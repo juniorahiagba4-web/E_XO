@@ -1,0 +1,74 @@
+{
+  "nav": {
+    "home": "Home",
+    "catalogue": "Catalogue",
+    "howItWorks": "How it works",
+    "contact": "Contact",
+    "trackQuote": "Track my quote"
+  },
+  "home": {
+    "heroTitle": "The event furniture you need, when you need it",
+    "heroSubtitle": "Chairs, tables, tablecloths, coolers and more, available for rent or purchase for your weddings, seminars and ceremonies in Togo.",
+    "ctaCatalogue": "Browse the catalogue",
+    "ctaWhatsapp": "Chat on WhatsApp",
+    "howItWorksTitle": "How it works",
+    "step1Title": "1. Pick your furniture",
+    "step1Text": "Browse the catalogue and select the quantities you need.",
+    "step2Title": "2. Choose your dates",
+    "step2Text": "Set your event period, availability is checked in real time.",
+    "step3Title": "3. Get your quote",
+    "step3Text": "A PDF quote is generated instantly and you can confirm it on WhatsApp.",
+    "featuredTitle": "Popular categories"
+  },
+  "catalogue": {
+    "title": "Catalogue",
+    "searchPlaceholder": "Search an item...",
+    "allCategories": "All categories",
+    "perDay": "/ day",
+    "viewDetails": "Check availability",
+    "empty": "No item found.",
+    "loadError": "Could not load the catalogue right now."
+  },
+  "product": {
+    "backToCatalogue": "Back to catalogue",
+    "deposit": "Deposit",
+    "checkAvailability": "Check availability",
+    "startDate": "Start date",
+    "endDate": "End date",
+    "quantity": "Quantity",
+    "available": "{count} available for the selected period",
+    "unavailable": "Not enough stock for this period (remaining {count})",
+    "checking": "Checking...",
+    "selectDates": "Select a period to check availability",
+    "requestQuote": "Request a quote",
+    "addToQuote": "Add to quote"
+  },
+  "quoteForm": {
+    "title": "Quote request",
+    "customerInfo": "Your details",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "phone": "Phone / WhatsApp",
+    "email": "Email",
+    "deliveryMethod": "Delivery method",
+    "delivery": "Delivery to my address",
+    "pickup": "Pickup at the depot",
+    "address": "Delivery address",
+    "notes": "Notes (optional)",
+    "submit": "Send my quote request",
+    "submitting": "Sending...",
+    "error": "Something went wrong, please try again.",
+    "emptyCart": "Add at least one item before requesting a quote."
+  },
+  "quoteConfirmation": {
+    "title": "Your quote has been generated",
+    "reference": "Reference",
+    "downloadPdf": "Download quote (PDF)",
+    "whatsappCta": "Confirm on WhatsApp",
+    "trackInfo": "Keep your reference to track your quote at any time."
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "whatsapp": "WhatsApp"
+  }
+}

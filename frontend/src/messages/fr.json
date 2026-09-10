@@ -1,0 +1,74 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "catalogue": "Catalogue",
+    "howItWorks": "Comment ça marche",
+    "contact": "Contact",
+    "trackQuote": "Suivre mon devis"
+  },
+  "home": {
+    "heroTitle": "Le mobilier événementiel qu'il vous faut, quand il vous le faut",
+    "heroSubtitle": "Chaises, tables, nappes, glacières et plus encore, disponibles à la location ou à la vente pour vos mariages, séminaires et cérémonies au Togo.",
+    "ctaCatalogue": "Voir le catalogue",
+    "ctaWhatsapp": "Discuter sur WhatsApp",
+    "howItWorksTitle": "Comment ça marche",
+    "step1Title": "1. Choisissez votre mobilier",
+    "step1Text": "Parcourez le catalogue et sélectionnez les quantités dont vous avez besoin.",
+    "step2Title": "2. Choisissez vos dates",
+    "step2Text": "Indiquez la période de votre événement, la disponibilité est vérifiée en temps réel.",
+    "step3Title": "3. Recevez votre devis",
+    "step3Text": "Un devis PDF est généré instantanément et vous pouvez le confirmer par WhatsApp.",
+    "featuredTitle": "Catégories populaires"
+  },
+  "catalogue": {
+    "title": "Catalogue",
+    "searchPlaceholder": "Rechercher un article...",
+    "allCategories": "Toutes les catégories",
+    "perDay": "/ jour",
+    "viewDetails": "Voir la disponibilité",
+    "empty": "Aucun article trouvé.",
+    "loadError": "Impossible de charger le catalogue pour le moment."
+  },
+  "product": {
+    "backToCatalogue": "Retour au catalogue",
+    "deposit": "Caution",
+    "checkAvailability": "Vérifier la disponibilité",
+    "startDate": "Date de début",
+    "endDate": "Date de fin",
+    "quantity": "Quantité",
+    "available": "{count} disponible(s) sur la période choisie",
+    "unavailable": "Quantité insuffisante sur cette période (reste {count})",
+    "checking": "Vérification en cours...",
+    "selectDates": "Choisissez une période pour vérifier la disponibilité",
+    "requestQuote": "Demander un devis",
+    "addToQuote": "Ajouter au devis"
+  },
+  "quoteForm": {
+    "title": "Demande de devis",
+    "customerInfo": "Vos coordonnées",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "phone": "Téléphone / WhatsApp",
+    "email": "Email",
+    "deliveryMethod": "Mode de livraison",
+    "delivery": "Livraison à mon adresse",
+    "pickup": "Retrait au dépôt",
+    "address": "Adresse de livraison",
+    "notes": "Notes (optionnel)",
+    "submit": "Envoyer ma demande de devis",
+    "submitting": "Envoi en cours...",
+    "error": "Une erreur est survenue, veuillez réessayer.",
+    "emptyCart": "Ajoutez au moins un article avant de demander un devis."
+  },
+  "quoteConfirmation": {
+    "title": "Votre devis a été généré",
+    "reference": "Référence",
+    "downloadPdf": "Télécharger le devis (PDF)",
+    "whatsappCta": "Confirmer sur WhatsApp",
+    "trackInfo": "Conservez votre référence pour suivre votre devis à tout moment."
+  },
+  "footer": {
+    "rights": "Tous droits réservés.",
+    "whatsapp": "WhatsApp"
+  }
+}
