@@ -36,35 +36,44 @@ Site vitrine + e-commerce pour une entreprise de location (et bientôt de vente)
 ## Structure du dépôt
 
 ```
-backend/    API Laravel + back-office Filament
-frontend/   Site vitrine Next.js (FR/EN)
-docker-compose.yml   Environnement de dev (MySQL, Redis, PHP-FPM, Nginx, Horizon)
+backend/              API Laravel + back-office Filament
+frontend/             Site vitrine Next.js (FR/EN)
+docker-compose.yml    Environnement de dev (MySQL, Redis, PHP-FPM, Nginx, Horizon)
+Makefile              Commandes make setup/dev/test/... (voir Démarrage rapide)
+.vscode/tasks.json    Mêmes commandes, accessibles via Run Task dans VS Code
+.devcontainer/        Config VS Code Dev Containers (backend + frontend dans un seul conteneur)
 ```
 
 ## Démarrage rapide
 
-### Avec Docker (recommandé)
+Trois façons de lancer le projet en local, de la plus automatisée à la plus manuelle.
+
+### Option A — VS Code, en un clic (recommandé)
+
+Prérequis : [Docker Desktop](https://www.docker.com/products/docker-desktop/) + [Node.js](https://nodejs.org/) installés, dépôt ouvert dans VS Code.
+
+`Ctrl+Shift+P` (ou `Cmd+Shift+P`) → **Tasks: Run Task** → **🚀 Démarrer le site (setup + dev)**.
+
+Cette tâche construit les conteneurs backend, installe les dépendances, migre + peuple la base de données, puis installe et lance le frontend — tout est visible dans le panneau *Terminal* de VS Code. Une fois le message `Ready in ...` affiché, ouvre `http://localhost:3000`.
+
+Les autres tâches disponibles (`Tasks: Run Task`) : *Backend: migrate + seed*, *Backend: tests*, *Arrêter les conteneurs backend*.
+
+### Option B — VS Code Dev Container (zéro installation locale de PHP/Node)
+
+Avec l'extension [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) installée : `Ctrl+Shift+P` → **Dev Containers: Reopen in Container**. VS Code construit un conteneur unique (PHP + Node) contenant tout le dépôt, installe les dépendances et prépare la base de données automatiquement (`postCreateCommand`). Il ne reste plus qu'à lancer `npm run dev` dans `frontend/` depuis le terminal intégré (déjà dans le conteneur).
+
+> Les tâches de l'option A (`make ...`) ne fonctionnent pas *depuis l'intérieur* du Dev Container — n'utilise qu'une des deux options à la fois.
+
+### Option C — En ligne de commande
 
 ```bash
-cp backend/.env.example backend/.env
-docker compose up -d --build
-docker compose exec app php artisan key:generate
-docker compose exec app php artisan migrate --seed
-docker compose exec app php artisan storage:link
+make setup   # construit les conteneurs, migre + peuple la BDD, installe le frontend
+make dev     # démarre les conteneurs backend + le serveur Next.js (premier plan)
 ```
 
-L'API est disponible sur `http://localhost:8000/api/v1`, le back-office sur `http://localhost:8000/admin` (identifiants créés par le seeder : `admin@eventloc.tg` / `password` — **à changer immédiatement**).
+Autres commandes utiles : `make test`, `make fresh` (réinitialise la BDD avec les données de démo), `make down`, `make logs`. Voir le `Makefile` pour le détail.
 
-Puis, pour le frontend :
-
-```bash
-cd frontend
-cp .env.example .env.local
-npm install
-npm run dev
-```
-
-Le site est disponible sur `http://localhost:3000`.
+Dans tous les cas : l'API est sur `http://localhost:8000/api/v1`, le back-office sur `http://localhost:8000/admin` (identifiants créés par le seeder : `admin@eventloc.tg` / `password` — **à changer immédiatement**), le site sur `http://localhost:3000`.
 
 ### Sans Docker (SQLite, pour un dev rapide)
 

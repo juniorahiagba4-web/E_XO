@@ -1,0 +1,27 @@
+{
+  "name": "EventLoc (backend + frontend)",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspace",
+  "shutdownAction": "stopCompose",
+
+  "forwardPorts": [8000, 3000, 3306, 6379],
+  "portsAttributes": {
+    "8000": { "label": "API + Admin (nginx)", "onAutoForward": "notify" },
+    "3000": { "label": "Frontend (Next.js)", "onAutoForward": "openBrowser" }
+  },
+
+  "postCreateCommand": "cd /var/www/html && composer install && (test -f .env || cp .env.example .env) && php artisan key:generate --ansi && php artisan migrate --seed && php artisan storage:link && cd /workspace/frontend && (test -f .env.local || cp .env.example .env.local) && npm install",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "bmewburn.vscode-intelephense-client",
+        "onecentlin.laravel-blade",
+        "dbaeumer.vscode-eslint",
+        "bradlc.vscode-tailwindcss",
+        "editorconfig.editorconfig"
+      ]
+    }
+  }
+}
