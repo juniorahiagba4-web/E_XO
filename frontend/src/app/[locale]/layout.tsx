@@ -1,17 +1,23 @@
 import type { Metadata } from "next";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Archivo_Black, Geist_Mono, Inter } from "next/font/google";
 import { routing } from "@/i18n/routing";
 import { CartProvider } from "@/lib/cart-context";
-import { WHATSAPP_NUMBER } from "@/lib/config";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import FloatingWhatsapp from "@/components/FloatingWhatsapp";
+import { AuthProvider } from "@/lib/auth-context";
+import { AuthGateProvider } from "@/lib/auth-gate-context";
+import { FavoritesProvider } from "@/lib/favorites-context";
+import { COMPANY_NAME } from "@/lib/config";
 import "../globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+});
+
+const archivoBlack = Archivo_Black({
+  variable: "--font-archivo-black",
+  weight: "400",
   subsets: ["latin"],
 });
 
@@ -21,9 +27,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "EventLoc - Location de mobilier événementiel",
+  title: `${COMPANY_NAME} - Location de mobilier événementiel`,
   description:
-    "Location et vente de chaises, tables, nappes, glacières pour vos événements au Togo.",
+    "Location et vente de chaises, tables, nappes, glacières pour vos événements au Togo et dans la sous-région.",
 };
 
 export function generateStaticParams() {
@@ -43,17 +49,18 @@ export default async function LocaleLayout({
   return (
     <html
       lang={locale}
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${inter.variable} ${archivoBlack.variable} ${geistMono.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="flex min-h-full flex-col bg-white text-slate-900">
+      <body className="flex min-h-full flex-col bg-white text-brand-navy font-sans">
         <NextIntlClientProvider>
-          <CartProvider>
-            <Header />
-            <main className="flex-1">{children}</main>
-            <Footer />
-            <FloatingWhatsapp message={`Bonjour, je souhaite avoir des informations sur vos mobiliers (WhatsApp: +${WHATSAPP_NUMBER}).`} />
-          </CartProvider>
+          <AuthProvider>
+            <AuthGateProvider>
+              <FavoritesProvider>
+                <CartProvider>{children}</CartProvider>
+              </FavoritesProvider>
+            </AuthGateProvider>
+          </AuthProvider>
         </NextIntlClientProvider>
       </body>
     </html>

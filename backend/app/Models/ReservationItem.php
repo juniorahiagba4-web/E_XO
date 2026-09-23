@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-#[Fillable(['reservation_id', 'item_id', 'quantity', 'unit_price_per_day', 'subtotal'])]
+#[Fillable(['reservation_id', 'item_id', 'quantity', 'unit_price_per_day', 'unit_sale_price', 'subtotal'])]
 class ReservationItem extends Model
 {
     use HasFactory;
@@ -17,6 +17,7 @@ class ReservationItem extends Model
         return [
             'quantity' => 'integer',
             'unit_price_per_day' => 'decimal:2',
+            'unit_sale_price' => 'decimal:2',
             'subtotal' => 'decimal:2',
         ];
     }

@@ -36,6 +36,11 @@ class ReservationsTable
                         'cancelled' => 'danger',
                         default => 'gray',
                     }),
+                TextColumn::make('type')
+                    ->label('Type')
+                    ->badge()
+                    ->formatStateUsing(fn (string $state) => $state === 'purchase' ? 'Achat' : 'Location')
+                    ->color(fn (string $state) => $state === 'purchase' ? 'success' : 'info'),
                 TextColumn::make('event_start_date')
                     ->label('Début')
                     ->date('d/m/Y')
@@ -72,6 +77,9 @@ class ReservationsTable
                         'completed' => 'Terminée',
                         'cancelled' => 'Annulée',
                     ]),
+                SelectFilter::make('type')
+                    ->label('Type')
+                    ->options(['rental' => 'Location', 'purchase' => 'Achat']),
             ])
             ->recordActions([
                 Action::make('quote_pdf')

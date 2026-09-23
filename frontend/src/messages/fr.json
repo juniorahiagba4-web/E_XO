@@ -1,10 +1,28 @@
 {
+  "errors": {
+    "notFoundTitle": "Page introuvable",
+    "notFoundMessage": "La page que vous cherchez n'existe pas ou a été déplacée.",
+    "notFoundCta": "Retour à l'accueil",
+    "notFoundCatalogue": "Voir le catalogue",
+    "genericTitle": "Une erreur est survenue",
+    "genericMessage": "Quelque chose s'est mal passé de notre côté. Réessayez, ou revenez à l'accueil si le problème persiste.",
+    "retry": "Réessayer",
+    "backHome": "Retour à l'accueil",
+    "criticalTitle": "Le site rencontre un problème",
+    "criticalMessage": "Une erreur inattendue est survenue. Merci de réessayer dans quelques instants."
+  },
   "nav": {
     "home": "Accueil",
     "catalogue": "Catalogue",
+    "promotions": "Promotions",
     "howItWorks": "Comment ça marche",
     "contact": "Contact",
-    "trackQuote": "Suivre mon devis"
+    "faq": "FAQ",
+    "cart": "Panier",
+    "trackQuote": "Suivre mon devis",
+    "back": "Retour",
+    "close": "Fermer",
+    "menu": "Menu"
   },
   "home": {
     "heroTitle": "Le mobilier événementiel qu'il vous faut, quand il vous le faut",
@@ -23,15 +41,33 @@
   "catalogue": {
     "title": "Catalogue",
     "searchPlaceholder": "Rechercher un article...",
+    "searchButton": "Rechercher",
     "allCategories": "Toutes les catégories",
+    "collectionBadge": "Collection",
     "perDay": "/ jour",
+    "orBuy": "ou achat",
     "viewDetails": "Voir la disponibilité",
     "empty": "Aucun article trouvé.",
-    "loadError": "Impossible de charger le catalogue pour le moment."
+    "loadError": "Impossible de charger le catalogue pour le moment.",
+    "inStock": "{count} en stock",
+    "outOfStock": "Rupture de stock",
+    "quickBuy": "Acheter",
+    "addToCart": "Ajouter",
+    "added": "Ajouté ✓",
+    "notAvailableForSale": "Cet article n'est pas disponible à la vente.",
+    "minPrice": "Prix min",
+    "maxPrice": "Prix max",
+    "applyPrice": "Filtrer",
+    "sortLabel": "Trier par",
+    "sortDefault": "Pertinence",
+    "sortPriceAsc": "Prix croissant",
+    "sortPriceDesc": "Prix décroissant",
+    "sortPopular": "Popularité",
+    "sortNewest": "Nouveautés",
+    "clearCategory": "Toutes catégories ✕"
   },
   "product": {
     "backToCatalogue": "Retour au catalogue",
-    "deposit": "Caution",
     "checkAvailability": "Vérifier la disponibilité",
     "startDate": "Date de début",
     "endDate": "Date de fin",
@@ -41,10 +77,31 @@
     "checking": "Vérification en cours...",
     "selectDates": "Choisissez une période pour vérifier la disponibilité",
     "requestQuote": "Demander un devis",
-    "addToQuote": "Ajouter au devis"
+    "addToQuote": "Ajouter au devis",
+    "modeRental": "Location",
+    "modePurchase": "Achat",
+    "orBuyFor": "Ou achetez-le pour",
+    "stockAvailable": "{count} en stock",
+    "stockUnavailable": "Rupture de stock",
+    "purchaseAvailable": "{count} disponible(s) à l'achat",
+    "purchaseUnavailable": "Quantité indisponible à l'achat",
+    "addToCart": "Ajouter au panier",
+    "added": "Ajouté ✓",
+    "rentNow": "Louer maintenant",
+    "buyNow": "Acheter maintenant",
+    "tabDescription": "Description",
+    "tabSpecifications": "Caractéristiques",
+    "tabReviews": "Avis",
+    "noDescription": "Aucune description disponible pour le moment.",
+    "noSpecifications": "Aucune caractéristique disponible pour le moment.",
+    "noReviews": "Aucun avis disponible pour le moment.",
+    "youMayAlsoLike": "Vous aimerez aussi"
   },
   "quoteForm": {
     "title": "Demande de devis",
+    "titlePurchase": "Ma commande",
+    "cartTitle": "Mon panier",
+    "total": "Total estimé",
     "customerInfo": "Vos coordonnées",
     "firstName": "Prénom",
     "lastName": "Nom",
@@ -55,10 +112,25 @@
     "pickup": "Retrait au dépôt",
     "address": "Adresse de livraison",
     "notes": "Notes (optionnel)",
+    "continue": "Continuer",
     "submit": "Envoyer ma demande de devis",
+    "submitPurchase": "Confirmer ma commande",
     "submitting": "Envoi en cours...",
     "error": "Une erreur est survenue, veuillez réessayer.",
-    "emptyCart": "Ajoutez au moins un article avant de demander un devis."
+    "emptyCart": "Ajoutez au moins un article avant de demander un devis.",
+    "loginRequired": "Connectez-vous pour finaliser votre demande.",
+    "viewCart": "Voir mon panier",
+    "checkout": "Passer la commande",
+    "continueShopping": "Continuer mes achats",
+    "subtotal": "Sous-total",
+    "discount": "Remise",
+    "promoCodePlaceholder": "Code promo",
+    "promoCodeApply": "Appliquer",
+    "promoCodeApplying": "Vérification...",
+    "promoCodeApplied": "Code {code} appliqué",
+    "promoCodeRemove": "Retirer",
+    "close": "Fermer",
+    "removeLine": "Retirer cet article"
   },
   "quoteConfirmation": {
     "title": "Votre devis a été généré",
@@ -68,7 +140,173 @@
     "trackInfo": "Conservez votre référence pour suivre votre devis à tout moment."
   },
   "footer": {
+    "slogan": "Le mobilier événementiel, sans le tracas.",
+    "sitemapTitle": "Navigation",
+    "legalTitle": "Informations légales",
+    "privacyPolicy": "Politique de confidentialité",
+    "termsOfService": "Conditions d'utilisation",
+    "followUsTitle": "Suivez-nous",
     "rights": "Tous droits réservés.",
     "whatsapp": "WhatsApp"
+  },
+  "contact": {
+    "title": "Contactez-nous",
+    "intro": "Une question sur nos articles, une demande spécifique ? Écrivez-nous ou contactez-nous directement.",
+    "detailsTitle": "Nos coordonnées",
+    "addressLabel": "Adresse",
+    "phoneLabel": "Téléphone",
+    "emailLabel": "Email",
+    "socialLabel": "Réseaux sociaux",
+    "formTitle": "Envoyez-nous un message",
+    "name": "Nom complet",
+    "email": "Email",
+    "phone": "Téléphone (optionnel)",
+    "subject": "Sujet (optionnel)",
+    "message": "Votre message",
+    "submit": "Envoyer le message",
+    "submitting": "Envoi en cours...",
+    "success": "Merci, votre message a bien été envoyé. Nous vous répondrons rapidement.",
+    "error": "Une erreur est survenue, veuillez réessayer."
+  },
+  "faq": {
+    "title": "Questions fréquentes",
+    "intro": "Vous avez une question ? Elle a peut-être déjà une réponse ici. Sinon, contactez-nous.",
+    "contactCta": "Poser une autre question",
+    "items": [
+      {
+        "question": "Comment fonctionne la location de mobilier ?",
+        "answer": "Choisissez vos articles dans le catalogue, indiquez la période de votre événement, puis recevez instantanément un devis PDF. Vous confirmez ensuite votre demande par WhatsApp."
+      },
+      {
+        "question": "Comment savoir si un article est disponible pour ma date ?",
+        "answer": "Sur chaque fiche produit, indiquez vos dates de début et de fin : la disponibilité réelle est calculée en temps réel selon les réservations déjà en cours sur cette période."
+      },
+      {
+        "question": "Le devis est-il gratuit et sans engagement ?",
+        "answer": "Oui, la demande de devis ne vous engage à rien. Elle bloque simplement le stock pendant 48h le temps que vous confirmiez votre commande."
+      },
+      {
+        "question": "Proposez-vous la livraison ?",
+        "answer": "Oui, vous pouvez choisir la livraison à votre adresse ou le retrait au dépôt lors de la demande de devis."
+      },
+      {
+        "question": "Quels moyens de paiement acceptez-vous ?",
+        "answer": "Le paiement se finalise directement avec notre équipe après confirmation de votre devis (Mobile Money, espèces). Le paiement en ligne arrive prochainement."
+      },
+      {
+        "question": "Comment suivre ma demande de devis ?",
+        "answer": "Conservez la référence reçue après votre demande et utilisez la page \"Suivre mon devis\" pour consulter son statut à tout moment."
+      }
+    ]
+  },
+  "auth": {
+    "login": "Connexion",
+    "register": "Créer un compte",
+    "loginTitle": "Connexion",
+    "loginIntro": "Connectez-vous pour gérer vos devis et commandes.",
+    "registerTitle": "Créer un compte",
+    "registerIntro": "Un compte est nécessaire pour demander un devis ou passer commande.",
+    "email": "Email",
+    "password": "Mot de passe",
+    "passwordConfirmation": "Confirmer le mot de passe",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "phone": "Téléphone / WhatsApp",
+    "submitting": "Envoi en cours...",
+    "error": "Une erreur est survenue, veuillez réessayer.",
+    "noAccount": "Pas encore de compte ?",
+    "hasAccount": "Déjà un compte ?",
+    "myAccount": "Mon compte",
+    "myOrders": "Mes commandes",
+    "myFavorites": "Mes favoris",
+    "logout": "Déconnexion",
+    "backToShop": "Retour à la boutique",
+    "continueAsGuest": "Continuer sans compte",
+    "gateTitle": "Connectez-vous pour continuer",
+    "gateMessage": "Créez un compte ou connectez-vous pour retrouver facilement vos articles, vos devis et vos commandes.",
+    "guestIntro": "Renseignez vos coordonnées pour recevoir votre devis, sans créer de compte.",
+    "loginBadge": "Bienvenue",
+    "loginWelcomeTitle": "Bon retour parmi nous.",
+    "loginWelcomeSubtitle": "Connectez-vous pour accéder à vos devis, vos commandes et vos favoris.",
+    "registerBadge": "Bienvenue",
+    "registerWelcomeTitle": "Rejoignez La Perle d'Or.",
+    "registerWelcomeSubtitle": "Créez votre compte pour demander un devis, passer commande et suivre vos favoris.",
+    "featureOrders": "Suivi de vos commandes",
+    "featureFavorites": "Liste de favoris",
+    "featureOffers": "Offres et promotions personnalisées",
+    "featureDelivery": "Livraison ou retrait rapide"
+  },
+  "favorites": {
+    "title": "Mes favoris",
+    "loading": "Chargement...",
+    "empty": "Vous n'avez pas encore d'article favori.",
+    "error": "Impossible de charger vos favoris pour le moment."
+  },
+  "account": {
+    "title": "Mon compte",
+    "greeting": "Bonjour {name}, voici l'historique de vos devis et commandes.",
+    "loading": "Chargement...",
+    "empty": "Vous n'avez pas encore de devis ou de commande.",
+    "error": "Impossible de charger vos commandes pour le moment.",
+    "typeRental": "Location",
+    "typePurchase": "Achat",
+    "viewPdf": "Voir le PDF"
+  },
+  "promotions": {
+    "title": "Promotions",
+    "intro": "Profitez de nos offres en cours sur la location et l'achat de mobilier événementiel.",
+    "empty": "Aucune promotion en cours pour le moment.",
+    "loadError": "Impossible de charger les promotions pour le moment.",
+    "validUntil": "Valable jusqu'au {date}"
+  },
+  "legal": {
+    "privacy": {
+      "title": "Politique de confidentialité",
+      "updated": "Dernière mise à jour : 2026",
+      "sections": [
+        {
+          "heading": "Données collectées",
+          "body": "Lorsque vous demandez un devis ou nous contactez, nous collectons votre nom, votre email, votre téléphone et, si nécessaire, votre adresse de livraison. Ces informations sont utilisées uniquement pour traiter votre demande."
+        },
+        {
+          "heading": "Utilisation des données",
+          "body": "Vos données servent à générer vos devis, organiser la livraison ou le retrait de votre commande, et vous recontacter au sujet de votre réservation. Nous ne revendons jamais vos données à des tiers."
+        },
+        {
+          "heading": "Conservation",
+          "body": "Vos informations sont conservées le temps nécessaire à la gestion de votre commande et à nos obligations comptables, puis supprimées ou anonymisées."
+        },
+        {
+          "heading": "Vos droits",
+          "body": "Vous pouvez à tout moment demander l'accès, la correction ou la suppression de vos données personnelles en nous contactant via la page Contact."
+        }
+      ]
+    },
+    "terms": {
+      "title": "Conditions d'utilisation",
+      "updated": "Dernière mise à jour : 2026",
+      "sections": [
+        {
+          "heading": "Objet",
+          "body": "Ces conditions régissent la location de mobilier événementiel proposée sur ce site. En passant une demande de devis, vous acceptez les termes ci-dessous."
+        },
+        {
+          "heading": "Devis et disponibilité",
+          "body": "Un devis généré sur le site bloque le stock concerné pendant 48 heures. Passé ce délai sans confirmation, la réservation est automatiquement annulée et le stock est de nouveau disponible."
+        },
+        {
+          "heading": "État du matériel",
+          "body": "Aucune caution n'est demandée. Le matériel doit être restitué dans l'état où il a été livré ; toute casse ou perte pourra toutefois être facturée."
+        },
+        {
+          "heading": "Livraison et retrait",
+          "body": "Selon l'option choisie, le mobilier est livré à l'adresse indiquée ou retiré au dépôt, sur les créneaux proposés lors de la demande de devis."
+        },
+        {
+          "heading": "Tarifs",
+          "body": "Les prix sont exprimés en Francs CFA (XOF) et calculés par jour de location. Le total est indicatif jusqu'à confirmation finale avec notre équipe."
+        }
+      ]
+    }
   }
 }

@@ -34,7 +34,8 @@ class ItemsRelationManager extends RelationManager
                     ->label('Quantité')
                     ->numeric(),
                 TextColumn::make('unit_price_per_day')
-                    ->label('Prix / jour'),
+                    ->label('Prix unitaire')
+                    ->formatStateUsing(fn ($state, $record) => $state ?? $record->unit_sale_price),
                 TextColumn::make('subtotal')
                     ->label('Sous-total'),
             ])

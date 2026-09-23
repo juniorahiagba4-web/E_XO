@@ -17,8 +17,8 @@ export default function LocaleSwitcher() {
           onClick={() => router.replace(pathname, { locale: loc })}
           className={`rounded px-2 py-1 uppercase transition ${
             loc === locale
-              ? "bg-slate-900 text-white"
-              : "text-slate-500 hover:bg-slate-100"
+              ? "bg-brand-gold text-brand-navy"
+              : "text-slate-300 hover:bg-white/10"
           }`}
         >
           {loc}

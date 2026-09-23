@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Item;
 use App\Models\Reservation;
+use App\Models\ReservationItem;
 use Illuminate\Support\Carbon;
 
 /**
@@ -22,6 +23,25 @@ class AvailabilityService
         $peak = $this->peakReservedQuantity($item->id, $start, $end, $excludeReservationId);
 
         return max(0, $item->total_stock - $peak);
+    }
+
+    /**
+     * Purchases have no time window: once a unit is sold it never comes back,
+     * so availability is simply the total minus everything already sold
+     * (any non-draft, non-cancelled purchase order).
+     */
+    public function purchasableQuantity(Item $item, ?int $excludeReservationId = null): int
+    {
+        $sold = ReservationItem::query()
+            ->where('item_id', $item->id)
+            ->whereHas('reservation', function ($query) use ($excludeReservationId) {
+                $query->where('type', 'purchase')
+                    ->whereNotIn('status', ['draft', 'cancelled'])
+                    ->when($excludeReservationId, fn ($q) => $q->whereKeyNot($excludeReservationId));
+            })
+            ->sum('quantity');
+
+        return max(0, $item->total_stock - (int) $sold);
     }
 
     public function peakReservedQuantity(int $itemId, Carbon $start, Carbon $end, ?int $excludeReservationId = null): int

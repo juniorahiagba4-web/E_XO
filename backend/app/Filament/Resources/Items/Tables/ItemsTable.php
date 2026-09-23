@@ -31,10 +31,19 @@ class ItemsTable
                     ->label('Prix / jour')
                     ->numeric()
                     ->sortable(),
+                TextColumn::make('sale_price')
+                    ->label('Prix de vente')
+                    ->numeric()
+                    ->placeholder('—')
+                    ->sortable(),
                 TextColumn::make('total_stock')
                     ->label('Stock')
                     ->numeric()
                     ->sortable(),
+                TextColumn::make('rating')
+                    ->label('Note')
+                    ->placeholder('—')
+                    ->formatStateUsing(fn ($state, $record) => $state ? "{$state} ★ ({$record->rating_count})" : '—'),
                 IconColumn::make('is_active')
                     ->label('Actif')
                     ->boolean(),

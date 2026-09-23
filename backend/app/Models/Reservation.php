@@ -12,7 +12,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
 #[Fillable([
-    'reference', 'customer_id', 'status',
+    'reference', 'customer_id', 'status', 'type',
     'event_start_date', 'event_end_date',
     'delivery_method', 'delivery_address',
     'delivery_slot_template_id', 'delivery_date',
@@ -105,11 +105,19 @@ class Reservation extends Model
 
     public function whatsappMessage(): string
     {
+        $isRental = $this->type === 'rental';
+
         $lines = [
-            "Bonjour, je souhaite confirmer ma demande de devis {$this->reference}.",
-            'Période : '.$this->event_start_date->format('d/m/Y').' au '.$this->event_end_date->format('d/m/Y'),
-            'Total estimé : '.number_format((float) $this->total, 0, ',', ' ')." {$this->currency}",
+            $isRental
+                ? "Bonjour, je souhaite confirmer ma demande de devis {$this->reference}."
+                : "Bonjour, je souhaite confirmer ma commande {$this->reference}.",
         ];
+
+        if ($isRental && $this->event_start_date && $this->event_end_date) {
+            $lines[] = 'Période : '.$this->event_start_date->format('d/m/Y').' au '.$this->event_end_date->format('d/m/Y');
+        }
+
+        $lines[] = 'Total estimé : '.number_format((float) $this->total, 0, ',', ' ')." {$this->currency}";
 
         return implode("\n", $lines);
     }

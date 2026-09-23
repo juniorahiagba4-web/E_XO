@@ -34,6 +34,11 @@ class ReservationForm
                             ])
                             ->required()
                             ->native(false),
+                        Select::make('type')
+                            ->label('Type')
+                            ->options(['rental' => 'Location', 'purchase' => 'Achat'])
+                            ->required()
+                            ->native(false),
                         Select::make('customer_id')
                             ->label('Client')
                             ->relationship('customer', 'email')
@@ -47,10 +52,10 @@ class ReservationForm
                             ->native(false),
                         DatePicker::make('event_start_date')
                             ->label('Début événement')
-                            ->required(),
+                            ->helperText('Sans objet pour une commande d\'achat.'),
                         DatePicker::make('event_end_date')
                             ->label('Fin événement')
-                            ->required(),
+                            ->helperText('Sans objet pour une commande d\'achat.'),
                         TextInput::make('delivery_address')
                             ->label('Adresse de livraison')
                             ->columnSpanFull(),
@@ -78,11 +83,6 @@ class ReservationForm
                     ->schema([
                         TextInput::make('subtotal')
                             ->label('Sous-total')
-                            ->required()
-                            ->numeric()
-                            ->default(0),
-                        TextInput::make('deposit_required')
-                            ->label('Caution requise')
                             ->required()
                             ->numeric()
                             ->default(0),

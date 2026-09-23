@@ -16,6 +16,9 @@ class ItemController extends Controller
     public function index(Request $request)
     {
         $items = Item::query()
+            ->withSum('reservationItems as popularity', 'quantity')
+            ->withCount('reviews')
+            ->withAvg('reviews', 'rating')
             ->with('category')
             ->where('is_active', true)
             ->when($request->string('category')->isNotEmpty(), function ($query) use ($request) {
@@ -25,17 +28,42 @@ class ItemController extends Controller
                 $search = '%'.$request->string('search').'%';
                 $query->where(fn ($q) => $q->where('name_fr', 'like', $search)->orWhere('name_en', 'like', $search));
             })
-            ->orderBy('name_fr')
-            ->paginate(24);
+            ->when($request->filled('min_price'), fn ($query) => $query->where('rental_price_per_day', '>=', $request->float('min_price')))
+            ->when($request->filled('max_price'), fn ($query) => $query->where('rental_price_per_day', '<=', $request->float('max_price')));
+
+        match ($request->string('sort')->toString()) {
+            'price_asc' => $items->orderBy('rental_price_per_day'),
+            'price_desc' => $items->orderByDesc('rental_price_per_day'),
+            'popular' => $items->orderByDesc('popularity'),
+            'newest' => $items->orderByDesc('created_at'),
+            default => $items->orderBy('name_fr'),
+        };
+
+        $items = $items->paginate(24);
 
         return ItemResource::collection($items);
     }
 
     public function show(string $slug)
     {
-        $item = Item::query()->with('category')->where('slug', $slug)->where('is_active', true)->firstOrFail();
+        $item = Item::query()
+            ->with(['category', 'reviews'])
+            ->where('slug', $slug)
+            ->where('is_active', true)
+            ->firstOrFail();
 
-        return new ItemResource($item);
+        $related = Item::query()
+            ->with('category')
+            ->where('is_active', true)
+            ->where('id', '!=', $item->id)
+            ->when($item->category_id, fn ($query) => $query->where('category_id', $item->category_id))
+            ->inRandomOrder()
+            ->limit(4)
+            ->get();
+
+        return (new ItemResource($item))->additional([
+            'related' => ItemResource::collection($related),
+        ]);
     }
 
     public function availability(Request $request, Item $item)

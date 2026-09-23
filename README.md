@@ -98,6 +98,22 @@ Les tests couvrent en priorité le moteur de disponibilité (chevauchements de d
 
 ## Notes de sécurité / production
 
-- Le CORS de l'API est ouvert (`*`) par défaut pour le développement — définir `CORS_ALLOWED_ORIGINS` avec le(s) domaine(s) réel(s) en production.
-- Le suivi de devis (`GET /reservations/{reference}`) ne demande que la référence ; celle-ci contient un suffixe aléatoire, mais une vérification d'identité (email/téléphone) est recommandée avant une mise en production.
+Mesures déjà en place :
+
+- **Headers de sécurité** (`App\Http\Middleware\SecurityHeaders`, appliqué globalement) : CSP, `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Referrer-Policy`, `Permissions-Policy`, et HSTS automatique dès que la requête est en HTTPS. Le frontend Next.js applique les mêmes headers via `frontend/src/proxy.ts`.
+- **Tokens Sanctum expirables** : `SANCTUM_TOKEN_EXPIRATION_MINUTES` (30 jours par défaut, voir `config/sanctum.php`) — un token volé n'est plus valable indéfiniment.
+- **Suivi de devis protégé** : `GET /reservations/{reference}` exige désormais l'email du client en plus de la référence (`ReservationController::show`), ce qui empêche de retrouver un devis au hasard en devinant/énumérant des références.
+- **Uploads Filament validés** : tous les champs `FileUpload` (catalogue, promotions, réglages) sont restreints aux formats image (`jpeg`/`png`/`webp`) et à 5 Mo max.
+- **Réponses d'erreur JSON propres** : l'API ne renvoie jamais de stack trace, même avec `APP_DEBUG=true` (voir `bootstrap/app.php` → `withExceptions`).
+- **CI** : `.github/workflows/backend-tests.yml` (PHPUnit) et `.github/workflows/frontend-tests.yml` (lint + typecheck + build) tournent sur chaque push/PR vers la branche `Wilfried`.
+- **2FA obligatoire sur le back-office** : Filament 4 embarque nativement l'authentification à deux facteurs (`->multiFactorAuthentication(...)` dans `AdminPanelProvider`, provider "Application d'authentification" type Google Authenticator, avec codes de récupération). Elle est configurée en `isRequired: true` : tout compte admin/manager doit la configurer dès sa première connexion, avant de pouvoir accéder au panneau. Le secret et les codes de récupération sont stockés chiffrés (`casts()` → `encrypted` / `encrypted:array` sur `User`).
+
+À faire avant une mise en ligne réelle :
+
+- **`APP_DEBUG=false`** en production, sans exception. Un `APP_DEBUG=true` exposé publiquement fuite les chemins serveur, les requêtes SQL et parfois des secrets d'environnement dans les traces d'erreur Laravel classiques (ce risque est déjà neutralisé côté API par `withExceptions`, mais `APP_DEBUG` doit rester `false` par défense en profondeur — d'autres pages Laravel non couvertes par ce handler, comme certaines erreurs de boot, l'utilisent encore).
+- **`CORS_ALLOWED_ORIGINS`** : vide par défaut (`*`, tout domaine autorisé) pour faciliter le développement local. En production, définir la valeur exacte du/des domaine(s) du frontend, ex. `CORS_ALLOWED_ORIGINS=https://laperledor.tg,https://www.laperledor.tg`. Ne jamais laisser `*` en production. Voir `backend/.env.production.example` pour un modèle complet des variables à changer en production.
+- **`APP_KEY`** : régénérer une clé propre à l'environnement de production (`php artisan key:generate`) — ne pas réutiliser celle d'un environnement de dev/staging.
+- **Identifiants admin par défaut** (`admin@eventloc.tg` / `password`, créés par le seeder) : à changer immédiatement après le premier déploiement.
+- **HTTPS obligatoire** : sans TLS, le header HSTS ajouté par `SecurityHeaders` ne s'active pas, et les tokens Sanctum circulent en clair.
 - Un devis (`quote_sent`) bloque le stock pendant 48h (`Reservation::QUOTE_HOLD_HOURS`). La commande planifiée `reservations:expire-stale-quotes` (exécutée chaque heure via `routes/console.php`) annule automatiquement les devis expirés — en production, un cron doit appeler `php artisan schedule:run` chaque minute (ou `docker compose` doit lancer un conteneur scheduler dédié).
+- **Première connexion admin après déploiement** : la 2FA étant obligatoire, le compte seedé (`admin@eventloc.tg`) devra configurer son authenticator (Google Authenticator, Authy, etc.) au premier login — prévoir ce téléphone/cette app avant la mise en ligne, et conserver les codes de récupération affichés une seule fois lors de la configuration.

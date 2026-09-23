@@ -39,6 +39,8 @@ class CategoryForm
                     ->unique(ignoreRecord: true),
                 FileUpload::make('image_path')
                     ->image()
+                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                    ->maxSize(5120)
                     ->directory('categories'),
                 Select::make('parent_id')
                     ->label('Catégorie parente')

@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Items\Schemas;
 
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -44,9 +45,20 @@ class ItemForm
                     ->required()
                     ->unique(ignoreRecord: true),
                 FileUpload::make('image_path')
-                    ->label('Photo')
+                    ->label('Photo principale')
                     ->image()
+                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                    ->maxSize(5120)
                     ->directory('items'),
+                FileUpload::make('gallery')
+                    ->label('Galerie (autres angles)')
+                    ->image()
+                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                    ->maxSize(5120)
+                    ->multiple()
+                    ->reorderable()
+                    ->directory('items/gallery')
+                    ->helperText('Photos supplémentaires affichées comme miniatures sur la fiche article.'),
 
                 TextInput::make('sku')
                     ->label('SKU')
@@ -61,12 +73,10 @@ class ItemForm
                     ->label('Prix de location / jour (XOF)')
                     ->required()
                     ->numeric(),
-                TextInput::make('deposit_amount')
-                    ->label('Caution (XOF)')
-                    ->numeric(),
                 TextInput::make('sale_price')
-                    ->label('Prix de vente (XOF, phase 2)')
-                    ->numeric(),
+                    ->label('Prix de vente (XOF)')
+                    ->numeric()
+                    ->helperText('Laisser vide si cet article n\'est disponible qu\'à la location.'),
 
                 TextInput::make('total_stock')
                     ->label('Stock total')
@@ -78,6 +88,35 @@ class ItemForm
                     ->required()
                     ->numeric()
                     ->default(1),
+
+                Section::make('Caractéristiques')
+                    ->schema([
+                        Repeater::make('specifications')
+                            ->label('')
+                            ->schema([
+                                TextInput::make('label')->label('Caractéristique')->required(),
+                                TextInput::make('value')->label('Valeur')->required(),
+                            ])
+                            ->columns(2)
+                            ->addActionLabel('Ajouter une caractéristique')
+                            ->defaultItems(0),
+                    ]),
+
+                Section::make('Note par défaut')
+                    ->columns(2)
+                    ->description('Utilisée tant qu\'aucun avis n\'a été ajouté ci-dessous (onglet Avis, après enregistrement).')
+                    ->schema([
+                        TextInput::make('rating')
+                            ->label('Note moyenne (0 à 5)')
+                            ->numeric()
+                            ->step(0.1)
+                            ->minValue(0)
+                            ->maxValue(5),
+                        TextInput::make('rating_count')
+                            ->label('Nombre d\'avis')
+                            ->numeric()
+                            ->default(0),
+                    ]),
 
                 Toggle::make('is_active')
                     ->label('Actif')

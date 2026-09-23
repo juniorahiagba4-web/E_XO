@@ -1,10 +1,28 @@
 {
+  "errors": {
+    "notFoundTitle": "Page not found",
+    "notFoundMessage": "The page you're looking for doesn't exist or has moved.",
+    "notFoundCta": "Back to home",
+    "notFoundCatalogue": "Browse the catalogue",
+    "genericTitle": "Something went wrong",
+    "genericMessage": "Something broke on our end. Try again, or head back home if the problem persists.",
+    "retry": "Try again",
+    "backHome": "Back to home",
+    "criticalTitle": "The site is having trouble",
+    "criticalMessage": "An unexpected error occurred. Please try again in a moment."
+  },
   "nav": {
     "home": "Home",
     "catalogue": "Catalogue",
+    "promotions": "Promotions",
     "howItWorks": "How it works",
     "contact": "Contact",
-    "trackQuote": "Track my quote"
+    "faq": "FAQ",
+    "cart": "Cart",
+    "trackQuote": "Track my quote",
+    "back": "Back",
+    "close": "Close",
+    "menu": "Menu"
   },
   "home": {
     "heroTitle": "The event furniture you need, when you need it",
@@ -23,15 +41,33 @@
   "catalogue": {
     "title": "Catalogue",
     "searchPlaceholder": "Search an item...",
+    "searchButton": "Search",
     "allCategories": "All categories",
+    "collectionBadge": "Collection",
     "perDay": "/ day",
+    "orBuy": "or buy",
     "viewDetails": "Check availability",
     "empty": "No item found.",
-    "loadError": "Could not load the catalogue right now."
+    "loadError": "Could not load the catalogue right now.",
+    "inStock": "{count} in stock",
+    "outOfStock": "Out of stock",
+    "quickBuy": "Buy",
+    "addToCart": "Add",
+    "added": "Added ✓",
+    "notAvailableForSale": "This item is not available for purchase.",
+    "minPrice": "Min price",
+    "maxPrice": "Max price",
+    "applyPrice": "Filter",
+    "sortLabel": "Sort by",
+    "sortDefault": "Relevance",
+    "sortPriceAsc": "Price: low to high",
+    "sortPriceDesc": "Price: high to low",
+    "sortPopular": "Popularity",
+    "sortNewest": "Newest",
+    "clearCategory": "All categories ✕"
   },
   "product": {
     "backToCatalogue": "Back to catalogue",
-    "deposit": "Deposit",
     "checkAvailability": "Check availability",
     "startDate": "Start date",
     "endDate": "End date",
@@ -41,10 +77,31 @@
     "checking": "Checking...",
     "selectDates": "Select a period to check availability",
     "requestQuote": "Request a quote",
-    "addToQuote": "Add to quote"
+    "addToQuote": "Add to quote",
+    "modeRental": "Rent",
+    "modePurchase": "Buy",
+    "orBuyFor": "Or buy it for",
+    "stockAvailable": "{count} in stock",
+    "stockUnavailable": "Out of stock",
+    "purchaseAvailable": "{count} available to buy",
+    "purchaseUnavailable": "Quantity unavailable for purchase",
+    "addToCart": "Add to cart",
+    "added": "Added ✓",
+    "rentNow": "Rent now",
+    "buyNow": "Buy now",
+    "tabDescription": "Description",
+    "tabSpecifications": "Specifications",
+    "tabReviews": "Reviews",
+    "noDescription": "No description available yet.",
+    "noSpecifications": "No specifications available yet.",
+    "noReviews": "No reviews available yet.",
+    "youMayAlsoLike": "You may also like"
   },
   "quoteForm": {
     "title": "Quote request",
+    "titlePurchase": "My order",
+    "cartTitle": "My cart",
+    "total": "Estimated total",
     "customerInfo": "Your details",
     "firstName": "First name",
     "lastName": "Last name",
@@ -55,10 +112,25 @@
     "pickup": "Pickup at the depot",
     "address": "Delivery address",
     "notes": "Notes (optional)",
+    "continue": "Continue",
     "submit": "Send my quote request",
+    "submitPurchase": "Confirm my order",
     "submitting": "Sending...",
     "error": "Something went wrong, please try again.",
-    "emptyCart": "Add at least one item before requesting a quote."
+    "emptyCart": "Add at least one item before requesting a quote.",
+    "loginRequired": "Log in to complete your request.",
+    "viewCart": "View my cart",
+    "checkout": "Checkout",
+    "continueShopping": "Continue shopping",
+    "subtotal": "Subtotal",
+    "discount": "Discount",
+    "promoCodePlaceholder": "Promo code",
+    "promoCodeApply": "Apply",
+    "promoCodeApplying": "Checking...",
+    "promoCodeApplied": "Code {code} applied",
+    "promoCodeRemove": "Remove",
+    "close": "Close",
+    "removeLine": "Remove this item"
   },
   "quoteConfirmation": {
     "title": "Your quote has been generated",
@@ -68,7 +140,173 @@
     "trackInfo": "Keep your reference to track your quote at any time."
   },
   "footer": {
+    "slogan": "Event furniture, without the hassle.",
+    "sitemapTitle": "Navigation",
+    "legalTitle": "Legal",
+    "privacyPolicy": "Privacy policy",
+    "termsOfService": "Terms of service",
+    "followUsTitle": "Follow us",
     "rights": "All rights reserved.",
     "whatsapp": "WhatsApp"
+  },
+  "contact": {
+    "title": "Contact us",
+    "intro": "A question about our items or a specific request? Write to us or reach out directly.",
+    "detailsTitle": "Our details",
+    "addressLabel": "Address",
+    "phoneLabel": "Phone",
+    "emailLabel": "Email",
+    "socialLabel": "Social media",
+    "formTitle": "Send us a message",
+    "name": "Full name",
+    "email": "Email",
+    "phone": "Phone (optional)",
+    "subject": "Subject (optional)",
+    "message": "Your message",
+    "submit": "Send message",
+    "submitting": "Sending...",
+    "success": "Thank you, your message has been sent. We'll get back to you shortly.",
+    "error": "Something went wrong, please try again."
+  },
+  "faq": {
+    "title": "Frequently asked questions",
+    "intro": "Have a question? It might already be answered here. Otherwise, get in touch.",
+    "contactCta": "Ask another question",
+    "items": [
+      {
+        "question": "How does furniture rental work?",
+        "answer": "Pick your items from the catalogue, set your event dates, and get an instant PDF quote. Then confirm your request on WhatsApp."
+      },
+      {
+        "question": "How do I know if an item is available for my date?",
+        "answer": "On each product page, enter your start and end dates: real availability is computed live based on existing reservations for that period."
+      },
+      {
+        "question": "Is the quote free and non-binding?",
+        "answer": "Yes, requesting a quote doesn't commit you to anything. It simply holds the stock for 48 hours while you confirm your order."
+      },
+      {
+        "question": "Do you offer delivery?",
+        "answer": "Yes, you can choose delivery to your address or pickup at our depot when requesting a quote."
+      },
+      {
+        "question": "What payment methods do you accept?",
+        "answer": "Payment is finalized directly with our team after your quote is confirmed (Mobile Money, cash). Online payment is coming soon."
+      },
+      {
+        "question": "How can I track my quote request?",
+        "answer": "Keep the reference you received after your request and use the \"Track my quote\" page to check its status at any time."
+      }
+    ]
+  },
+  "auth": {
+    "login": "Log in",
+    "register": "Create an account",
+    "loginTitle": "Log in",
+    "loginIntro": "Log in to manage your quotes and orders.",
+    "registerTitle": "Create an account",
+    "registerIntro": "An account is required to request a quote or place an order.",
+    "email": "Email",
+    "password": "Password",
+    "passwordConfirmation": "Confirm password",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "phone": "Phone / WhatsApp",
+    "submitting": "Sending...",
+    "error": "Something went wrong, please try again.",
+    "noAccount": "No account yet?",
+    "hasAccount": "Already have an account?",
+    "myAccount": "My account",
+    "myOrders": "My orders",
+    "myFavorites": "My favorites",
+    "logout": "Log out",
+    "backToShop": "Back to shop",
+    "continueAsGuest": "Continue without an account",
+    "gateTitle": "Sign in to continue",
+    "gateMessage": "Create an account or sign in to easily find your items, quotes and orders.",
+    "guestIntro": "Enter your details to receive your quote, no account needed.",
+    "loginBadge": "Welcome",
+    "loginWelcomeTitle": "Welcome back.",
+    "loginWelcomeSubtitle": "Log in to access your quotes, orders and favorites.",
+    "registerBadge": "Welcome",
+    "registerWelcomeTitle": "Join La Perle d'Or.",
+    "registerWelcomeSubtitle": "Create your account to request a quote, place an order and keep track of your favorites.",
+    "featureOrders": "Order tracking",
+    "featureFavorites": "Favorites list",
+    "featureOffers": "Personalized offers and promotions",
+    "featureDelivery": "Fast delivery or pickup"
+  },
+  "favorites": {
+    "title": "My favorites",
+    "loading": "Loading...",
+    "empty": "You don't have any favorite items yet.",
+    "error": "Could not load your favorites right now."
+  },
+  "account": {
+    "title": "My account",
+    "greeting": "Hi {name}, here's your quote and order history.",
+    "loading": "Loading...",
+    "empty": "You don't have any quotes or orders yet.",
+    "error": "Could not load your orders right now.",
+    "typeRental": "Rental",
+    "typePurchase": "Purchase",
+    "viewPdf": "View PDF"
+  },
+  "promotions": {
+    "title": "Promotions",
+    "intro": "Take advantage of our current offers on renting and buying event furniture.",
+    "empty": "No promotions running right now.",
+    "loadError": "Could not load promotions right now.",
+    "validUntil": "Valid until {date}"
+  },
+  "legal": {
+    "privacy": {
+      "title": "Privacy policy",
+      "updated": "Last updated: 2026",
+      "sections": [
+        {
+          "heading": "Data we collect",
+          "body": "When you request a quote or contact us, we collect your name, email, phone number and, if needed, your delivery address. This information is used solely to process your request."
+        },
+        {
+          "heading": "How we use your data",
+          "body": "Your data is used to generate quotes, arrange delivery or pickup, and follow up on your reservation. We never sell your data to third parties."
+        },
+        {
+          "heading": "Retention",
+          "body": "Your information is kept for as long as needed to manage your order and meet our accounting obligations, then deleted or anonymized."
+        },
+        {
+          "heading": "Your rights",
+          "body": "You may request access to, correction of, or deletion of your personal data at any time via the Contact page."
+        }
+      ]
+    },
+    "terms": {
+      "title": "Terms of service",
+      "updated": "Last updated: 2026",
+      "sections": [
+        {
+          "heading": "Purpose",
+          "body": "These terms govern the event furniture rental service offered on this site. By submitting a quote request, you accept the terms below."
+        },
+        {
+          "heading": "Quotes and availability",
+          "body": "A quote generated on the site holds the related stock for 48 hours. Past that delay without confirmation, the reservation is automatically cancelled and the stock becomes available again."
+        },
+        {
+          "heading": "Item condition",
+          "body": "No security deposit is required. Equipment must be returned in the condition it was delivered in; any damage or loss may still be charged."
+        },
+        {
+          "heading": "Delivery and pickup",
+          "body": "Depending on the option chosen, furniture is delivered to the given address or picked up at our depot, within the slots proposed during the quote request."
+        },
+        {
+          "heading": "Pricing",
+          "body": "Prices are in CFA Francs (XOF) and calculated per rental day. The total is indicative until final confirmation with our team."
+        }
+      ]
+    }
   }
 }

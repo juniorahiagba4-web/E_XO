@@ -12,6 +12,8 @@ class DatabaseSeeder extends Seeder
             RolesAndAdminUserSeeder::class,
             CatalogueSeeder::class,
             DeliverySlotTemplateSeeder::class,
+            PromotionSeeder::class,
+            ItemReviewSeeder::class,
         ]);
     }
 }
