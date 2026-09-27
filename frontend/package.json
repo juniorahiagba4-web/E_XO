@@ -15,7 +15,7 @@
     "next": "16.3.4",
     "next-intl": "^4.14.2",
     "playwright": "^1.63.0",
-    "react": "19.2.8",
+    "react": "19.3.0",
     "react-day-picker": "^10.0.1",
     "react-dom": "19.2.8"
   },
