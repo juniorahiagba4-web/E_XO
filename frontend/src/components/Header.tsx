@@ -12,7 +12,6 @@ import Logo from "./Logo";
 const NAV_LINKS = [
   { href: "/", key: "home" },
   { href: "/catalogue", key: "catalogue" },
-  { href: "/promotions", key: "promotions" },
   { href: "/contact", key: "contact" },
   { href: "/faq", key: "faq" },
   { href: "/suivi", key: "trackQuote" },

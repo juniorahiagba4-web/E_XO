@@ -7,6 +7,7 @@ import { getItemAvailability, ApiError } from "@/lib/api";
 import { useCart } from "@/lib/cart-context";
 import { useAuthGate } from "@/lib/auth-gate-context";
 import QuantityStepper from "./QuantityStepper";
+import DateRangePicker from "./DateRangePicker";
 import type { Item, OrderType } from "@/lib/types";
 
 export default function AvailabilityAndQuote({
@@ -98,33 +99,15 @@ export default function AvailabilityAndQuote({
 
       {mode === "rental" ? (
         <>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <label className="flex flex-col gap-1 text-sm">
-              {t("startDate")}
-              <input
-                type="date"
-                value={startDate}
-                onChange={(e) => {
-                  setStartDate(e.target.value);
-                  setStatus("idle");
-                }}
-                className="rounded-lg border border-slate-300 px-3 py-2"
-              />
-            </label>
-            <label className="flex flex-col gap-1 text-sm">
-              {t("endDate")}
-              <input
-                type="date"
-                value={endDate}
-                min={startDate || undefined}
-                onChange={(e) => {
-                  setEndDate(e.target.value);
-                  setStatus("idle");
-                }}
-                className="rounded-lg border border-slate-300 px-3 py-2"
-              />
-            </label>
-          </div>
+          <DateRangePicker
+            startDate={startDate}
+            endDate={endDate}
+            onChange={(start, end) => {
+              setStartDate(start);
+              setEndDate(end);
+              setStatus("idle");
+            }}
+          />
 
           <div className="mt-4 flex flex-col gap-1 text-sm">
             {t("quantity")}

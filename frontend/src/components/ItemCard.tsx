@@ -7,32 +7,35 @@ import { useCart } from "@/lib/cart-context";
 import { useAuthGate } from "@/lib/auth-gate-context";
 import RatingStars from "./RatingStars";
 import FavoriteHeart from "./FavoriteHeart";
-import type { Item } from "@/lib/types";
+import type { Item, OrderType } from "@/lib/types";
 
 export default function ItemCard({ item }: { item: Item }) {
   const t = useTranslations("catalogue");
   const cart = useCart();
   const { guard } = useAuthGate();
-  const [added, setAdded] = useState<"rental" | "purchase" | null>(null);
+  const [mode, setMode] = useState<OrderType>("rental");
+  const [added, setAdded] = useState(false);
   const [notAvailable, setNotAvailable] = useState(false);
 
   const canBuyNow = Boolean(item.sale_price) && (item.purchasable_quantity ?? 0) > 0;
+  const hasSalePrice = Boolean(item.sale_price);
   const outOfRentalStock = item.total_stock <= 0;
 
-  function flash(mode: "rental" | "purchase") {
-    setAdded(mode);
-    window.setTimeout(() => setAdded(null), 1500);
+  function flash() {
+    setAdded(true);
+    window.setTimeout(() => setAdded(false), 1500);
   }
 
-  function quickAdd() {
-    if (outOfRentalStock) return;
-    guard(() => {
-      cart.addLine(item, 1, "rental");
-      flash("rental");
-    });
-  }
+  function handlePrimaryAction() {
+    if (mode === "rental") {
+      if (outOfRentalStock) return;
+      guard(() => {
+        cart.addLine(item, 1, "rental");
+        flash();
+      });
+      return;
+    }
 
-  function quickBuy() {
     if (!canBuyNow) {
       setNotAvailable(true);
       window.setTimeout(() => setNotAvailable(false), 2500);
@@ -40,9 +43,11 @@ export default function ItemCard({ item }: { item: Item }) {
     }
     guard(() => {
       cart.addLine(item, 1, "purchase");
-      flash("purchase");
+      flash();
     });
   }
+
+  const primaryDisabled = mode === "rental" && outOfRentalStock;
 
   return (
     <div className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200 transition hover:shadow-md">
@@ -87,21 +92,50 @@ export default function ItemCard({ item }: { item: Item }) {
           {outOfRentalStock ? t("outOfStock") : t("inStock", { count: item.total_stock })}
         </span>
 
-        <div className="mt-2 flex gap-2">
+        {hasSalePrice && (
+          <div className="mt-2 inline-flex self-start rounded-full border border-slate-200 p-0.5 text-xs">
+            <button
+              type="button"
+              onClick={() => setMode("rental")}
+              className={`rounded-full px-2.5 py-1 font-medium transition ${
+                mode === "rental" ? "bg-brand-navy text-white" : "text-slate-500"
+              }`}
+            >
+              {t("modeRental")}
+            </button>
+            <button
+              type="button"
+              onClick={() => setMode("purchase")}
+              className={`rounded-full px-2.5 py-1 font-medium transition ${
+                mode === "purchase" ? "bg-brand-navy text-white" : "text-slate-500"
+              }`}
+            >
+              {t("modePurchase")}
+            </button>
+          </div>
+        )}
+
+        <div className={`flex gap-2 ${hasSalePrice ? "mt-1" : "mt-2"}`}>
           <button
             type="button"
-            onClick={quickAdd}
-            disabled={outOfRentalStock}
-            className="flex-1 rounded-full border border-brand-navy px-3 py-1.5 text-xs font-medium text-brand-navy transition hover:bg-brand-navy hover:text-white disabled:pointer-events-none disabled:opacity-40"
+            onClick={() => cart.openCart()}
+            aria-label={t("openCart")}
+            title={t("openCart")}
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-slate-200 text-brand-navy transition hover:border-brand-navy"
           >
-            {added === "rental" ? t("added") : t("addToCart")}
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3 4h2l1.5 12.5A2 2 0 0 0 8.5 18h9a2 2 0 0 0 2-1.7L21 8H6" />
+              <circle cx="9.5" cy="21" r="1.3" fill="currentColor" stroke="none" />
+              <circle cx="17.5" cy="21" r="1.3" fill="currentColor" stroke="none" />
+            </svg>
           </button>
           <button
             type="button"
-            onClick={quickBuy}
-            className="flex-1 rounded-full bg-brand-navy px-3 py-1.5 text-xs font-medium text-white transition hover:bg-brand-navy-light"
+            onClick={handlePrimaryAction}
+            disabled={primaryDisabled}
+            className="flex-1 rounded-full bg-brand-navy px-3 py-1.5 text-xs font-medium text-white transition hover:bg-brand-navy-light disabled:pointer-events-none disabled:opacity-40"
           >
-            {added === "purchase" ? t("added") : t("quickBuy")}
+            {added ? t("added") : mode === "rental" ? t("rent") : t("quickBuy")}
           </button>
         </div>
         {notAvailable && (

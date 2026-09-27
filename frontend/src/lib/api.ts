@@ -8,8 +8,6 @@ import type {
   DeliverySlot,
   Item,
   LoginPayload,
-  PromoCodeResult,
-  Promotion,
   RegisterPayload,
   Reservation,
 } from "./types";
@@ -168,18 +166,6 @@ export function sendContactMessage(locale: string, payload: ContactMessagePayloa
   ).then((r) => r.data);
 }
 
-export function getPromotions(locale: string) {
-  return apiFetch<{ data: Promotion[] }>("/promotions", locale).then(
-    (r) => r.data,
-  );
-}
-
-export function validatePromoCode(locale: string, code: string, itemIds: number[]) {
-  return apiFetch<{ data: PromoCodeResult }>("/promotions/validate-code", locale, {
-    method: "POST",
-    body: JSON.stringify({ code, item_ids: itemIds }),
-  }).then((r) => r.data);
-}
 
 export function register(locale: string, payload: RegisterPayload) {
   return apiFetch<{ token: string; user: AuthUser }>("/auth/register", locale, {

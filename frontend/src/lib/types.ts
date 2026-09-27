@@ -83,7 +83,6 @@ export type CreateReservationPayload = {
   delivery_slot_id?: number | null;
   return_slot_id?: number | null;
   notes?: string;
-  promo_code?: string;
   customer?: GuestCustomerPayload;
   items: ReservationItemPayload[];
 };
@@ -141,17 +140,3 @@ export type LoginPayload = {
   password: string;
 };
 
-export type Promotion = {
-  id: number;
-  title: string;
-  description: string | null;
-  image_url: string | null;
-  discount_type: "percent" | "fixed";
-  discount_value: string;
-  category: Category | null;
-  item: Item | null;
-  starts_at: string | null;
-  ends_at: string | null;
-};
-
-export type PromoCodeResult = Pick<Promotion, "title" | "discount_type" | "discount_value" | "category" | "item">;

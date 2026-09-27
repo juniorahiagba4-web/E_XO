@@ -14,7 +14,6 @@
   "nav": {
     "home": "Accueil",
     "catalogue": "Catalogue",
-    "promotions": "Promotions",
     "howItWorks": "Comment ça marche",
     "contact": "Contact",
     "faq": "FAQ",
@@ -52,7 +51,10 @@
     "inStock": "{count} en stock",
     "outOfStock": "Rupture de stock",
     "quickBuy": "Acheter",
-    "addToCart": "Ajouter",
+    "rent": "Louer",
+    "modeRental": "Location",
+    "modePurchase": "Achat",
+    "openCart": "Voir le panier",
     "added": "Ajouté ✓",
     "notAvailableForSale": "Cet article n'est pas disponible à la vente.",
     "minPrice": "Prix min",
@@ -71,6 +73,12 @@
     "checkAvailability": "Vérifier la disponibilité",
     "startDate": "Date de début",
     "endDate": "Date de fin",
+    "checkIn": "Arrivée",
+    "checkOut": "Départ",
+    "addDates": "Ajouter des dates",
+    "nights": "{count} nuit(s)",
+    "clearDates": "Effacer",
+    "applyDates": "Appliquer",
     "quantity": "Quantité",
     "available": "{count} disponible(s) sur la période choisie",
     "unavailable": "Quantité insuffisante sur cette période (reste {count})",
@@ -119,16 +127,8 @@
     "error": "Une erreur est survenue, veuillez réessayer.",
     "emptyCart": "Ajoutez au moins un article avant de demander un devis.",
     "loginRequired": "Connectez-vous pour finaliser votre demande.",
-    "viewCart": "Voir mon panier",
     "checkout": "Passer la commande",
     "continueShopping": "Continuer mes achats",
-    "subtotal": "Sous-total",
-    "discount": "Remise",
-    "promoCodePlaceholder": "Code promo",
-    "promoCodeApply": "Appliquer",
-    "promoCodeApplying": "Vérification...",
-    "promoCodeApplied": "Code {code} appliqué",
-    "promoCodeRemove": "Retirer",
     "close": "Fermer",
     "removeLine": "Retirer cet article"
   },
@@ -233,7 +233,7 @@
     "registerWelcomeSubtitle": "Créez votre compte pour demander un devis, passer commande et suivre vos favoris.",
     "featureOrders": "Suivi de vos commandes",
     "featureFavorites": "Liste de favoris",
-    "featureOffers": "Offres et promotions personnalisées",
+    "featureOffers": "Offres personnalisées",
     "featureDelivery": "Livraison ou retrait rapide"
   },
   "favorites": {
@@ -251,13 +251,6 @@
     "typeRental": "Location",
     "typePurchase": "Achat",
     "viewPdf": "Voir le PDF"
-  },
-  "promotions": {
-    "title": "Promotions",
-    "intro": "Profitez de nos offres en cours sur la location et l'achat de mobilier événementiel.",
-    "empty": "Aucune promotion en cours pour le moment.",
-    "loadError": "Impossible de charger les promotions pour le moment.",
-    "validUntil": "Valable jusqu'au {date}"
   },
   "legal": {
     "privacy": {

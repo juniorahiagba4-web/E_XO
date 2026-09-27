@@ -36,9 +36,6 @@ export default function Footer() {
           <Link href="/catalogue" className="text-sm text-slate-300 hover:text-brand-gold">
             {tNav("catalogue")}
           </Link>
-          <Link href="/promotions" className="text-sm text-slate-300 hover:text-brand-gold">
-            {tNav("promotions")}
-          </Link>
           <Link href="/contact" className="text-sm text-slate-300 hover:text-brand-gold">
             {tNav("contact")}
           </Link>

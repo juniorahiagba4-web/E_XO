@@ -14,7 +14,6 @@
   "nav": {
     "home": "Home",
     "catalogue": "Catalogue",
-    "promotions": "Promotions",
     "howItWorks": "How it works",
     "contact": "Contact",
     "faq": "FAQ",
@@ -52,7 +51,10 @@
     "inStock": "{count} in stock",
     "outOfStock": "Out of stock",
     "quickBuy": "Buy",
-    "addToCart": "Add",
+    "rent": "Rent",
+    "modeRental": "Rental",
+    "modePurchase": "Purchase",
+    "openCart": "View cart",
     "added": "Added ✓",
     "notAvailableForSale": "This item is not available for purchase.",
     "minPrice": "Min price",
@@ -71,6 +73,12 @@
     "checkAvailability": "Check availability",
     "startDate": "Start date",
     "endDate": "End date",
+    "checkIn": "Check-in",
+    "checkOut": "Check-out",
+    "addDates": "Add dates",
+    "nights": "{count} night(s)",
+    "clearDates": "Clear",
+    "applyDates": "Apply",
     "quantity": "Quantity",
     "available": "{count} available for the selected period",
     "unavailable": "Not enough stock for this period (remaining {count})",
@@ -119,16 +127,8 @@
     "error": "Something went wrong, please try again.",
     "emptyCart": "Add at least one item before requesting a quote.",
     "loginRequired": "Log in to complete your request.",
-    "viewCart": "View my cart",
     "checkout": "Checkout",
     "continueShopping": "Continue shopping",
-    "subtotal": "Subtotal",
-    "discount": "Discount",
-    "promoCodePlaceholder": "Promo code",
-    "promoCodeApply": "Apply",
-    "promoCodeApplying": "Checking...",
-    "promoCodeApplied": "Code {code} applied",
-    "promoCodeRemove": "Remove",
     "close": "Close",
     "removeLine": "Remove this item"
   },
@@ -233,7 +233,7 @@
     "registerWelcomeSubtitle": "Create your account to request a quote, place an order and keep track of your favorites.",
     "featureOrders": "Order tracking",
     "featureFavorites": "Favorites list",
-    "featureOffers": "Personalized offers and promotions",
+    "featureOffers": "Personalized offers",
     "featureDelivery": "Fast delivery or pickup"
   },
   "favorites": {
@@ -251,13 +251,6 @@
     "typeRental": "Rental",
     "typePurchase": "Purchase",
     "viewPdf": "View PDF"
-  },
-  "promotions": {
-    "title": "Promotions",
-    "intro": "Take advantage of our current offers on renting and buying event furniture.",
-    "empty": "No promotions running right now.",
-    "loadError": "Could not load promotions right now.",
-    "validUntil": "Valid until {date}"
   },
   "legal": {
     "privacy": {

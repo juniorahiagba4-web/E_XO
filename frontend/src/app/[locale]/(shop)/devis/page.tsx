@@ -6,8 +6,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
 import { useCart } from "@/lib/cart-context";
 import { useAuth } from "@/lib/auth-context";
-import { createReservation, validatePromoCode, ApiError } from "@/lib/api";
-import { computeDiscountPreview } from "@/lib/promo";
+import { createReservation, ApiError } from "@/lib/api";
 import { buildWhatsappLink } from "@/lib/config";
 import QuantityStepper from "@/components/QuantityStepper";
 import type { Reservation } from "@/lib/types";
@@ -32,9 +31,6 @@ export default function DevisPage() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [reservation, setReservation] = useState<Reservation | null>(null);
-  const [promoInput, setPromoInput] = useState("");
-  const [promoStatus, setPromoStatus] = useState<"idle" | "checking" | "error">("idle");
-  const [promoError, setPromoError] = useState<string | null>(null);
 
   const isPurchase = cart.orderType === "purchase";
 
@@ -52,27 +48,7 @@ export default function DevisPage() {
   };
 
   const subtotal = cart.lines.reduce((sum, line) => sum + lineTotal(line), 0);
-  const discount = computeDiscountPreview(cart.promo, cart.lines, lineTotal);
-  const total = Math.max(0, subtotal - discount);
-
-  async function applyPromoCode() {
-    if (!promoInput.trim() || cart.lines.length === 0) return;
-    setPromoStatus("checking");
-    setPromoError(null);
-    try {
-      const result = await validatePromoCode(
-        locale,
-        promoInput.trim(),
-        cart.lines.map((l) => l.item.id),
-      );
-      cart.applyPromo(promoInput.trim().toUpperCase(), result);
-      setPromoInput("");
-      setPromoStatus("idle");
-    } catch (err) {
-      setPromoStatus("error");
-      setPromoError(err instanceof ApiError ? err.message : t("error"));
-    }
-  }
+  const total = subtotal;
 
   function close() {
     router.push("/catalogue");
@@ -93,7 +69,6 @@ export default function DevisPage() {
           delivery_method: deliveryMethod,
           delivery_address: deliveryMethod === "delivery" ? address : undefined,
           notes,
-          promo_code: cart.promo?.code,
           customer: user
             ? undefined
             : {
@@ -224,50 +199,9 @@ export default function DevisPage() {
                     </div>
                   );
                 })}
-                <div className="p-4">
-                  {cart.promo ? (
-                    <div className="mb-3 flex items-center justify-between rounded-lg bg-emerald-50 px-3 py-2 text-sm text-emerald-700">
-                      <span>{t("promoCodeApplied", { code: cart.promo.code })}</span>
-                      <button type="button" onClick={cart.removePromo} className="font-medium underline">
-                        {t("promoCodeRemove")}
-                      </button>
-                    </div>
-                  ) : (
-                    <div className="mb-3">
-                      <div className="flex gap-2">
-                        <input
-                          value={promoInput}
-                          onChange={(e) => setPromoInput(e.target.value)}
-                          placeholder={t("promoCodePlaceholder")}
-                          className="min-w-0 flex-1 rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-brand-gold focus:outline-none"
-                        />
-                        <button
-                          type="button"
-                          onClick={applyPromoCode}
-                          disabled={promoStatus === "checking" || !promoInput.trim()}
-                          className="shrink-0 rounded-lg border border-brand-navy px-4 py-2 text-sm font-medium text-brand-navy transition hover:bg-brand-navy hover:text-white disabled:opacity-40"
-                        >
-                          {promoStatus === "checking" ? t("promoCodeApplying") : t("promoCodeApply")}
-                        </button>
-                      </div>
-                      {promoError && <p className="mt-1.5 text-xs text-red-500">{promoError}</p>}
-                    </div>
-                  )}
-
-                  <div className="flex items-center justify-between text-sm text-slate-500">
-                    <span>{t("subtotal")}</span>
-                    <span>{subtotal.toLocaleString()} XOF</span>
-                  </div>
-                  {discount > 0 && (
-                    <div className="mt-1 flex items-center justify-between text-sm text-emerald-600">
-                      <span>{t("discount")}</span>
-                      <span>-{discount.toLocaleString()} XOF</span>
-                    </div>
-                  )}
-                  <div className="mt-2 flex items-center justify-between text-lg font-semibold text-brand-navy">
-                    <span>{t("total")}</span>
-                    <span>{total.toLocaleString()} XOF</span>
-                  </div>
+                <div className="flex items-center justify-between p-4 text-lg font-semibold text-brand-navy">
+                  <span>{t("total")}</span>
+                  <span>{total.toLocaleString()} XOF</span>
                 </div>
               </div>
 

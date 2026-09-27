@@ -10,16 +10,11 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import type { Item, OrderType, PromoCodeResult } from "./types";
+import type { Item, OrderType } from "./types";
 
 export type CartLine = {
   item: Item;
   quantity: number;
-};
-
-export type AppliedPromo = {
-  code: string;
-  promotion: PromoCodeResult;
 };
 
 const STORAGE_KEY = "eventloc.cart";
@@ -29,7 +24,6 @@ type StoredCart = {
   orderType: OrderType | null;
   eventStartDate: string;
   eventEndDate: string;
-  promo: AppliedPromo | null;
 };
 
 type CartContextValue = {
@@ -37,7 +31,6 @@ type CartContextValue = {
   orderType: OrderType | null;
   eventStartDate: string;
   eventEndDate: string;
-  promo: AppliedPromo | null;
   setEventDates: (start: string, end: string) => void;
   /**
    * Adding an item in a different mode than what's already in the cart
@@ -47,9 +40,11 @@ type CartContextValue = {
   addLine: (item: Item, quantity: number, mode: OrderType) => void;
   removeLine: (itemId: number) => void;
   updateQuantity: (itemId: number, quantity: number) => void;
-  applyPromo: (code: string, promotion: PromoCodeResult) => void;
-  removePromo: () => void;
   clear: () => void;
+  /** Whether the cart drawer (CartPopup) is open — lets any component (e.g. an item card's cart shortcut) open it, not just the header's own cart button. */
+  isOpen: boolean;
+  openCart: () => void;
+  closeCart: () => void;
 };
 
 const CartContext = createContext<CartContextValue | null>(null);
@@ -59,7 +54,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [orderType, setOrderType] = useState<OrderType | null>(null);
   const [eventStartDate, setEventStartDate] = useState("");
   const [eventEndDate, setEventEndDate] = useState("");
-  const [promo, setPromo] = useState<AppliedPromo | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
   // A state (not a ref) so the write-back effect only fires after a real
   // re-render with the loaded values — a ref flipped inside the same effect
   // would still read as "hydrated" during React StrictMode's dev-only
@@ -80,7 +75,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
         setOrderType(stored.orderType ?? null);
         setEventStartDate(stored.eventStartDate ?? "");
         setEventEndDate(stored.eventEndDate ?? "");
-        setPromo(stored.promo ?? null);
       }
     } catch {
       // Ignore corrupted or inaccessible storage.
@@ -93,12 +87,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!hydrated) return;
     try {
-      const payload: StoredCart = { lines, orderType, eventStartDate, eventEndDate, promo };
+      const payload: StoredCart = { lines, orderType, eventStartDate, eventEndDate };
       window.localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
     } catch {
       // Ignore write failures (e.g. private browsing).
     }
-  }, [hydrated, lines, orderType, eventStartDate, eventEndDate, promo]);
+  }, [hydrated, lines, orderType, eventStartDate, eventEndDate]);
 
   const orderTypeRef = useRef<OrderType | null>(orderType);
   useEffect(() => {
@@ -142,17 +136,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
     setEventEndDate(end);
   }, []);
 
-  const applyPromo = useCallback((code: string, promotion: PromoCodeResult) => {
-    setPromo({ code, promotion });
-  }, []);
-
-  const removePromo = useCallback(() => setPromo(null), []);
-
   const clear = useCallback(() => {
     setLines([]);
     setOrderType(null);
-    setPromo(null);
   }, []);
+
+  const openCart = useCallback(() => setIsOpen(true), []);
+  const closeCart = useCallback(() => setIsOpen(false), []);
 
   const value = useMemo(
     () => ({
@@ -160,28 +150,28 @@ export function CartProvider({ children }: { children: ReactNode }) {
       orderType,
       eventStartDate,
       eventEndDate,
-      promo,
       setEventDates,
       addLine,
       removeLine,
       updateQuantity,
-      applyPromo,
-      removePromo,
       clear,
+      isOpen,
+      openCart,
+      closeCart,
     }),
     [
       lines,
       orderType,
       eventStartDate,
       eventEndDate,
-      promo,
       setEventDates,
       addLine,
       removeLine,
       updateQuantity,
-      applyPromo,
-      removePromo,
       clear,
+      isOpen,
+      openCart,
+      closeCart,
     ],
   );
 
