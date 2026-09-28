@@ -74,8 +74,8 @@ export default function AuthLayout({
             {badge}
           </span>
           <h1
-            className="max-w-md text-4xl leading-tight text-white"
-            style={{ fontFamily: "var(--font-archivo-black)" }}
+            className="max-w-md text-4xl font-black leading-tight text-white"
+            style={{ fontFamily: "var(--font-display)" }}
           >
             {title}
           </h1>

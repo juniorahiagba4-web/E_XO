@@ -26,8 +26,8 @@ export default function Logo({
       </span>
       {withWordmark && (
         <span
-          className="text-[9px] leading-none tracking-[0.14em] text-white uppercase"
-          style={{ fontFamily: "var(--font-archivo-black), sans-serif" }}
+          className="text-[9px] leading-none tracking-[0.14em] text-white uppercase font-black"
+          style={{ fontFamily: "var(--font-display)" }}
         >
           La Perle d&apos;Or
         </span>

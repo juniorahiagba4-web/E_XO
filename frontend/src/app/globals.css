@@ -16,8 +16,13 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-inter);
-  --font-display: var(--font-archivo-black);
+  /* Helvetica isn't a licensable web font, so the whole site relies on the
+     system stack (Helvetica Neue on macOS/iOS, Arial elsewhere renders
+     near-identically) rather than a hosted font file. --font-display reuses
+     the same stack for headings, which lean on `font-black`/`font-bold`
+     weight classes instead of a distinct display typeface. */
+  --font-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-display: "Helvetica Neue", Helvetica, Arial, sans-serif;
   --font-mono: var(--font-geist-mono);
 
   --color-brand-navy: var(--brand-navy);

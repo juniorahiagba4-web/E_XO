@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
-import { Archivo_Black, Geist_Mono, Inter } from "next/font/google";
+import { Geist_Mono } from "next/font/google";
 import { routing } from "@/i18n/routing";
 import { CartProvider } from "@/lib/cart-context";
 import { AuthProvider } from "@/lib/auth-context";
@@ -10,17 +10,10 @@ import { FavoritesProvider } from "@/lib/favorites-context";
 import { COMPANY_NAME } from "@/lib/config";
 import "../globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-});
-
-const archivoBlack = Archivo_Black({
-  variable: "--font-archivo-black",
-  weight: "400",
-  subsets: ["latin"],
-});
-
+// Helvetica itself isn't a licensable web font, so the whole site uses the
+// standard Helvetica Neue / Arial system-font stack (defined in globals.css
+// as --font-sans / --font-display) instead of a next/font Google import —
+// only the monospace reference-code font still comes from next/font.
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
@@ -49,7 +42,7 @@ export default async function LocaleLayout({
   return (
     <html
       lang={locale}
-      className={`${inter.variable} ${archivoBlack.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistMono.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <body className="flex min-h-full flex-col bg-white text-brand-navy font-sans">

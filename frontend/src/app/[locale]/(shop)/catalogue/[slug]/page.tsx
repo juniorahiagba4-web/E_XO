@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { getItem, ApiError } from "@/lib/api";
+import { formatPrice } from "@/lib/format";
 import AvailabilityAndQuote from "@/components/AvailabilityAndQuote";
 import RatingStars from "@/components/RatingStars";
 import ItemGallery from "@/components/ItemGallery";
@@ -54,9 +55,9 @@ export default async function ProductPage({
             </div>
           )}
 
-          <p className="mt-2 text-xl text-brand-gold-dark">{item.rental_price_per_day} / jour</p>
+          <p className="mt-2 text-xl text-brand-gold-dark">{formatPrice(item.rental_price_per_day)} / jour</p>
           {item.sale_price && (
-            <p className="mt-1 text-slate-600">{t("orBuyFor")} {item.sale_price} XOF</p>
+            <p className="mt-1 text-slate-600">{t("orBuyFor")} {formatPrice(item.sale_price)} XOF</p>
           )}
 
           <p className={`mt-2 text-sm font-medium ${item.total_stock > 0 ? "text-emerald-600" : "text-red-500"}`}>

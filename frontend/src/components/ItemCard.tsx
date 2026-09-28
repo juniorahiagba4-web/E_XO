@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
 import { useCart } from "@/lib/cart-context";
 import { useAuthGate } from "@/lib/auth-gate-context";
+import { formatPrice } from "@/lib/format";
 import RatingStars from "./RatingStars";
 import FavoriteHeart from "./FavoriteHeart";
 import type { Item, OrderType } from "@/lib/types";
@@ -12,6 +13,7 @@ import type { Item, OrderType } from "@/lib/types";
 export default function ItemCard({ item }: { item: Item }) {
   const t = useTranslations("catalogue");
   const cart = useCart();
+  const router = useRouter();
   const { guard } = useAuthGate();
   const [mode, setMode] = useState<OrderType>("rental");
   const [added, setAdded] = useState(false);
@@ -20,34 +22,39 @@ export default function ItemCard({ item }: { item: Item }) {
   const canBuyNow = Boolean(item.sale_price) && (item.purchasable_quantity ?? 0) > 0;
   const hasSalePrice = Boolean(item.sale_price);
   const outOfRentalStock = item.total_stock <= 0;
+  const modeUnavailable = mode === "rental" ? outOfRentalStock : !canBuyNow;
 
   function flash() {
     setAdded(true);
     window.setTimeout(() => setAdded(false), 1500);
   }
 
-  function handlePrimaryAction() {
-    if (mode === "rental") {
-      if (outOfRentalStock) return;
-      guard(() => {
-        cart.addLine(item, 1, "rental");
-        flash();
-      });
-      return;
-    }
+  function flagUnavailable() {
+    setNotAvailable(true);
+    window.setTimeout(() => setNotAvailable(false), 2500);
+  }
 
-    if (!canBuyNow) {
-      setNotAvailable(true);
-      window.setTimeout(() => setNotAvailable(false), 2500);
+  function handleAddToCart() {
+    if (modeUnavailable) {
+      if (mode === "purchase") flagUnavailable();
       return;
     }
     guard(() => {
-      cart.addLine(item, 1, "purchase");
+      cart.addLine(item, 1, mode);
       flash();
     });
   }
 
-  const primaryDisabled = mode === "rental" && outOfRentalStock;
+  function handleCheckoutNow() {
+    if (modeUnavailable) {
+      if (mode === "purchase") flagUnavailable();
+      return;
+    }
+    guard(() => {
+      cart.addLine(item, 1, mode);
+      router.push("/devis");
+    });
+  }
 
   return (
     <div className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200 transition hover:shadow-md">
@@ -81,10 +88,10 @@ export default function ItemCard({ item }: { item: Item }) {
 
         <div className="flex flex-wrap items-baseline gap-x-2 text-sm">
           <span className="text-slate-700">
-            {item.rental_price_per_day} {t("perDay")}
+            {formatPrice(item.rental_price_per_day)} {t("perDay")}
           </span>
           {item.sale_price && (
-            <span className="text-slate-400">· {t("orBuy")} {item.sale_price}</span>
+            <span className="text-slate-400">· {t("orBuy")} {formatPrice(item.sale_price)}</span>
           )}
         </div>
 
@@ -118,24 +125,19 @@ export default function ItemCard({ item }: { item: Item }) {
         <div className={`flex gap-2 ${hasSalePrice ? "mt-1" : "mt-2"}`}>
           <button
             type="button"
-            onClick={() => cart.openCart()}
-            aria-label={t("openCart")}
-            title={t("openCart")}
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-slate-200 text-brand-navy transition hover:border-brand-navy"
+            onClick={handleAddToCart}
+            disabled={mode === "rental" && outOfRentalStock}
+            className="flex-1 rounded-full border border-brand-navy px-3 py-1.5 text-xs font-medium text-brand-navy transition hover:bg-brand-navy hover:text-white disabled:pointer-events-none disabled:opacity-40"
           >
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M3 4h2l1.5 12.5A2 2 0 0 0 8.5 18h9a2 2 0 0 0 2-1.7L21 8H6" />
-              <circle cx="9.5" cy="21" r="1.3" fill="currentColor" stroke="none" />
-              <circle cx="17.5" cy="21" r="1.3" fill="currentColor" stroke="none" />
-            </svg>
+            {added ? t("added") : t("addToCart")}
           </button>
           <button
             type="button"
-            onClick={handlePrimaryAction}
-            disabled={primaryDisabled}
+            onClick={handleCheckoutNow}
+            disabled={mode === "rental" && outOfRentalStock}
             className="flex-1 rounded-full bg-brand-navy px-3 py-1.5 text-xs font-medium text-white transition hover:bg-brand-navy-light disabled:pointer-events-none disabled:opacity-40"
           >
-            {added ? t("added") : mode === "rental" ? t("rent") : t("quickBuy")}
+            {mode === "rental" ? t("rent") : t("quickBuy")}
           </button>
         </div>
         {notAvailable && (

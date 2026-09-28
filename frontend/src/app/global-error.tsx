@@ -22,7 +22,7 @@ export default function GlobalError({
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          fontFamily: "system-ui, sans-serif",
+          fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
           background: "#ffffff",
           color: "#0b1045",
         }}

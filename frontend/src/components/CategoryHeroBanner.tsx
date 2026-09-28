@@ -20,7 +20,7 @@ export default async function CategoryHeroBanner({
         <span className="rounded-full bg-white/15 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white">
           {t("collectionBadge")}
         </span>
-        <h2 className="font-display text-4xl text-white" style={{ fontFamily: "var(--font-archivo-black)" }}>
+        <h2 className="font-display text-4xl font-black text-white">
           {category.name}
         </h2>
         {category.description && (

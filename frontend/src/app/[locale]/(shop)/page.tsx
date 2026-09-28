@@ -54,8 +54,8 @@ function Hero({ backgroundImage }: { backgroundImage: string | null }) {
         <div className="absolute inset-0 bg-gradient-to-r from-brand-navy/95 via-brand-navy/75 to-brand-navy/40" />
         <div className="relative mx-auto flex max-w-6xl flex-col items-start gap-6 px-4 py-24 sm:py-32">
           <h1
-            className="max-w-2xl text-4xl text-white sm:text-5xl"
-            style={{ fontFamily: "var(--font-archivo-black)" }}
+            className="max-w-2xl text-4xl font-black text-white sm:text-5xl"
+            style={{ fontFamily: "var(--font-display)" }}
           >
             {t("heroTitle")}
           </h1>
