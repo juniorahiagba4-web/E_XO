@@ -5,10 +5,12 @@ import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth-context";
 import { getMyReservations, ApiError } from "@/lib/api";
+import { formatPrice } from "@/lib/format";
 import type { Reservation } from "@/lib/types";
 
 export default function AccountPage() {
   const t = useTranslations("account");
+  const tStatus = useTranslations("reservationStatus");
   const locale = useLocale();
   const router = useRouter();
   const { user, token, loading } = useAuth();
@@ -51,12 +53,12 @@ export default function AccountPage() {
               <div>
                 <p className="font-mono text-sm font-medium text-brand-navy">{res.reference}</p>
                 <p className="text-xs text-slate-500">
-                  {res.type === "purchase" ? t("typePurchase") : t("typeRental")} · {res.status}
+                  {res.type === "purchase" ? t("typePurchase") : t("typeRental")} · {tStatus(res.status)}
                 </p>
               </div>
               <div className="flex items-center gap-4">
                 <span className="font-semibold text-brand-navy">
-                  {Number(res.total).toLocaleString()} {res.currency}
+                  {formatPrice(res.total)} {res.currency}
                 </span>
                 {res.quote_pdf_url && (
                   <a

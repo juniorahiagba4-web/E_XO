@@ -139,6 +139,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const clear = useCallback(() => {
     setLines([]);
     setOrderType(null);
+    // A stale rental period must not silently outlive the order it was
+    // picked for — left in place, it can end up submitted with a brand new
+    // item added later (e.g. via a catalogue card's quick "Louer" button,
+    // which never asks for dates), failing validation with a date that's
+    // now in the past.
+    setEventStartDate("");
+    setEventEndDate("");
   }, []);
 
   const openCart = useCallback(() => setIsOpen(true), []);

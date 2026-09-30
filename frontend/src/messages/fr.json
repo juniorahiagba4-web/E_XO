@@ -242,6 +242,14 @@
     "empty": "Vous n'avez pas encore d'article favori.",
     "error": "Impossible de charger vos favoris pour le moment."
   },
+  "reservationStatus": {
+    "quote_sent": "Envoyé",
+    "confirmed": "Confirmée",
+    "deposit_paid": "Acompte payé",
+    "ongoing": "En cours",
+    "completed": "Terminée",
+    "cancelled": "Annulée"
+  },
   "account": {
     "title": "Mon compte",
     "greeting": "Bonjour {name}, voici l'historique de vos devis et commandes.",

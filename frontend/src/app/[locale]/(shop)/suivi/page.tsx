@@ -4,10 +4,12 @@ import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { getReservation, ApiError } from "@/lib/api";
 import { buildWhatsappLink } from "@/lib/config";
+import { formatPrice } from "@/lib/format";
 import type { Reservation } from "@/lib/types";
 
 export default function TrackQuotePage() {
   const t = useTranslations("quoteConfirmation");
+  const tStatus = useTranslations("reservationStatus");
   const locale = useLocale();
   const [reference, setReference] = useState("");
   const [email, setEmail] = useState("");
@@ -68,9 +70,9 @@ export default function TrackQuotePage() {
           <p className="text-sm text-slate-500">
             {t("reference")}: <span className="font-mono">{reservation.reference}</span>
           </p>
-          <p className="mt-2 font-medium text-brand-navy">Statut : {reservation.status}</p>
+          <p className="mt-2 font-medium text-brand-navy">Statut : {tStatus(reservation.status)}</p>
           <p className="mt-1 text-slate-600">
-            Total : {reservation.total} {reservation.currency}
+            Total : {formatPrice(reservation.total)} {reservation.currency}
           </p>
           <div className="mt-4 flex flex-col gap-2 sm:flex-row">
             {reservation.quote_pdf_url && (

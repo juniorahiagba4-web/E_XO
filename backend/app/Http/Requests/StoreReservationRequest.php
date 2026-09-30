@@ -22,7 +22,10 @@ class StoreReservationRequest extends FormRequest
         return [
             'type' => ['required', 'in:rental,purchase'],
 
-            'event_start_date' => ['required_if:type,rental', 'nullable', 'date', 'after_or_equal:today'],
+            // A literal date (rather than the "today" keyword) so the
+            // validator's :date placeholder renders as an actual date
+            // instead of the untranslatable English word "today".
+            'event_start_date' => ['required_if:type,rental', 'nullable', 'date', 'after_or_equal:'.now()->toDateString()],
             'event_end_date' => ['required_if:type,rental', 'nullable', 'date', 'after_or_equal:event_start_date'],
 
             'delivery_method' => ['required', 'in:delivery,pickup'],

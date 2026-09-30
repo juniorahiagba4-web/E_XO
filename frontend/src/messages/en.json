@@ -242,6 +242,14 @@
     "empty": "You don't have any favorite items yet.",
     "error": "Could not load your favorites right now."
   },
+  "reservationStatus": {
+    "quote_sent": "Sent",
+    "confirmed": "Confirmed",
+    "deposit_paid": "Deposit paid",
+    "ongoing": "Ongoing",
+    "completed": "Completed",
+    "cancelled": "Cancelled"
+  },
   "account": {
     "title": "My account",
     "greeting": "Hi {name}, here's your quote and order history.",

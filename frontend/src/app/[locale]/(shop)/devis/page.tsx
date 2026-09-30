@@ -9,6 +9,7 @@ import { useAuth } from "@/lib/auth-context";
 import { createReservation, ApiError } from "@/lib/api";
 import { buildWhatsappLink } from "@/lib/config";
 import QuantityStepper from "@/components/QuantityStepper";
+import DateRangePicker from "@/components/DateRangePicker";
 import type { Reservation } from "@/lib/types";
 
 export default function DevisPage() {
@@ -50,13 +51,15 @@ export default function DevisPage() {
   const subtotal = cart.lines.reduce((sum, line) => sum + lineTotal(line), 0);
   const total = subtotal;
 
+  const datesMissing = !isPurchase && (!cart.eventStartDate || !cart.eventEndDate);
+
   function close() {
     router.push("/catalogue");
   }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (cart.lines.length === 0 || !cart.orderType) return;
+    if (cart.lines.length === 0 || !cart.orderType || datesMissing) return;
     setSubmitting(true);
     setError(null);
     try {
@@ -205,6 +208,17 @@ export default function DevisPage() {
                 </div>
               </div>
 
+              {!isPurchase && (
+                <fieldset>
+                  <legend className="mb-2 font-semibold text-brand-navy">{tProduct("startDate")} / {tProduct("endDate")}</legend>
+                  <DateRangePicker
+                    startDate={cart.eventStartDate}
+                    endDate={cart.eventEndDate}
+                    onChange={(start, end) => cart.setEventDates(start, end)}
+                  />
+                </fieldset>
+              )}
+
               {!user && (
                 <div className="rounded-xl bg-brand-gold/10 px-4 py-3 text-sm text-brand-navy">
                   {tAuth("guestIntro")}{" "}
@@ -280,11 +294,12 @@ export default function DevisPage() {
                 rows={3}
               />
 
+              {datesMissing && <p className="text-sm text-red-600">{tProduct("selectDates")}</p>}
               {error && <p className="text-sm text-red-600">{error}</p>}
 
               <button
                 type="submit"
-                disabled={submitting}
+                disabled={submitting || datesMissing}
                 className="rounded-full bg-brand-navy px-6 py-3 font-medium text-white transition hover:bg-brand-navy-light disabled:opacity-50"
               >
                 {submitting ? t("submitting") : isPurchase ? t("submitPurchase") : t("submit")}
