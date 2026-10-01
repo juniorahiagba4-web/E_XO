@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 #[Fillable([
     'category_id', 'name_fr', 'name_en', 'slug', 'description_fr', 'description_en',
     'image_path', 'gallery', 'specifications', 'sku', 'unit_label',
-    'rental_price_per_day', 'deposit_amount', 'sale_price',
+    'rental_price_per_day', 'deposit_amount', 'sale_price', 'sale_price_on_request',
     'rating', 'rating_count',
     'total_stock', 'min_rental_quantity', 'is_active',
 ])]
@@ -27,6 +27,7 @@ class Item extends Model
             'rental_price_per_day' => 'decimal:2',
             'deposit_amount' => 'decimal:2',
             'sale_price' => 'decimal:2',
+            'sale_price_on_request' => 'boolean',
             'rating' => 'decimal:1',
             'rating_count' => 'integer',
             'total_stock' => 'integer',

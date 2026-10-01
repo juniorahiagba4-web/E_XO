@@ -73,9 +73,14 @@ class ItemForm
                     ->label('Prix de location / jour (XOF)')
                     ->required()
                     ->numeric(),
+                Toggle::make('sale_price_on_request')
+                    ->label('Prix de vente sur devis uniquement')
+                    ->helperText('Active si cet article est à vendre mais sans prix fixe : le site affichera "Prix disponible sur devis" au lieu d\'un montant.')
+                    ->live(),
                 TextInput::make('sale_price')
                     ->label('Prix de vente (XOF)')
                     ->numeric()
+                    ->hidden(fn ($get) => $get('sale_price_on_request'))
                     ->helperText('Laisser vide si cet article n\'est disponible qu\'à la location.'),
 
                 TextInput::make('total_stock')

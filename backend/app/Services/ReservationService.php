@@ -73,11 +73,15 @@ class ReservationService
                         'subtotal' => $lineSubtotal,
                     ];
                 } else {
-                    if (! $item->sale_price) {
+                    if (! $item->sale_price && ! $item->sale_price_on_request) {
                         throw new InvalidArgumentException("Item {$item->id} is not for sale.");
                     }
 
-                    $lineSubtotal = $item->sale_price * $line['quantity'];
+                    // A "sur devis" item has no fixed price yet, so it contributes
+                    // nothing to the computed total — the final price is agreed
+                    // with the customer separately, and the quote clearly marks
+                    // the line as pending (see ReservationResource/quote PDF).
+                    $lineSubtotal = $item->sale_price ? $item->sale_price * $line['quantity'] : 0;
 
                     $lines[] = [
                         'item_id' => $item->id,

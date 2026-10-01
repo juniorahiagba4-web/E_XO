@@ -5,10 +5,12 @@ namespace App\Filament\Resources\Items\Tables;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Notifications\Notification;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Collection;
 
 class ItemsTable
 {
@@ -35,6 +37,7 @@ class ItemsTable
                     ->label('Prix de vente')
                     ->numeric()
                     ->placeholder('—')
+                    ->formatStateUsing(fn ($state, $record) => $record->sale_price_on_request ? 'Sur devis' : $state)
                     ->sortable(),
                 TextColumn::make('total_stock')
                     ->label('Stock')
@@ -58,7 +61,25 @@ class ItemsTable
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                    DeleteBulkAction::make()
+                        ->before(function (Collection $records) {
+                            // Filament already skips individual records whose delete()
+                            // throws (see DeleteBulkAction::setUp()) and reports a
+                            // generic partial-failure notification — this just adds
+                            // the specific reason so the admin knows to deactivate
+                            // instead of retrying the delete.
+                            $blocked = $records->filter(fn ($record) => $record->reservationItems()->exists());
+
+                            if ($blocked->isNotEmpty()) {
+                                Notification::make()
+                                    ->warning()
+                                    ->title('Certains articles ne pourront pas être supprimés')
+                                    ->body('Liés à des réservations existantes : '
+                                        .$blocked->pluck('name_fr')->join(', ').'. Désactivez-les plutôt via le champ "Actif".')
+                                    ->persistent()
+                                    ->send();
+                            }
+                        }),
                 ]),
             ]);
     }

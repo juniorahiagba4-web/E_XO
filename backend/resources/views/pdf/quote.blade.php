@@ -56,12 +56,27 @@
             </tr>
         </thead>
         <tbody>
+            @php($hasPendingPrice = false)
             @foreach($reservation->items as $line)
+                @php($priceOnRequest = $reservation->type === 'purchase' && $line->unit_sale_price === null)
+                @php($hasPendingPrice = $hasPendingPrice || $priceOnRequest)
                 <tr>
                     <td>{{ $line->item?->name_fr }}</td>
                     <td>{{ $line->quantity }}</td>
-                    <td>{{ number_format((float) ($line->unit_sale_price ?? $line->unit_price_per_day), 0, ',', ' ') }} {{ $reservation->currency }}</td>
-                    <td>{{ number_format((float) $line->subtotal, 0, ',', ' ') }} {{ $reservation->currency }}</td>
+                    <td>
+                        @if($priceOnRequest)
+                            Sur devis
+                        @else
+                            {{ number_format((float) ($line->unit_sale_price ?? $line->unit_price_per_day), 0, ',', ' ') }} {{ $reservation->currency }}
+                        @endif
+                    </td>
+                    <td>
+                        @if($priceOnRequest)
+                            À confirmer
+                        @else
+                            {{ number_format((float) $line->subtotal, 0, ',', ' ') }} {{ $reservation->currency }}
+                        @endif
+                    </td>
                 </tr>
             @endforeach
         </tbody>
@@ -83,6 +98,10 @@
             <td><strong>{{ number_format((float) $reservation->total, 0, ',', ' ') }} {{ $reservation->currency }}</strong></td>
         </tr>
     </table>
+
+    @if($hasPendingPrice)
+        <p><em>* Le prix des articles "Sur devis" n'est pas inclus dans le total ci-dessus et vous sera communiqué séparément par notre équipe.</em></p>
+    @endif
 
     @if($reservation->notes)
         <p><strong>Notes :</strong> {{ $reservation->notes }}</p>

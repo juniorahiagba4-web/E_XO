@@ -22,7 +22,7 @@ export default function AvailabilityAndQuote({
   const cart = useCart();
   const { guard } = useAuthGate();
 
-  const canSell = Boolean(item.sale_price) && (item.purchasable_quantity ?? 0) > 0;
+  const canSell = (Boolean(item.sale_price) || item.sale_price_on_request) && (item.purchasable_quantity ?? 0) > 0;
   const [mode, setMode] = useState<OrderType>("rental");
 
   const [startDate, setStartDate] = useState(cart.eventStartDate);
@@ -155,6 +155,9 @@ export default function AvailabilityAndQuote({
           <p className="text-sm text-slate-500">
             {t("purchaseAvailable", { count: item.purchasable_quantity ?? 0 })}
           </p>
+          {item.sale_price_on_request && (
+            <p className="mt-1 text-sm font-medium text-brand-gold-dark">{t("priceOnRequest")}</p>
+          )}
           <div className="mt-4 flex flex-col gap-1 text-sm">
             {t("quantity")}
             <QuantityStepper

@@ -43,10 +43,16 @@ export default function DevisPage() {
     );
   }, [isPurchase, cart.eventStartDate, cart.eventEndDate]);
 
+  const isPriceOnRequest = (line: (typeof cart.lines)[number]) =>
+    isPurchase && !line.item.sale_price && line.item.sale_price_on_request;
+
   const lineTotal = (line: (typeof cart.lines)[number]) => {
+    if (isPriceOnRequest(line)) return 0;
     const unitPrice = isPurchase ? Number(line.item.sale_price ?? 0) : Number(line.item.rental_price_per_day);
     return isPurchase ? unitPrice * line.quantity : unitPrice * line.quantity * nights;
   };
+
+  const hasPriceOnRequestLine = cart.lines.some(isPriceOnRequest);
 
   const subtotal = cart.lines.reduce((sum, line) => sum + lineTotal(line), 0);
   const total = subtotal;
@@ -177,9 +183,11 @@ export default function DevisPage() {
                       <div className="min-w-0 flex-1">
                         <p className="truncate font-medium text-brand-navy">{line.item.name}</p>
                         <p className="text-sm text-slate-500">
-                          {isPurchase
-                            ? `${unitPrice.toLocaleString()} XOF`
-                            : `${unitPrice.toLocaleString()} XOF x ${nights}j`}
+                          {isPriceOnRequest(line)
+                            ? tProduct("priceOnRequest")
+                            : isPurchase
+                              ? `${unitPrice.toLocaleString()} XOF`
+                              : `${unitPrice.toLocaleString()} XOF x ${nights}j`}
                         </p>
                       </div>
                       <QuantityStepper
@@ -189,7 +197,7 @@ export default function DevisPage() {
                         onChange={(value) => cart.updateQuantity(line.item.id, value)}
                       />
                       <p className="w-24 shrink-0 text-right font-medium text-brand-navy">
-                        {rowTotal.toLocaleString()} XOF
+                        {isPriceOnRequest(line) ? tProduct("priceOnRequestShort") : `${rowTotal.toLocaleString()} XOF`}
                       </p>
                       <button
                         type="button"
@@ -207,6 +215,9 @@ export default function DevisPage() {
                   <span>{total.toLocaleString()} XOF</span>
                 </div>
               </div>
+              {hasPriceOnRequestLine && (
+                <p className="text-xs text-slate-500">{t("priceOnRequestNote")}</p>
+              )}
 
               {!isPurchase && (
                 <fieldset>

@@ -30,6 +30,7 @@ class ReservationResource extends JsonResource
                 'unit_price_per_day' => $line->unit_price_per_day,
                 'unit_sale_price' => $line->unit_sale_price,
                 'subtotal' => $line->subtotal,
+                'price_on_request' => $this->type === 'purchase' && $line->unit_sale_price === null,
             ])),
         ];
     }

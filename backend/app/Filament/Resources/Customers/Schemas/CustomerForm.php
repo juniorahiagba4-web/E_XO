@@ -19,7 +19,7 @@ class CustomerForm
                 TextInput::make('last_name')
                     ->required(),
                 TextInput::make('email')
-                    ->label('Email address')
+                    ->label('Adresse email')
                     ->email()
                     ->required(),
                 TextInput::make('phone')

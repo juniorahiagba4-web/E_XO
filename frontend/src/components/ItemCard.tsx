@@ -19,8 +19,9 @@ export default function ItemCard({ item }: { item: Item }) {
   const [added, setAdded] = useState(false);
   const [notAvailable, setNotAvailable] = useState(false);
 
-  const canBuyNow = Boolean(item.sale_price) && (item.purchasable_quantity ?? 0) > 0;
-  const hasSalePrice = Boolean(item.sale_price);
+  const sellable = Boolean(item.sale_price) || item.sale_price_on_request;
+  const canBuyNow = sellable && (item.purchasable_quantity ?? 0) > 0;
+  const hasSalePrice = sellable;
   const outOfRentalStock = item.total_stock <= 0;
   const modeUnavailable = mode === "rental" ? outOfRentalStock : !canBuyNow;
 
@@ -90,8 +91,12 @@ export default function ItemCard({ item }: { item: Item }) {
           <span className="text-slate-700">
             {formatPrice(item.rental_price_per_day)} {t("perDay")}
           </span>
-          {item.sale_price && (
-            <span className="text-slate-400">· {t("orBuy")} {formatPrice(item.sale_price)}</span>
+          {item.sale_price_on_request ? (
+            <span className="text-slate-400">· {t("priceOnRequest")}</span>
+          ) : (
+            item.sale_price && (
+              <span className="text-slate-400">· {t("orBuy")} {formatPrice(item.sale_price)}</span>
+            )
           )}
         </div>
 

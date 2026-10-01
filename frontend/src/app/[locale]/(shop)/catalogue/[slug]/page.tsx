@@ -56,8 +56,12 @@ export default async function ProductPage({
           )}
 
           <p className="mt-2 text-xl text-brand-gold-dark">{formatPrice(item.rental_price_per_day)} / jour</p>
-          {item.sale_price && (
-            <p className="mt-1 text-slate-600">{t("orBuyFor")} {formatPrice(item.sale_price)} XOF</p>
+          {item.sale_price_on_request ? (
+            <p className="mt-1 text-slate-600">{t("priceOnRequest")}</p>
+          ) : (
+            item.sale_price && (
+              <p className="mt-1 text-slate-600">{t("orBuyFor")} {formatPrice(item.sale_price)} XOF</p>
+            )
           )}
 
           <p className={`mt-2 text-sm font-medium ${item.total_stock > 0 ? "text-emerald-600" : "text-red-500"}`}>

@@ -30,6 +30,7 @@ export type Item = {
   unit_label: string;
   rental_price_per_day: string;
   sale_price: string | null;
+  sale_price_on_request: boolean;
   rating: string | null;
   rating_count: number;
   reviews: ItemReview[];
@@ -106,6 +107,7 @@ export type Reservation = {
     unit_price_per_day: string | null;
     unit_sale_price: string | null;
     subtotal: string;
+    price_on_request: boolean;
   }[];
 };
 

@@ -74,6 +74,11 @@ export default function TrackQuotePage() {
           <p className="mt-1 text-slate-600">
             Total : {formatPrice(reservation.total)} {reservation.currency}
           </p>
+          {reservation.items?.some((line) => line.price_on_request) && (
+            <p className="mt-1 text-xs text-slate-500">
+              Le prix de certains articles reste à confirmer par notre équipe.
+            </p>
+          )}
           <div className="mt-4 flex flex-col gap-2 sm:flex-row">
             {reservation.quote_pdf_url && (
               <a

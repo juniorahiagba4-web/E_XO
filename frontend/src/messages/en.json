@@ -45,6 +45,7 @@
     "collectionBadge": "Collection",
     "perDay": "/ day",
     "orBuy": "or buy",
+    "priceOnRequest": "price on request",
     "viewDetails": "Check availability",
     "empty": "No item found.",
     "loadError": "Could not load the catalogue right now.",
@@ -89,6 +90,8 @@
     "modeRental": "Rent",
     "modePurchase": "Buy",
     "orBuyFor": "Or buy it for",
+    "priceOnRequest": "Price available on request",
+    "priceOnRequestShort": "On request",
     "stockAvailable": "{count} in stock",
     "stockUnavailable": "Out of stock",
     "purchaseAvailable": "{count} available to buy",
@@ -130,7 +133,8 @@
     "checkout": "Checkout",
     "continueShopping": "Continue shopping",
     "close": "Close",
-    "removeLine": "Remove this item"
+    "removeLine": "Remove this item",
+    "priceOnRequestNote": "The price of \"On request\" items is not included in the total above and will be shared with you by our team."
   },
   "quoteConfirmation": {
     "title": "Your quote has been generated",

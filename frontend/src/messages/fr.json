@@ -45,6 +45,7 @@
     "collectionBadge": "Collection",
     "perDay": "/ jour",
     "orBuy": "ou achat",
+    "priceOnRequest": "prix sur devis",
     "viewDetails": "Voir la disponibilité",
     "empty": "Aucun article trouvé.",
     "loadError": "Impossible de charger le catalogue pour le moment.",
@@ -89,6 +90,8 @@
     "modeRental": "Location",
     "modePurchase": "Achat",
     "orBuyFor": "Ou achetez-le pour",
+    "priceOnRequest": "Prix disponible sur devis",
+    "priceOnRequestShort": "Sur devis",
     "stockAvailable": "{count} en stock",
     "stockUnavailable": "Rupture de stock",
     "purchaseAvailable": "{count} disponible(s) à l'achat",
@@ -130,7 +133,8 @@
     "checkout": "Passer la commande",
     "continueShopping": "Continuer mes achats",
     "close": "Fermer",
-    "removeLine": "Retirer cet article"
+    "removeLine": "Retirer cet article",
+    "priceOnRequestNote": "Le prix des articles \"Sur devis\" n'est pas inclus dans le total ci-dessus et vous sera communiqué par notre équipe."
   },
   "quoteConfirmation": {
     "title": "Votre devis a été généré",

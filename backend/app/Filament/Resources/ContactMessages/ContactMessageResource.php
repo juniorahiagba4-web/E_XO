@@ -19,7 +19,7 @@ class ContactMessageResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedEnvelope;
 
-    protected static string|\UnitEnum|null $navigationGroup = 'Support';
+    protected static string|\UnitEnum|null $navigationGroup = 'Messages';
 
     protected static ?string $modelLabel = 'Message de contact';
 

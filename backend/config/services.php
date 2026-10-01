@@ -35,4 +35,9 @@ return [
         ],
     ],
 
+    'deepl' => [
+        'key' => env('DEEPL_API_KEY'),
+        'free' => env('DEEPL_API_FREE', true),
+    ],
+
 ];
