@@ -16,10 +16,13 @@ BRANCH="Wilfried"
 # to Vercel (the frontend) instead, configured separately in Vercel + DNS.
 DOMAIN="api.laperledor-togo.com"
 APP_DIR="/var/www/laperledor"
+PHP_VERSION="8.4"
 DB_PASSWORD="__PASTE_THE_PASSWORD_FROM_STEP_01_HERE__"
 # Same DeepL key already used locally (see backend/.env on the dev machine) —
 # without it, admin forms just leave the English fields blank, nothing breaks.
 DEEPL_API_KEY=""
+# Set to "yes" to also load the demo catalogue (admin account + sample items).
+SEED_DATABASE="no"
 # Optional: a free ntfy.sh topic name (no account needed) to receive a push
 # notification when disk space runs low. Pick any unguessable topic name,
 # e.g. "laperledor-alerts-x7f2", and subscribe to it in the ntfy app.
@@ -66,16 +69,23 @@ $set("CACHE_STORE", "redis");
 $set("QUEUE_CONNECTION", "redis");
 $set("SESSION_DRIVER", "redis");
 $set("FILESYSTEM_DISK", "public");
-$set("CORS_ALLOWED_ORIGINS", "https://laperledor-togo.com,https://www.laperledor-togo.com");
+$set("CORS_ALLOWED_ORIGINS", "https://laperledor-togo.com,https://www.laperledor-togo.com,https://laperledor-togo.vercel.app,https://frontend-three-tau-99.vercel.app");
 if ("'"$DEEPL_API_KEY"'" !== "") {
     $set("DEEPL_API_KEY", "'"$DEEPL_API_KEY"'");
 }
 file_put_contents($path, $env);
 '
 
-php artisan key:generate --force
+# Only generate a key once: regenerating it would invalidate every Sanctum
+# token and every queued session already issued on this server.
+if ! grep -qE '^APP_KEY=base64:.+' .env; then
+    php artisan key:generate --force
+fi
 php artisan storage:link
 php artisan migrate --force
+if [ "$SEED_DATABASE" = "yes" ]; then
+    php artisan db:seed --force
+fi
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
@@ -86,7 +96,7 @@ sudo find "$APP_DIR/backend/storage" "$APP_DIR/backend/bootstrap/cache" -type d 
 sudo find "$APP_DIR/backend/storage" "$APP_DIR/backend/bootstrap/cache" -type f -exec chmod 664 {} \;
 
 echo "==> Configuring PHP-FPM pool (run as www-data, matches Nginx)"
-sudo tee /etc/php/8.4/fpm/pool.d/laperledor.conf >/dev/null <<EOF
+sudo tee "/etc/php/${PHP_VERSION}/fpm/pool.d/laperledor.conf" >/dev/null <<EOF
 [laperledor]
 user = www-data
 group = www-data
@@ -99,7 +109,7 @@ pm.start_servers = 2
 pm.min_spare_servers = 1
 pm.max_spare_servers = 4
 EOF
-sudo systemctl restart php8.4-fpm
+sudo systemctl restart "php${PHP_VERSION}-fpm"
 
 echo "==> Configuring Nginx"
 sudo tee "/etc/nginx/sites-available/$DOMAIN" >/dev/null <<EOF
@@ -118,8 +128,13 @@ server {
     location ~ \.php\$ {
         fastcgi_pass unix:/run/php/laperledor.sock;
         fastcgi_index index.php;
-        fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
         include fastcgi_params;
+        # nginx has no "\$script_name" variable (that is Apache syntax) —
+        # "\$fastcgi_script_name" is the right one, and it must be declared
+        # *after* fastcgi_params because the last value of a given
+        # fastcgi_param wins.
+        fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
+        fastcgi_param SCRIPT_NAME \$fastcgi_script_name;
     }
 
     location ~ /\.(?!well-known).* {
@@ -145,7 +160,7 @@ After=network.target redis-server.service mysql.service
 User=www-data
 Group=www-data
 Restart=always
-ExecStart=/usr/bin/php8.4 $APP_DIR/backend/artisan horizon
+ExecStart=/usr/bin/php${PHP_VERSION} $APP_DIR/backend/artisan horizon
 ExecStopSec=30
 KillSignal=SIGTERM
 
@@ -156,7 +171,7 @@ sudo systemctl daemon-reload
 sudo systemctl enable --now laperledor-horizon
 
 echo "==> Setting up the Laravel scheduler (runs ExpireStaleQuotes hourly)"
-(crontab -l 2>/dev/null | grep -v "artisan schedule:run"; echo "* * * * * cd $APP_DIR/backend && php8.4 artisan schedule:run >> /dev/null 2>&1") | crontab -
+(crontab -l 2>/dev/null | grep -v "artisan schedule:run"; echo "* * * * * cd $APP_DIR/backend && php${PHP_VERSION} artisan schedule:run >> /dev/null 2>&1") | crontab -
 
 if [ -n "$NTFY_TOPIC" ]; then
     echo "==> Setting up a disk-space alert (checks daily, notifies via ntfy.sh if >80% full)"
@@ -179,5 +194,13 @@ Application setup complete.
 Site should now be live at: https://$DOMAIN
 Queue worker status:  sudo systemctl status laperledor-horizon
 Scheduler (cron):      crontab -l
+
+Two steps still have to be run from the development machine:
+  1. upload the media (the images are git-ignored):
+       bash deploy/03-upload-media.sh
+  2. copy the catalogue over (optional, replaces the demo data):
+       php deploy/export-catalogue.php /tmp/catalogue.json
+       scp /tmp/catalogue.json \$SERVER:/tmp/catalogue.json
+       ssh \$SERVER 'cd $APP_DIR/backend && php ../deploy/import-catalogue.php /tmp/catalogue.json'
 ============================================================
 EOF

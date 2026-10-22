@@ -22,6 +22,9 @@ class ApiError extends Error {
   }
 }
 
+// When the backend is exposed through a free ngrok tunnel, the tunnel
+// intercepts non-browser requests and returns an HTML warning page instead
+// of JSON. Sending this header tells ngrok to skip that page unconditionally.
 async function apiFetch<T>(
   path: string,
   locale: string,
@@ -29,15 +32,35 @@ async function apiFetch<T>(
 ): Promise<T> {
   const { token, ...requestInit } = init ?? {};
 
+  const headers: Record<string, string> = {
+    Accept: "application/json",
+    "Accept-Language": locale,
+  };
+
+  if (API_URL.includes("ngrok")) {
+    headers["ngrok-skip-browser-warning"] = "1";
+  }
+
+  if (requestInit.body) {
+    headers["Content-Type"] = "application/json";
+  }
+
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`;
+  }
+
+  if (requestInit.headers) {
+    const extraHeaders = requestInit.headers as Record<string, string>;
+    Object.entries(extraHeaders).forEach(([key, value]) => {
+      if (value !== undefined) {
+        headers[key] = value;
+      }
+    });
+  }
+
   const res = await fetch(`${API_URL}${path}`, {
     ...requestInit,
-    headers: {
-      Accept: "application/json",
-      "Accept-Language": locale,
-      ...(requestInit.body ? { "Content-Type": "application/json" } : {}),
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      ...requestInit.headers,
-    },
+    headers,
     cache: "no-store",
   });
 
