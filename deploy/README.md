@@ -64,6 +64,17 @@ local development database into the production MySQL database, keeping the
 row ids so the foreign keys stay valid. Users, roles and reservations are not
 touched.
 
+### 5. `04-redirect-root-domain.sh` — transitional redirect (optional)
+
+```sh
+ssh root@54.39.230.49 'bash -s' < deploy/04-redirect-root-domain.sh
+```
+
+While the DNS of the bare domain still points at the VPS, this vhost
+redirects `laperledor-togo.com` and `www.laperledor-togo.com` to the Vercel
+deployment instead of returning a 404. It is never reached once the DNS is
+switched to Vercel.
+
 ## Deploying a new version
 
 ```sh
@@ -97,7 +108,18 @@ crontab -l                                   # scheduler
 
 ## Remaining manual step
 
-The bare domain and `www` still point to the VPS in the Hostinger DNS zone.
-They have to be switched to the Vercel nameservers/records, then
-`laperledor-togo.com` must be added to the Vercel project as a custom domain.
-`api.laperledor-togo.com` must stay on the VPS.
+`laperledor-togo.com` and `www.laperledor-togo.com` are already added to the
+Vercel project as custom domains, but their DNS records still point at the
+VPS. In the Hostinger DNS zone (`hyperion.atlas.dns-parking.com`):
+
+| Record | Value |
+| --- | --- |
+| `@` | the Vercel nameservers or the A record given by Vercel |
+| `www` | the same |
+| `api` | `54.39.230.49` (unchanged — it must stay on the VPS) |
+
+Once the DNS is switched, the frontend is served directly from
+`https://laperledor-togo.com` and the redirect installed by
+`04-redirect-root-domain.sh` becomes unused. The Filament panel is protected
+by the authenticator-app second factor, and the Vercel deployment protection
+is set to `all_except_custom_domains`, so the custom domain stays public.
