@@ -107,7 +107,7 @@ export default function CartPopup() {
                           onChange={(value) => cart.updateQuantity(line.item.id, value)}
                         />
                         <p className="text-sm font-bold text-brand-navy">
-                          {lineTotal.toLocaleString()} XOF
+                          {lineTotal.toLocaleString()} FCFA
                         </p>
                       </div>
                     </div>
@@ -122,7 +122,7 @@ export default function CartPopup() {
           <div className="border-t border-slate-100 p-5">
             <div className="mb-4 flex items-center justify-between">
               <span className="text-slate-500">{tCart("total")}</span>
-              <span className="text-xl font-bold text-brand-navy">{subtotal.toLocaleString()} XOF</span>
+              <span className="text-xl font-bold text-brand-navy">{subtotal.toLocaleString()} FCFA</span>
             </div>
             <Link
               href="/devis"

@@ -60,7 +60,7 @@ export default async function ProductPage({
             <p className="mt-1 text-slate-600">{t("priceOnRequest")}</p>
           ) : (
             item.sale_price && (
-              <p className="mt-1 text-slate-600">{t("orBuyFor")} {formatPrice(item.sale_price)} XOF</p>
+              <p className="mt-1 text-slate-600">{t("orBuyFor")} {formatPrice(item.sale_price)} FCFA</p>
             )
           )}
 

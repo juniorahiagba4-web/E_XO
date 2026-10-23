@@ -79,6 +79,7 @@ export default function Footer() {
       <div className="border-t border-white/10">
         <div className="mx-auto max-w-6xl px-4 py-6 text-center text-sm text-slate-400">
           <p>© {year} {COMPANY_NAME}. {t("rights")}</p>
+          <p className="mt-1">Développé par KOKOU AHG</p>
         </div>
       </div>
     </footer>

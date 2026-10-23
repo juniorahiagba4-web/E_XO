@@ -1,6 +1,8 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FloatingWhatsapp from "@/components/FloatingWhatsapp";
+import BackToTop from "@/components/BackToTop";
+import CookieBanner from "@/components/CookieBanner";
 import { WHATSAPP_NUMBER } from "@/lib/config";
 
 export default function ShopLayout({ children }: { children: React.ReactNode }) {
@@ -12,6 +14,8 @@ export default function ShopLayout({ children }: { children: React.ReactNode }) 
       <FloatingWhatsapp
         message={`Bonjour, je souhaite avoir des informations sur vos mobiliers (WhatsApp: +${WHATSAPP_NUMBER}).`}
       />
+      <BackToTop />
+      <CookieBanner />
     </>
   );
 }

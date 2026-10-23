@@ -19,7 +19,7 @@ export const COMPANY_ADDRESS =
   process.env.NEXT_PUBLIC_COMPANY_ADDRESS ?? "Cité Millénium, face restaurant Le Beffcut, Lomé, Togo";
 
 // Même numéro de test que WHATSAPP_NUMBER ci-dessus pour les appels directs.
-export const COMPANY_PHONE = process.env.NEXT_PUBLIC_COMPANY_PHONE ?? "+228 93 04 01 03";
+export const COMPANY_PHONE = process.env.NEXT_PUBLIC_COMPANY_PHONE ?? "+228 93 36 07 70";
 
 export const COMPANY_EMAIL = process.env.NEXT_PUBLIC_COMPANY_EMAIL ?? "contact@laperledor.tg";
 
