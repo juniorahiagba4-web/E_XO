@@ -187,8 +187,8 @@ export default function DevisPage() {
                           {isPriceOnRequest(line)
                             ? tProduct("priceOnRequest")
                             : isPurchase
-                              ? `${formatPrice(unitPrice)} XOF`
-                              : `${formatPrice(unitPrice)} XOF x ${nights}j`}
+                              ? `${formatPrice(unitPrice)} FCFA`
+                              : `${formatPrice(unitPrice)} FCFA x ${nights}j`}
                         </p>
                       </div>
                       <QuantityStepper
@@ -198,7 +198,7 @@ export default function DevisPage() {
                         onChange={(value) => cart.updateQuantity(line.item.id, value)}
                       />
                       <p className="w-24 shrink-0 text-right font-medium text-brand-navy">
-                        {isPriceOnRequest(line) ? tProduct("priceOnRequestShort") : `${formatPrice(rowTotal)} XOF`}
+                        {isPriceOnRequest(line) ? tProduct("priceOnRequestShort") : `${formatPrice(rowTotal)} FCFA`}
                       </p>
                       <button
                         type="button"
@@ -213,7 +213,7 @@ export default function DevisPage() {
                 })}
                 <div className="flex items-center justify-between p-4 text-lg font-semibold text-brand-navy">
                   <span>{t("total")}</span>
-                  <span>{formatPrice(total)} XOF</span>
+                  <span>{formatPrice(total)} FCFA</span>
                 </div>
               </div>
               {hasPriceOnRequestLine && (
