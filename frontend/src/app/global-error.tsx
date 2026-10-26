@@ -24,7 +24,7 @@ export default function GlobalError({
           justifyContent: "center",
           fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
           background: "#ffffff",
-          color: "#0b1045",
+          color: "#000046",
         }}
       >
         <div style={{ textAlign: "center", padding: "24px", maxWidth: "420px" }}>
@@ -39,7 +39,7 @@ export default function GlobalError({
             onClick={reset}
             style={{
               borderRadius: "9999px",
-              background: "#0b1045",
+              background: "#000046",
               color: "#ffffff",
               padding: "12px 24px",
               fontWeight: 500,

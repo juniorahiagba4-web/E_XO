@@ -16,7 +16,7 @@ export default async function AuthLayoutWrapper({
     <div className="flex min-h-screen flex-col bg-white">
       <div className="flex items-center justify-between bg-brand-navy px-6 py-4">
         <Link href="/">
-          <Logo size={32} withWordmark={false} />
+          <Logo className="h-8" />
         </Link>
         <Link
           href="/"

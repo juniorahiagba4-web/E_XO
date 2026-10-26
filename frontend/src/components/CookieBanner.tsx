@@ -8,14 +8,17 @@ export default function CookieBanner() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    try {
-      const consent = localStorage.getItem(COOKIE_CONSENT_KEY);
-      if (!consent) {
+    // Read the stored consent after the first paint: the banner must never
+    // block rendering, and touching localStorage during render would break SSR.
+    const timer = window.setTimeout(() => {
+      try {
+        setVisible(!localStorage.getItem(COOKIE_CONSENT_KEY));
+      } catch {
         setVisible(true);
       }
-    } catch {
-      setVisible(true);
-    }
+    }, 0);
+
+    return () => window.clearTimeout(timer);
   }, []);
 
   const accept = () => {

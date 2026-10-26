@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { Geist_Mono } from "next/font/google";
@@ -23,6 +23,10 @@ export const metadata: Metadata = {
   title: `${COMPANY_NAME} - Location de mobilier événementiel`,
   description:
     "Location et vente de chaises, tables, nappes, glacières pour vos événements au Togo et dans la sous-région.",
+};
+
+export const viewport: Viewport = {
+  themeColor: "#000046",
 };
 
 export function generateStaticParams() {

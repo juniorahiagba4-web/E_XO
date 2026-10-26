@@ -13,12 +13,27 @@ export default function UserMenu() {
 
   if (!user) {
     return (
-      <Link
-        href="/connexion"
-        className="rounded-full border border-white/20 px-4 py-1.5 text-sm font-medium text-slate-200 transition hover:border-brand-gold hover:text-brand-gold"
-      >
-        {t("login")}
-      </Link>
+      <>
+        {/* Compact icon on phones: the full "Connexion" pill would eat the
+            space the logo needs in a narrow header. */}
+        <Link
+          href="/connexion"
+          aria-label={t("login")}
+          title={t("login")}
+          className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 text-slate-200 transition hover:border-brand-gold hover:text-brand-gold md:hidden"
+        >
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden>
+            <circle cx="12" cy="8" r="3.4" />
+            <path strokeLinecap="round" d="M4.8 19.5c1.1-3.1 3.8-4.8 7.2-4.8s6.1 1.7 7.2 4.8" />
+          </svg>
+        </Link>
+        <Link
+          href="/connexion"
+          className="hidden rounded-full border border-white/20 px-4 py-1.5 text-sm font-medium text-slate-200 transition hover:border-brand-gold hover:text-brand-gold md:inline-block"
+        >
+          {t("login")}
+        </Link>
+      </>
     );
   }
 

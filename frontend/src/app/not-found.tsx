@@ -33,19 +33,24 @@ export default function RootNotFound() {
           justifyContent: "center",
           fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
           background: "#ffffff",
-          color: "#0b1045",
+          color: "#000046",
         }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/logo.png" alt="La Perle d'Or" width={64} height={64} style={{ borderRadius: 12, marginBottom: 24 }} />
-        <span style={{ fontSize: "56px", fontWeight: 900, color: "#f0b429", lineHeight: 1 }}>404</span>
+        <img
+          src="/brand/logo-lockup-light.svg"
+          alt="La Perle d'Or"
+          height={112}
+          style={{ height: 112, width: "auto", marginBottom: 24 }}
+        />
+        <span style={{ fontSize: "56px", fontWeight: 900, color: "#ffbd00", lineHeight: 1 }}>404</span>
         <h1 style={{ fontSize: "22px", fontWeight: 700, margin: "12px 0 8px" }}>{t.title}</h1>
         <p style={{ color: "#64748b", marginBottom: "24px", textAlign: "center", maxWidth: 360 }}>{t.message}</p>
         <a
           href={homeHref}
           style={{
             borderRadius: "9999px",
-            background: "#0b1045",
+            background: "#000046",
             color: "#ffffff",
             padding: "12px 24px",
             fontWeight: 500,

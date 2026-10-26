@@ -46,10 +46,10 @@ export default function Header() {
         <div className="flex items-center gap-2">
           <BackButton />
           <Link href="/">
-            <Logo />
+            <Logo className="h-8 md:h-10" />
           </Link>
         </div>
-        <nav className="hidden items-center gap-6 text-sm font-medium md:flex">
+        <nav className="hidden items-center gap-6 text-sm font-medium lg:flex">
           {NAV_LINKS.map(({ href, key }) => (
             <NavLink key={href} href={href}>
               {t(key)}
@@ -59,12 +59,14 @@ export default function Header() {
         <div className="flex items-center gap-3">
           <CartPopup />
           <UserMenu />
-          <LocaleSwitcher />
+          <div className="hidden lg:block">
+            <LocaleSwitcher />
+          </div>
           <button
             type="button"
             onClick={() => setMobileOpen(true)}
             aria-label={t("menu")}
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 text-slate-200 transition hover:border-brand-gold hover:text-brand-gold md:hidden"
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 text-slate-200 transition hover:border-brand-gold hover:text-brand-gold lg:hidden"
           >
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden>
               <path strokeLinecap="round" d="M4 6h16M4 12h16M4 18h16" />
@@ -74,7 +76,7 @@ export default function Header() {
       </div>
 
       {mobileOpen && (
-        <div className="fixed inset-0 z-50 md:hidden">
+        <div className="fixed inset-0 z-50 lg:hidden">
           <div
             className="absolute inset-0 bg-brand-navy/40 backdrop-blur-sm"
             style={{ animation: "backdrop-in .15s ease-out" }}
@@ -85,7 +87,7 @@ export default function Header() {
             style={{ animation: "modal-in .18s ease-out" }}
           >
             <div className="mb-8 flex items-center justify-between">
-              <Logo />
+              <Logo className="h-9" />
               <button
                 type="button"
                 onClick={() => setMobileOpen(false)}
@@ -102,6 +104,9 @@ export default function Header() {
                 </NavLink>
               ))}
             </nav>
+            <div className="mt-8 border-t border-white/10 pt-6">
+              <LocaleSwitcher />
+            </div>
           </div>
         </div>
       )}

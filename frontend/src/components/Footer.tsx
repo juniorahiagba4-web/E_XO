@@ -21,7 +21,7 @@ export default function Footer() {
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:grid-cols-2 lg:grid-cols-4">
         <div className="flex flex-col gap-3">
           <Link href="/">
-            <Logo />
+            <Logo variant="stacked" className="h-24" />
           </Link>
           <p className="text-sm text-slate-300">{t("slogan")}</p>
           <p className="text-sm text-slate-300">{COMPANY_ADDRESS}</p>

@@ -2,15 +2,18 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #0b1045;
+  --foreground: #000046;
 
-  /* La Perle d'Or brand palette, taken from the logo. */
-  --brand-navy: #0b1045;
-  --brand-navy-light: #1a2166;
-  --brand-navy-dark: #06081f;
-  --brand-gold: #f0b429;
-  --brand-gold-light: #f7cc5f;
-  --brand-gold-dark: #c9910f;
+  /* La Perle d'Or brand palette, sampled straight from the logo artwork
+     (design/brand/logo-source.pdf): navy #000046, gold #FFBD00, white. The
+     "light" and "dark" steps are derived from those two anchors for gradients,
+     hovers and text-on-navy contrast. */
+  --brand-navy: #000046;
+  --brand-navy-light: #0f1167;
+  --brand-navy-dark: #000020;
+  --brand-gold: #ffbd00;
+  --brand-gold-light: #ffd24d;
+  --brand-gold-dark: #d69a00;
 }
 
 @theme inline {
@@ -62,12 +65,12 @@ button:active:not(:disabled) {
 
 .bg-brand-gold:hover,
 a.bg-brand-gold:hover {
-  box-shadow: 0 6px 18px -4px rgb(240 180 41 / 0.55);
+  box-shadow: 0 6px 18px -4px rgb(255 189 0 / 0.55);
 }
 
 .bg-brand-navy:hover,
 a.bg-brand-navy:hover {
-  box-shadow: 0 6px 18px -4px rgb(11 16 69 / 0.35);
+  box-shadow: 0 6px 18px -4px rgb(0 0 70 / 0.35);
 }
 
 @keyframes modal-in {
