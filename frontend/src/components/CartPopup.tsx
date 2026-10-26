@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { useCart } from "@/lib/cart-context";
+import { formatPrice } from "@/lib/format";
 import QuantityStepper from "./QuantityStepper";
 import Modal from "./Modal";
 
@@ -107,7 +108,7 @@ export default function CartPopup() {
                           onChange={(value) => cart.updateQuantity(line.item.id, value)}
                         />
                         <p className="text-sm font-bold text-brand-navy">
-                          {lineTotal.toLocaleString()} FCFA
+                          {formatPrice(lineTotal)} FCFA
                         </p>
                       </div>
                     </div>
@@ -122,7 +123,7 @@ export default function CartPopup() {
           <div className="border-t border-slate-100 p-5">
             <div className="mb-4 flex items-center justify-between">
               <span className="text-slate-500">{tCart("total")}</span>
-              <span className="text-xl font-bold text-brand-navy">{subtotal.toLocaleString()} FCFA</span>
+              <span className="text-xl font-bold text-brand-navy">{formatPrice(subtotal)} FCFA</span>
             </div>
             <Link
               href="/devis"

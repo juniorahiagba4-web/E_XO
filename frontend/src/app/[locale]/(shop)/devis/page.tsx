@@ -8,6 +8,7 @@ import { useCart } from "@/lib/cart-context";
 import { useAuth } from "@/lib/auth-context";
 import { createReservation, ApiError } from "@/lib/api";
 import { buildWhatsappLink } from "@/lib/config";
+import { formatPrice } from "@/lib/format";
 import QuantityStepper from "@/components/QuantityStepper";
 import DateRangePicker from "@/components/DateRangePicker";
 import type { Reservation } from "@/lib/types";
@@ -186,8 +187,8 @@ export default function DevisPage() {
                           {isPriceOnRequest(line)
                             ? tProduct("priceOnRequest")
                             : isPurchase
-                              ? `${unitPrice.toLocaleString()} XOF`
-                              : `${unitPrice.toLocaleString()} XOF x ${nights}j`}
+                              ? `${formatPrice(unitPrice)} XOF`
+                              : `${formatPrice(unitPrice)} XOF x ${nights}j`}
                         </p>
                       </div>
                       <QuantityStepper
@@ -197,7 +198,7 @@ export default function DevisPage() {
                         onChange={(value) => cart.updateQuantity(line.item.id, value)}
                       />
                       <p className="w-24 shrink-0 text-right font-medium text-brand-navy">
-                        {isPriceOnRequest(line) ? tProduct("priceOnRequestShort") : `${rowTotal.toLocaleString()} XOF`}
+                        {isPriceOnRequest(line) ? tProduct("priceOnRequestShort") : `${formatPrice(rowTotal)} XOF`}
                       </p>
                       <button
                         type="button"
@@ -212,7 +213,7 @@ export default function DevisPage() {
                 })}
                 <div className="flex items-center justify-between p-4 text-lg font-semibold text-brand-navy">
                   <span>{t("total")}</span>
-                  <span>{total.toLocaleString()} XOF</span>
+                  <span>{formatPrice(total)} XOF</span>
                 </div>
               </div>
               {hasPriceOnRequestLine && (
