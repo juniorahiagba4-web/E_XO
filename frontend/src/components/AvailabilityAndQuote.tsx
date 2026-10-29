@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { getItemAvailability, ApiError } from "@/lib/api";
 import { useCart } from "@/lib/cart-context";
+import { formatPrice } from "@/lib/format";
 import { useAuthGate } from "@/lib/auth-gate-context";
 import QuantityStepper from "./QuantityStepper";
 import DateRangePicker from "./DateRangePicker";
@@ -73,124 +74,140 @@ export default function AvailabilityAndQuote({
   }
 
   return (
-    <div className="rounded-2xl border border-slate-200 p-6">
-      {canSell && (
-        <div className="mb-5 inline-flex rounded-full border border-slate-200 p-1 text-sm">
-          <button
-            type="button"
-            onClick={() => setMode("rental")}
-            className={`rounded-full px-4 py-1.5 font-medium transition ${
-              mode === "rental" ? "bg-brand-navy text-white" : "text-slate-600"
-            }`}
-          >
-            {t("modeRental")}
-          </button>
-          <button
-            type="button"
-            onClick={() => setMode("purchase")}
-            className={`rounded-full px-4 py-1.5 font-medium transition ${
-              mode === "purchase" ? "bg-brand-navy text-white" : "text-slate-600"
-            }`}
-          >
-            {t("modePurchase")}
-          </button>
-        </div>
-      )}
-
+    <>
       {mode === "rental" ? (
         <>
-          <DateRangePicker
-            startDate={startDate}
-            endDate={endDate}
-            onChange={(start, end) => {
-              setStartDate(start);
-              setEndDate(end);
-              setStatus("idle");
-            }}
-          />
+          <p className="text-xl text-brand-gold-dark">
+            {formatPrice(item.rental_price_per_day)} {t("perDay")}
+          </p>
+          <p className={`mt-2 text-sm font-medium ${item.total_stock > 0 ? "text-emerald-600" : "text-red-500"}`}>
+            {item.total_stock > 0
+              ? t("stockAvailable", { count: item.total_stock })
+              : t("stockUnavailable")}
+          </p>
+        </>
+      ) : (
+        <p className="text-xl text-brand-gold-dark">
+          {item.sale_price_on_request ? t("priceOnRequest") : `${formatPrice(item.sale_price)} FCFA`}
+        </p>
+      )}
 
-          <div className="mt-4 flex flex-col gap-1 text-sm">
-            {t("quantity")}
-            <QuantityStepper
-              value={quantity}
-              min={item.min_rental_quantity || 1}
-              max={item.total_stock}
-              onChange={(value) => {
-                setQuantity(value);
+      <div className="mt-6 rounded-2xl border border-slate-200 p-6">
+        {canSell && (
+          <div className="mb-5 inline-flex rounded-full border border-slate-200 p-1 text-sm">
+            <button
+              type="button"
+              onClick={() => setMode("rental")}
+              className={`rounded-full px-4 py-1.5 font-medium transition ${
+                mode === "rental" ? "bg-brand-navy text-white" : "text-slate-600"
+              }`}
+            >
+              {t("modeRental")}
+            </button>
+            <button
+              type="button"
+              onClick={() => setMode("purchase")}
+              className={`rounded-full px-4 py-1.5 font-medium transition ${
+                mode === "purchase" ? "bg-brand-navy text-white" : "text-slate-600"
+              }`}
+            >
+              {t("modePurchase")}
+            </button>
+          </div>
+        )}
+
+        {mode === "rental" ? (
+          <>
+            <DateRangePicker
+              startDate={startDate}
+              endDate={endDate}
+              onChange={(start, end) => {
+                setStartDate(start);
+                setEndDate(end);
                 setStatus("idle");
               }}
             />
-          </div>
 
+            <div className="mt-4 flex flex-col gap-1 text-sm">
+              {t("quantity")}
+              <QuantityStepper
+                value={quantity}
+                min={item.min_rental_quantity || 1}
+                max={item.total_stock}
+                onChange={(value) => {
+                  setQuantity(value);
+                  setStatus("idle");
+                }}
+              />
+            </div>
+
+            <button
+              type="button"
+              disabled={!canCheck || status === "checking"}
+              onClick={checkAvailability}
+              className="mt-4 w-full rounded-full bg-brand-navy px-4 py-2 font-medium text-white transition hover:bg-brand-navy-light disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              {status === "checking" ? t("checking") : t("checkAvailability")}
+            </button>
+
+            <div className="mt-3 min-h-6 text-sm">
+              {status === "idle" && !canCheck && (
+                <span className="text-slate-400">{t("selectDates")}</span>
+              )}
+              {status === "checked" && isRentalAvailable && (
+                <span className="text-emerald-600">
+                  {t("available", { count: availableQuantity })}
+                </span>
+              )}
+              {status === "checked" && !isRentalAvailable && (
+                <span className="text-red-600">
+                  {t("unavailable", { count: availableQuantity ?? 0 })}
+                </span>
+              )}
+              {status === "error" && (
+                <span className="text-red-600">{t("checkAvailability")} ✕</span>
+              )}
+            </div>
+          </>
+        ) : (
+          <>
+            <p className="text-sm text-slate-500">
+              {t("purchaseAvailable", { count: item.purchasable_quantity ?? 0 })}
+            </p>
+            <div className="mt-4 flex flex-col gap-1 text-sm">
+              {t("quantity")}
+              <QuantityStepper
+                value={quantity}
+                min={1}
+                max={item.purchasable_quantity ?? 1}
+                onChange={setQuantity}
+              />
+            </div>
+            {!isPurchaseAvailable && (
+              <p className="mt-2 text-sm text-red-600">{t("purchaseUnavailable")}</p>
+            )}
+          </>
+        )}
+
+        <div className="mt-4 flex flex-col gap-2 sm:flex-row">
           <button
             type="button"
-            disabled={!canCheck || status === "checking"}
-            onClick={checkAvailability}
-            className="mt-4 w-full rounded-full bg-brand-navy px-4 py-2 font-medium text-white transition hover:bg-brand-navy-light disabled:cursor-not-allowed disabled:opacity-50"
+            disabled={!canAdd}
+            onClick={addToCart}
+            className="flex-1 rounded-full border border-brand-navy px-4 py-2 font-medium text-brand-navy transition hover:bg-brand-navy hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
           >
-            {status === "checking" ? t("checking") : t("checkAvailability")}
+            {justAdded ? t("added") : t("addToCart")}
           </button>
-
-          <div className="mt-3 min-h-6 text-sm">
-            {status === "idle" && !canCheck && (
-              <span className="text-slate-400">{t("selectDates")}</span>
-            )}
-            {status === "checked" && isRentalAvailable && (
-              <span className="text-emerald-600">
-                {t("available", { count: availableQuantity })}
-              </span>
-            )}
-            {status === "checked" && !isRentalAvailable && (
-              <span className="text-red-600">
-                {t("unavailable", { count: availableQuantity ?? 0 })}
-              </span>
-            )}
-            {status === "error" && (
-              <span className="text-red-600">{t("checkAvailability")} ✕</span>
-            )}
-          </div>
-        </>
-      ) : (
-        <>
-          <p className="text-sm text-slate-500">
-            {t("purchaseAvailable", { count: item.purchasable_quantity ?? 0 })}
-          </p>
-          {item.sale_price_on_request && (
-            <p className="mt-1 text-sm font-medium text-brand-gold-dark">{t("priceOnRequest")}</p>
-          )}
-          <div className="mt-4 flex flex-col gap-1 text-sm">
-            {t("quantity")}
-            <QuantityStepper
-              value={quantity}
-              min={1}
-              max={item.purchasable_quantity ?? 1}
-              onChange={setQuantity}
-            />
-          </div>
-          {!isPurchaseAvailable && (
-            <p className="mt-2 text-sm text-red-600">{t("purchaseUnavailable")}</p>
-          )}
-        </>
-      )}
-
-      <div className="mt-4 flex flex-col gap-2 sm:flex-row">
-        <button
-          type="button"
-          disabled={!canAdd}
-          onClick={addToCart}
-          className="flex-1 rounded-full border border-brand-navy px-4 py-2 font-medium text-brand-navy transition hover:bg-brand-navy hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
-        >
-          {justAdded ? t("added") : t("addToCart")}
-        </button>
-        <button
-          type="button"
-          disabled={!canAdd}
-          onClick={orderNow}
-          className="flex-1 rounded-full bg-brand-gold px-4 py-2 font-medium text-white transition hover:bg-brand-gold-dark disabled:cursor-not-allowed disabled:opacity-40"
-        >
-          {mode === "rental" ? t("rentNow") : t("buyNow")}
-        </button>
+          <button
+            type="button"
+            disabled={!canAdd}
+            onClick={orderNow}
+            className="flex-1 rounded-full bg-brand-gold px-4 py-2 font-medium text-white transition hover:bg-brand-gold-dark disabled:cursor-not-allowed disabled:opacity-40"
+          >
+            {mode === "rental" ? t("rentNow") : t("buyNow")}
+          </button>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

@@ -87,16 +87,15 @@ export default function ItemCard({ item }: { item: Item }) {
           <RatingStars rating={Number(item.rating)} count={item.rating_count} />
         )}
 
-        <div className="flex flex-wrap items-baseline gap-x-2 text-sm">
-          <span className="text-slate-700">
-            {formatPrice(item.rental_price_per_day)} {t("perDay")}
-          </span>
-          {item.sale_price_on_request ? (
-            <span className="text-slate-400">· {t("priceOnRequest")}</span>
+        <div className="text-sm text-slate-700">
+          {mode === "rental" ? (
+            <span>
+              {formatPrice(item.rental_price_per_day)} {t("perDay")}
+            </span>
+          ) : item.sale_price_on_request ? (
+            <span className="text-brand-gold-dark">{t("priceOnRequest")}</span>
           ) : (
-            item.sale_price && (
-              <span className="text-slate-400">· {t("orBuy")} {formatPrice(item.sale_price)}</span>
-            )
+            <span>{formatPrice(item.sale_price)} FCFA</span>
           )}
         </div>
 

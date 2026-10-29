@@ -86,20 +86,38 @@ export default function ContactPage() {
         <div className="flex flex-col gap-4">
           <h2 className="text-lg font-semibold text-brand-navy">{t("detailsTitle")}</h2>
 
-          <a
-            href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(COMPANY_ADDRESS)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group flex items-start gap-4 rounded-xl border border-slate-200 p-4 transition hover:-translate-y-0.5 hover:border-brand-gold hover:bg-brand-gold/5 hover:shadow-md"
-          >
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-navy text-brand-gold transition group-hover:scale-110 group-hover:bg-brand-gold group-hover:text-brand-navy">
-              <MapPinIcon />
-            </span>
-            <span>
-              <span className="block text-sm font-medium text-brand-navy">{t("addressLabel")}</span>
-              <span className="block text-slate-500">{COMPANY_ADDRESS}</span>
-            </span>
-          </a>
+          <div className="group relative overflow-hidden rounded-xl border border-slate-200 transition hover:-translate-y-0.5 hover:border-brand-gold hover:shadow-md">
+            {/* The embedded map is only a preview: pointer events are disabled
+                so the whole card acts as a single link to Google Maps. */}
+            <div className="relative h-44 bg-slate-100">
+              <iframe
+                src={`https://maps.google.com/maps?q=${encodeURIComponent(COMPANY_ADDRESS)}&z=15&output=embed`}
+                title={t("mapTitle")}
+                loading="lazy"
+                tabIndex={-1}
+                className="pointer-events-none h-full w-full border-0 grayscale-[30%] transition group-hover:grayscale-0"
+              />
+              <span className="absolute bottom-3 right-3 rounded-full bg-white px-3 py-1.5 text-xs font-medium text-brand-navy shadow-md transition group-hover:bg-brand-gold">
+                {t("openInMaps")} ↗
+              </span>
+            </div>
+            <div className="flex items-start gap-4 p-4 transition group-hover:bg-brand-gold/5">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-navy text-brand-gold transition group-hover:scale-110 group-hover:bg-brand-gold group-hover:text-brand-navy">
+                <MapPinIcon />
+              </span>
+              <span>
+                <span className="block text-sm font-medium text-brand-navy">{t("addressLabel")}</span>
+                <span className="block text-slate-500">{COMPANY_ADDRESS}</span>
+              </span>
+            </div>
+            <a
+              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(COMPANY_ADDRESS)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${t("openInMaps")} : ${COMPANY_ADDRESS}`}
+              className="absolute inset-0"
+            />
+          </div>
 
           <a
             href={`tel:${COMPANY_PHONE.replace(/\s+/g, "")}`}

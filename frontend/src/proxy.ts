@@ -35,6 +35,8 @@ export function proxy(request: NextRequest) {
       `img-src 'self' data: blob: ${extraHost}`.trim(),
       "font-src 'self' data:",
       `connect-src 'self' ${extraHost}`.trim(),
+      // Map preview on the contact page.
+      "frame-src https://www.google.com https://maps.google.com",
     ].join("; ") + ";",
   );
 

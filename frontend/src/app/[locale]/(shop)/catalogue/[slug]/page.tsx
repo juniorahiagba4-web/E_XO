@@ -1,7 +1,6 @@
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { getItem, ApiError } from "@/lib/api";
-import { formatPrice } from "@/lib/format";
 import AvailabilityAndQuote from "@/components/AvailabilityAndQuote";
 import RatingStars from "@/components/RatingStars";
 import ItemGallery from "@/components/ItemGallery";
@@ -55,22 +54,7 @@ export default async function ProductPage({
             </div>
           )}
 
-          <p className="mt-2 text-xl text-brand-gold-dark">{formatPrice(item.rental_price_per_day)} / jour</p>
-          {item.sale_price_on_request ? (
-            <p className="mt-1 text-slate-600">{t("priceOnRequest")}</p>
-          ) : (
-            item.sale_price && (
-              <p className="mt-1 text-slate-600">{t("orBuyFor")} {formatPrice(item.sale_price)} FCFA</p>
-            )
-          )}
-
-          <p className={`mt-2 text-sm font-medium ${item.total_stock > 0 ? "text-emerald-600" : "text-red-500"}`}>
-            {item.total_stock > 0
-              ? t("stockAvailable", { count: item.total_stock })
-              : t("stockUnavailable")}
-          </p>
-
-          <div className="mt-6">
+          <div className="mt-2">
             <AvailabilityAndQuote item={item} locale={locale} />
           </div>
         </div>
