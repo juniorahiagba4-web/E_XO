@@ -24,6 +24,7 @@ class ReservationResource extends JsonResource
             'created_at' => $this->created_at?->toIso8601String(),
             'quote_pdf_url' => $this->quote_pdf_path ? Storage::disk('public')->url($this->quote_pdf_path) : null,
             'whatsapp_message' => $this->whatsappMessage(),
+            'review_url' => $this->canBeReviewed() ? $this->reviewUrl() : null,
             'items' => $this->whenLoaded('items', fn () => $this->items->map(fn ($line) => [
                 'item_name' => $line->item?->getLocalized('name'),
                 'quantity' => $line->quantity,

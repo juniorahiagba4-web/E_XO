@@ -67,7 +67,14 @@ export default function ItemTabs({ item }: { item: Item }) {
               {item.reviews.map((review) => (
                 <div key={review.id} className="border-b border-slate-100 pb-4">
                   <div className="flex items-center justify-between">
-                    <span className="font-medium text-brand-navy">{review.author_name}</span>
+                    <span className="flex items-center gap-2">
+                      <span className="font-medium text-brand-navy">{review.author_name}</span>
+                      {review.verified && (
+                        <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-xs font-medium text-emerald-700">
+                          ✓ {t("verifiedCustomer")}
+                        </span>
+                      )}
+                    </span>
                     <RatingStars rating={Number(review.rating)} />
                   </div>
                   {review.comment && (

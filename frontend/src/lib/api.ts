@@ -10,6 +10,8 @@ import type {
   LoginPayload,
   RegisterPayload,
   Reservation,
+  ReviewPayload,
+  ReviewRequest,
 } from "./types";
 
 class ApiError extends Error {
@@ -170,6 +172,25 @@ export function getReservation(locale: string, reference: string, email: string)
     `/reservations/${reference}?email=${encodeURIComponent(email)}`,
     locale,
   ).then((r) => r.data);
+}
+
+export function getReviewRequest(locale: string, reference: string, reviewToken: string) {
+  return apiFetch<{ data: ReviewRequest }>(
+    `/reviews/${encodeURIComponent(reference)}?t=${encodeURIComponent(reviewToken)}`,
+    locale,
+  ).then((r) => r.data);
+}
+
+export function submitReviews(
+  locale: string,
+  reference: string,
+  reviewToken: string,
+  reviews: ReviewPayload[],
+) {
+  return apiFetch<{ created: number }>(`/reviews/${encodeURIComponent(reference)}`, locale, {
+    method: "POST",
+    body: JSON.stringify({ t: reviewToken, reviews }),
+  });
 }
 
 export function getMyReservations(locale: string, token: string) {

@@ -54,6 +54,9 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
+    // Public Next.js site, used to build links sent to customers (review requests).
+    'frontend_url' => env('FRONTEND_URL', 'https://laperledor-togo.com'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

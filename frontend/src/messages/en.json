@@ -125,6 +125,7 @@
     "noDescription": "No description available yet.",
     "noSpecifications": "No specifications available yet.",
     "noReviews": "No reviews available yet.",
+    "verifiedCustomer": "Verified customer",
     "youMayAlsoLike": "You may also like"
   },
   "quoteForm": {
@@ -283,7 +284,27 @@
     "error": "Could not load your orders right now.",
     "typeRental": "Rental",
     "typePurchase": "Purchase",
-    "viewPdf": "View PDF"
+    "viewPdf": "View PDF",
+    "leaveReview": "Leave a review"
+  },
+  "reviewForm": {
+    "title": "Leave a review",
+    "greeting": "Thank you {name}!",
+    "intro": "How did your rental go? Rate the furniture you received: you can rate a single item or all of them.",
+    "loading": "Loading...",
+    "ratingLabel": "Rating for {name}",
+    "commentPlaceholder": "Any comment? (optional) Condition of the furniture, delivery on time...",
+    "moderationNote": "Your review will be published with your first name and last-name initial, after a quick check by our team.",
+    "submit": "{count, plural, =0 {Pick a rating} one {Send my review} other {Send my # reviews}}",
+    "submitting": "Sending...",
+    "error": "Something went wrong, please try again.",
+    "thanksTitle": "Thank you for your review!",
+    "thanksText": "It will appear on the site once our team has checked it.",
+    "alreadyDone": "You have already reviewed every item of this order.",
+    "backCatalogue": "Browse the catalogue",
+    "invalidTitle": "Invalid link",
+    "invalidText": "This review link is not valid or the order is not finished yet. Contact us on WhatsApp if needed.",
+    "backHome": "Back to home"
   },
   "legal": {
     "privacy": {

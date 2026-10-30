@@ -17,8 +17,8 @@ class ItemController extends Controller
     {
         $items = Item::query()
             ->withSum('reservationItems as popularity', 'quantity')
-            ->withCount('reviews')
-            ->withAvg('reviews', 'rating')
+            ->withCount(['reviews' => fn ($query) => $query->approved()])
+            ->withAvg(['reviews' => fn ($query) => $query->approved()], 'rating')
             ->with('category')
             ->where('is_active', true)
             ->when($request->string('category')->isNotEmpty(), function ($query) use ($request) {
@@ -47,7 +47,7 @@ class ItemController extends Controller
     public function show(string $slug)
     {
         $item = Item::query()
-            ->with(['category', 'reviews'])
+            ->with(['category', 'reviews' => fn ($query) => $query->approved()->latest()])
             ->where('slug', $slug)
             ->where('is_active', true)
             ->firstOrFail();

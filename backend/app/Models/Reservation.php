@@ -85,6 +85,51 @@ class Reservation extends Model
         return $this->belongsTo(DeliverySlotTemplate::class, 'return_slot_template_id');
     }
 
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(ItemReview::class);
+    }
+
+    /** Only finished orders can be reviewed, so every published review comes from a real customer. */
+    public function canBeReviewed(): bool
+    {
+        return $this->status === 'completed';
+    }
+
+    /**
+     * Private link the customer uses to review the items of this order. The
+     * token is generated on first use and kept, so a link sent earlier keeps working.
+     */
+    public function reviewUrl(): string
+    {
+        if (! $this->review_token) {
+            $this->forceFill(['review_token' => Str::random(40)])->save();
+        }
+
+        return rtrim(config('app.frontend_url'), '/')."/fr/avis/{$this->reference}?t={$this->review_token}";
+    }
+
+    /** wa.me link opening a chat with the customer, pre-filled with the review request. */
+    public function reviewWhatsappUrl(): ?string
+    {
+        $phone = preg_replace('/\D+/', '', (string) $this->customer?->phone);
+        if ($phone === '') {
+            return null;
+        }
+        // Togolese numbers are often typed without the country code.
+        if (strlen($phone) === 8) {
+            $phone = '228'.$phone;
+        }
+
+        $message = implode("\n", [
+            "Bonjour {$this->customer->first_name}, merci d'avoir fait confiance à La Perle d'Or pour votre événement !",
+            'Votre avis nous aide beaucoup. Pouvez-vous noter le mobilier reçu ? Cela prend moins d\'une minute :',
+            $this->reviewUrl(),
+        ]);
+
+        return "https://wa.me/{$phone}?text=".rawurlencode($message);
+    }
+
     /**
      * Reservations whose items currently occupy stock: confirmed bookings,
      * plus quotes still within their hold window.

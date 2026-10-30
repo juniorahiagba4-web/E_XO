@@ -37,8 +37,9 @@ class ItemResource extends JsonResource
             'rental_price_per_day' => $this->rental_price_per_day,
             'sale_price' => $this->sale_price,
             'sale_price_on_request' => (bool) $this->sale_price_on_request,
-            'rating' => $reviewAverage ?? $this->rating,
-            'rating_count' => $reviewCount > 0 ? $reviewCount : $this->rating_count,
+            // Only approved customer reviews count: an item with none shows no stars.
+            'rating' => $reviewAverage,
+            'rating_count' => $reviewCount,
             'reviews' => $reviewsLoaded ? ItemReviewResource::collection($this->reviews) : [],
             'total_stock' => $this->total_stock,
             'purchasable_quantity' => $this->when(

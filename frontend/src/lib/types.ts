@@ -11,7 +11,25 @@ export type ItemReview = {
   author_name: string;
   rating: string;
   comment: string | null;
+  verified: boolean;
   created_at: string | null;
+};
+
+export type ReviewRequest = {
+  reference: string;
+  first_name: string | null;
+  items: {
+    item_id: number;
+    name: string;
+    image_url: string | null;
+    reviewed: boolean;
+  }[];
+};
+
+export type ReviewPayload = {
+  item_id: number;
+  rating: number;
+  comment?: string;
 };
 
 export type ItemSpecification = {
@@ -101,6 +119,7 @@ export type Reservation = {
   created_at?: string;
   quote_pdf_url: string | null;
   whatsapp_message: string;
+  review_url: string | null;
   items?: {
     item_name: string | null;
     quantity: number;

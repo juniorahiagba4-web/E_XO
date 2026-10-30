@@ -2,11 +2,18 @@
 
 import { useEffect, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { useRouter } from "@/i18n/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth-context";
 import { getMyReservations, ApiError } from "@/lib/api";
 import { formatPrice } from "@/lib/format";
 import type { Reservation } from "@/lib/types";
+
+// The API returns an absolute French link (the one sent on WhatsApp); keep
+// only its path and query so the review page opens in the current locale.
+function localReviewPath(reviewUrl: string) {
+  const url = new URL(reviewUrl);
+  return url.pathname.replace(/^\/(fr|en)(?=\/)/, "") + url.search;
+}
 
 export default function AccountPage() {
   const t = useTranslations("account");
@@ -69,6 +76,14 @@ export default function AccountPage() {
                   >
                     {t("viewPdf")}
                   </a>
+                )}
+                {res.review_url && (
+                  <Link
+                    href={localReviewPath(res.review_url)}
+                    className="rounded-full bg-brand-gold px-3 py-1 text-sm font-medium text-brand-navy transition hover:bg-brand-gold-dark"
+                  >
+                    ★ {t("leaveReview")}
+                  </Link>
                 )}
               </div>
             </div>

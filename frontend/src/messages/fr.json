@@ -125,6 +125,7 @@
     "noDescription": "Aucune description disponible pour le moment.",
     "noSpecifications": "Aucune caractéristique disponible pour le moment.",
     "noReviews": "Aucun avis disponible pour le moment.",
+    "verifiedCustomer": "Client vérifié",
     "youMayAlsoLike": "Vous aimerez aussi"
   },
   "quoteForm": {
@@ -283,7 +284,27 @@
     "error": "Impossible de charger vos commandes pour le moment.",
     "typeRental": "Location",
     "typePurchase": "Achat",
-    "viewPdf": "Voir le PDF"
+    "viewPdf": "Voir le PDF",
+    "leaveReview": "Donner mon avis"
+  },
+  "reviewForm": {
+    "title": "Donnez votre avis",
+    "greeting": "Merci {name} !",
+    "intro": "Comment s'est passée votre location ? Notez le mobilier reçu : vous pouvez noter un seul article ou tous.",
+    "loading": "Chargement...",
+    "ratingLabel": "Note pour {name}",
+    "commentPlaceholder": "Un commentaire ? (facultatif) État du mobilier, ponctualité de la livraison...",
+    "moderationNote": "Votre avis sera publié avec votre prénom et l'initiale de votre nom, après une rapide vérification par notre équipe.",
+    "submit": "{count, plural, =0 {Choisissez une note} one {Envoyer mon avis} other {Envoyer mes # avis}}",
+    "submitting": "Envoi en cours...",
+    "error": "Une erreur est survenue, veuillez réessayer.",
+    "thanksTitle": "Merci pour votre avis !",
+    "thanksText": "Il sera visible sur le site dès qu'il aura été vérifié par notre équipe.",
+    "alreadyDone": "Vous avez déjà donné votre avis sur tous les articles de cette commande.",
+    "backCatalogue": "Voir le catalogue",
+    "invalidTitle": "Lien invalide",
+    "invalidText": "Ce lien d'avis n'est pas valide ou la commande n'est pas encore terminée. Contactez-nous sur WhatsApp si besoin.",
+    "backHome": "Retour à l'accueil"
   },
   "legal": {
     "privacy": {

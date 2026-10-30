@@ -14,6 +14,7 @@ class ItemReviewResource extends JsonResource
             'author_name' => $this->author_name,
             'rating' => $this->rating,
             'comment' => $this->comment,
+            'verified' => $this->reservation_id !== null,
             'created_at' => $this->created_at?->toIso8601String(),
         ];
     }

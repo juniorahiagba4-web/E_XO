@@ -107,22 +107,6 @@ class ItemForm
                             ->defaultItems(0),
                     ]),
 
-                Section::make('Note par défaut')
-                    ->columns(2)
-                    ->description('Utilisée tant qu\'aucun avis n\'a été ajouté ci-dessous (onglet Avis, après enregistrement).')
-                    ->schema([
-                        TextInput::make('rating')
-                            ->label('Note moyenne (0 à 5)')
-                            ->numeric()
-                            ->step(0.1)
-                            ->minValue(0)
-                            ->maxValue(5),
-                        TextInput::make('rating_count')
-                            ->label('Nombre d\'avis')
-                            ->numeric()
-                            ->default(0),
-                    ]),
-
                 Toggle::make('is_active')
                     ->label('Actif')
                     ->default(true),

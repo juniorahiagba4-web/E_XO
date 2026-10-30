@@ -88,6 +88,15 @@ class ReservationsTable
                     ->url(fn ($record) => $record->quote_pdf_path ? Storage::disk('public')->url($record->quote_pdf_path) : null)
                     ->openUrlInNewTab()
                     ->visible(fn ($record) => filled($record->quote_pdf_path)),
+                // Opens WhatsApp with a pre-filled message carrying the customer's
+                // private review link. Only finished orders can be reviewed.
+                Action::make('request_review')
+                    ->label('Demander un avis')
+                    ->icon('heroicon-o-star')
+                    ->color('success')
+                    ->url(fn ($record) => $record->reviewWhatsappUrl())
+                    ->openUrlInNewTab()
+                    ->visible(fn ($record) => $record->canBeReviewed() && filled($record->customer?->phone)),
                 EditAction::make(),
             ])
             ->toolbarActions([

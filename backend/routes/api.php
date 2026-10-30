@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\FavoriteController;
 use App\Http\Controllers\Api\ItemController;
 use App\Http\Controllers\Api\PromotionController;
 use App\Http\Controllers\Api\ReservationController;
+use App\Http\Controllers\Api\ReviewController;
 use App\Http\Controllers\Api\SiteSettingController;
 use Illuminate\Support\Facades\Route;
 
@@ -35,6 +36,11 @@ Route::prefix('v1')->group(function () {
         ->middleware('auth:sanctum');
     Route::post('items/{item:id}/favorite', [FavoriteController::class, 'toggle'])
         ->middleware('auth:sanctum');
+
+    Route::get('reviews/{reference}', [ReviewController::class, 'show'])
+        ->middleware('throttle:30,1');
+    Route::post('reviews/{reference}', [ReviewController::class, 'store'])
+        ->middleware('throttle:10,1');
 
     Route::post('contact-messages', [ContactMessageController::class, 'store'])
         ->middleware('throttle:10,1');
