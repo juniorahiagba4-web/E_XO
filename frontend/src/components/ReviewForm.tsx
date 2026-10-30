@@ -125,7 +125,7 @@ export default function ReviewForm({ reference, reviewToken }: { reference: stri
 
   return (
     <form onSubmit={handleSubmit}>
-      <h1 className="mb-2 text-3xl font-bold text-brand-navy">
+      <h1 className="mb-2 heading-page">
         {request.first_name ? t("greeting", { name: request.first_name }) : t("title")}
       </h1>
       <p className="mb-8 text-slate-500">{t("intro")}</p>

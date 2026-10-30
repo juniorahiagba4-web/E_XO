@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import { heros } from "./fonts/heros";
 
 const COPY = {
   fr: {
@@ -31,7 +32,7 @@ export default function RootNotFound() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+          fontFamily: heros.style.fontFamily,
           background: "#ffffff",
           color: "#000046",
         }}

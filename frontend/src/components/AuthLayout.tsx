@@ -73,10 +73,7 @@ export default function AuthLayout({
           <span className="w-fit rounded-full bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-brand-gold">
             {badge}
           </span>
-          <h1
-            className="max-w-md text-4xl font-black leading-tight text-white"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
+          <h1 className="max-w-md text-4xl leading-tight font-bold tracking-tight text-white">
             {title}
           </h1>
           <p className="max-w-sm text-slate-300">{subtitle}</p>

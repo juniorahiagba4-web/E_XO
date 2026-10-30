@@ -11,13 +11,13 @@ export default async function PrivacyPolicyPage({
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-12">
-      <h1 className="mb-2 text-3xl font-bold text-brand-navy">{t("title")}</h1>
+      <h1 className="mb-2 heading-page">{t("title")}</h1>
       <p className="mb-10 text-sm text-slate-400">{t("updated")}</p>
 
       <div className="flex flex-col gap-8">
         {sections.map((section) => (
           <div key={section.heading}>
-            <h2 className="mb-2 text-lg font-semibold text-brand-navy">{section.heading}</h2>
+            <h2 className="mb-2 heading-sub">{section.heading}</h2>
             <p className="text-slate-500">{section.body}</p>
           </div>
         ))}

@@ -13,7 +13,7 @@ export default function FaqPage() {
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-12">
-      <h1 className="mb-3 text-3xl font-bold text-brand-navy">{t("title")}</h1>
+      <h1 className="mb-3 heading-page">{t("title")}</h1>
       <p className="mb-10 text-slate-500">{t("intro")}</p>
 
       <div className="divide-y divide-slate-200 rounded-2xl border border-slate-200">

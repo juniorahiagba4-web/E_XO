@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { heros } from "./fonts/heros";
 
 export default function GlobalError({
   error,
@@ -22,7 +23,7 @@ export default function GlobalError({
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+          fontFamily: heros.style.fontFamily,
           background: "#ffffff",
           color: "#000046",
         }}

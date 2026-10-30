@@ -34,7 +34,7 @@ export default function TrackQuotePage() {
 
   return (
     <div className="mx-auto max-w-xl px-4 py-16">
-      <h1 className="mb-2 text-3xl font-bold text-brand-navy">Suivre mon devis</h1>
+      <h1 className="mb-2 heading-page">Suivre mon devis</h1>
       <p className="mb-6 text-sm text-slate-500">
         Renseignez la référence de votre devis ainsi que l&apos;email utilisé lors de la demande.
       </p>
@@ -68,7 +68,7 @@ export default function TrackQuotePage() {
       {reservation && (
         <div className="mt-8 rounded-2xl border border-slate-200 p-6">
           <p className="text-sm text-slate-500">
-            {t("reference")}: <span className="font-mono">{reservation.reference}</span>
+            {t("reference")}: <span className="font-semibold tracking-wide tabular-nums">{reservation.reference}</span>
           </p>
           <p className="mt-2 font-medium text-brand-navy">Statut : {tStatus(reservation.status)}</p>
           <p className="mt-1 text-slate-600">

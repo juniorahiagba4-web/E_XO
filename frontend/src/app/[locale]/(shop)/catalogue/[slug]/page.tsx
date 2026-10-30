@@ -46,7 +46,7 @@ export default async function ProductPage({
         </div>
 
         <div>
-          <h1 className="text-3xl font-bold text-brand-navy">{item.name}</h1>
+          <h1 className="heading-page">{item.name}</h1>
 
           {item.rating && (
             <div className="mt-2">
@@ -64,7 +64,7 @@ export default async function ProductPage({
 
       {related.length > 0 && (
         <div className="mt-16">
-          <h2 className="mb-6 text-xl font-semibold text-brand-navy">{t("youMayAlsoLike")}</h2>
+          <h2 className="mb-6 heading-section">{t("youMayAlsoLike")}</h2>
           <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
             {related.map((r) => (
               <ItemCard key={r.id} item={r} />

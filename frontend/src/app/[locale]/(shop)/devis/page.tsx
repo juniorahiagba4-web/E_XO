@@ -112,7 +112,7 @@ export default function DevisPage() {
         style={{ animation: "modal-in .18s ease-out" }}
       >
         <div className="flex items-center justify-between border-b border-slate-100 p-5">
-          <h1 className="text-lg font-semibold text-brand-navy">
+          <h1 className="text-xl font-bold text-brand-navy">
             {reservation ? tConfirm("title") : isPurchase ? t("titlePurchase") : t("title")}
           </h1>
           <button
@@ -129,7 +129,7 @@ export default function DevisPage() {
           {reservation ? (
             <div className="text-center">
               <p className="mt-2 text-slate-500">
-                {tConfirm("reference")}: <span className="font-mono font-semibold text-brand-navy">{reservation.reference}</span>
+                {tConfirm("reference")}: <span className="font-semibold tracking-wide text-brand-navy tabular-nums">{reservation.reference}</span>
               </p>
               <div className="mt-8 flex flex-col items-center gap-3">
                 {reservation.quote_pdf_url && (

@@ -79,12 +79,12 @@ export default function ContactPage() {
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-12">
-      <h1 className="mb-3 text-3xl font-bold text-brand-navy">{t("title")}</h1>
+      <h1 className="mb-3 heading-page">{t("title")}</h1>
       <p className="mb-10 max-w-2xl text-slate-500">{t("intro")}</p>
 
       <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)]">
         <div className="flex flex-col gap-4">
-          <h2 className="text-lg font-semibold text-brand-navy">{t("detailsTitle")}</h2>
+          <h2 className="heading-sub">{t("detailsTitle")}</h2>
 
           <div className="group relative overflow-hidden rounded-xl border border-slate-200 transition hover:-translate-y-0.5 hover:border-brand-gold hover:shadow-md">
             {/* The embedded map is only a preview: pointer events are disabled
@@ -165,7 +165,7 @@ export default function ContactPage() {
         </div>
 
         <div className="rounded-2xl border border-slate-200 p-6">
-          <h2 className="mb-6 text-lg font-semibold text-brand-navy">{t("formTitle")}</h2>
+          <h2 className="mb-6 heading-sub">{t("formTitle")}</h2>
 
           {success ? (
             <p className="rounded-lg bg-emerald-50 px-4 py-3 text-sm text-emerald-700">

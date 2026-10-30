@@ -70,10 +70,7 @@ function WhyUs() {
         <p className="text-sm font-medium uppercase tracking-widest text-brand-gold">
           {t("whyEyebrow")}
         </p>
-        <h2
-          className="mt-3 text-4xl font-black uppercase leading-none tracking-tight sm:text-6xl"
-          style={{ fontFamily: "var(--font-display)" }}
-        >
+        <h2 className="mt-3 text-4xl leading-none font-bold tracking-tight uppercase sm:text-5xl">
           {t("whyTitle")}
         </h2>
         <p className="mt-4 max-w-2xl text-lg text-slate-300">{t("whyTagline")}</p>
@@ -115,7 +112,7 @@ function RentalTerms() {
         <p className="text-sm font-medium uppercase tracking-widest text-brand-gold-dark">
           {t("termsEyebrow")}
         </p>
-        <h2 className="mt-2 mb-10 text-2xl font-semibold text-brand-navy">{t("termsTitle")}</h2>
+        <h2 className="mt-2 mb-10 heading-section">{t("termsTitle")}</h2>
         <dl className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {items.map((item) => (
             <div
@@ -145,10 +142,7 @@ function Hero({ backgroundImage }: { backgroundImage: string | null }) {
       >
         <div className="absolute inset-0 bg-gradient-to-r from-brand-navy/95 via-brand-navy/75 to-brand-navy/40" />
         <div className="relative mx-auto flex max-w-6xl flex-col items-start gap-6 px-4 py-24 sm:py-32">
-          <h1
-            className="max-w-2xl text-4xl font-black text-white sm:text-5xl"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
+          <h1 className="max-w-2xl text-4xl leading-[1.08] font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
             {t("heroTitle")}
           </h1>
           <p className="max-w-xl text-lg text-slate-100">{t("heroSubtitle")}</p>
@@ -176,7 +170,7 @@ function Hero({ backgroundImage }: { backgroundImage: string | null }) {
   return (
     <section className="bg-gradient-to-b from-brand-gold/10 to-white">
       <div className="mx-auto flex max-w-6xl flex-col items-start gap-6 px-4 py-16">
-        <h1 className="max-w-2xl text-4xl font-bold tracking-tight text-brand-navy sm:text-5xl">
+        <h1 className="max-w-2xl text-4xl leading-[1.08] font-bold tracking-tight text-brand-navy sm:text-5xl lg:text-6xl">
           {t("heroTitle")}
         </h1>
         <p className="max-w-xl text-lg text-slate-600">{t("heroSubtitle")}</p>
@@ -207,20 +201,20 @@ function HowItWorks() {
   return (
     <section className="border-t border-slate-100 bg-slate-50">
       <div className="mx-auto max-w-6xl px-4 py-16">
-        <h2 className="mb-10 text-2xl font-semibold text-brand-navy">
+        <h2 className="mb-10 heading-section">
           {t("howItWorksTitle")}
         </h2>
         <div className="grid gap-8 sm:grid-cols-3">
           <div>
-            <h3 className="font-semibold text-brand-navy">{t("step1Title")}</h3>
+            <h3 className="heading-sub">{t("step1Title")}</h3>
             <p className="mt-2 text-slate-600">{t("step1Text")}</p>
           </div>
           <div>
-            <h3 className="font-semibold text-brand-navy">{t("step2Title")}</h3>
+            <h3 className="heading-sub">{t("step2Title")}</h3>
             <p className="mt-2 text-slate-600">{t("step2Text")}</p>
           </div>
           <div>
-            <h3 className="font-semibold text-brand-navy">{t("step3Title")}</h3>
+            <h3 className="heading-sub">{t("step3Title")}</h3>
             <p className="mt-2 text-slate-600">{t("step3Text")}</p>
           </div>
         </div>

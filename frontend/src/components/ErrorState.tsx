@@ -14,10 +14,7 @@ export default function ErrorState({
   return (
     <div className="mx-auto flex max-w-lg flex-col items-center px-4 py-24 text-center">
       {code && (
-        <span
-          className="text-6xl font-black text-brand-gold"
-          style={{ fontFamily: "var(--font-display)" }}
-        >
+        <span className="text-6xl font-bold tracking-tight text-brand-gold">
           {code}
         </span>
       )}

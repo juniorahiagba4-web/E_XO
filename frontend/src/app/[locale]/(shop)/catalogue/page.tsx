@@ -14,7 +14,7 @@ export default async function CataloguePage({
   return (
     <div className="mx-auto max-w-6xl px-4 py-12">
       <Breadcrumbs items={[{ label: tNav("home"), href: "/" }, { label: t("title") }]} />
-      <h1 className="mb-8 text-3xl font-bold text-brand-navy">{t("title")}</h1>
+      <h1 className="mb-8 heading-page">{t("title")}</h1>
 
       <CatalogueBrowser
         locale={locale}

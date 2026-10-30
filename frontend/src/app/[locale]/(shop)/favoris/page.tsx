@@ -34,7 +34,7 @@ export default function FavoritesPage() {
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-12">
-      <h1 className="mb-8 text-3xl font-bold text-brand-navy">{t("title")}</h1>
+      <h1 className="mb-8 heading-page">{t("title")}</h1>
 
       {error && <p className="text-sm text-red-600">{error}</p>}
 

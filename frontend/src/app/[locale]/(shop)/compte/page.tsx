@@ -42,7 +42,7 @@ export default function AccountPage() {
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-12">
-      <h1 className="mb-2 text-3xl font-bold text-brand-navy">{t("title")}</h1>
+      <h1 className="mb-2 heading-page">{t("title")}</h1>
       <p className="mb-8 text-slate-500">
         {t("greeting", { name: user.first_name ?? user.name })}
       </p>
@@ -58,7 +58,7 @@ export default function AccountPage() {
           {reservations.map((res) => (
             <div key={res.reference} className="flex flex-wrap items-center justify-between gap-3 p-4">
               <div>
-                <p className="font-mono text-sm font-medium text-brand-navy">{res.reference}</p>
+                <p className="text-sm font-semibold tracking-wide text-brand-navy tabular-nums">{res.reference}</p>
                 <p className="text-xs text-slate-500">
                   {res.type === "purchase" ? t("typePurchase") : t("typeRental")} · {tStatus(res.status)}
                 </p>
