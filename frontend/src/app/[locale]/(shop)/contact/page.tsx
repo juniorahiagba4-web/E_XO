@@ -3,7 +3,14 @@
 import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { sendContactMessage, ApiError } from "@/lib/api";
-import { COMPANY_ADDRESS, COMPANY_EMAIL, COMPANY_PHONE, SOCIAL_LINKS } from "@/lib/config";
+import {
+  COMPANY_ADDRESS,
+  COMPANY_EMAIL,
+  COMPANY_MAPS_QUERY,
+  COMPANY_MAPS_URL,
+  COMPANY_PHONE,
+  SOCIAL_LINKS,
+} from "@/lib/config";
 import { FacebookIcon, InstagramIcon, TiktokIcon, WhatsappIcon } from "@/components/icons/SocialIcons";
 
 function MapPinIcon() {
@@ -91,7 +98,7 @@ export default function ContactPage() {
                 so the whole card acts as a single link to Google Maps. */}
             <div className="relative h-44 bg-slate-100">
               <iframe
-                src={`https://maps.google.com/maps?q=${encodeURIComponent(COMPANY_ADDRESS)}&z=15&output=embed`}
+                src={`https://maps.google.com/maps?q=${encodeURIComponent(COMPANY_MAPS_QUERY)}&z=16&output=embed`}
                 title={t("mapTitle")}
                 loading="lazy"
                 tabIndex={-1}
@@ -111,7 +118,7 @@ export default function ContactPage() {
               </span>
             </div>
             <a
-              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(COMPANY_ADDRESS)}`}
+              href={COMPANY_MAPS_URL}
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`${t("openInMaps")} : ${COMPANY_ADDRESS}`}
