@@ -65,7 +65,7 @@ export default function AccountPage() {
               </div>
               <div className="flex items-center gap-4">
                 <span className="font-semibold text-brand-navy">
-                  {formatPrice(res.total)} {res.currency}
+                  {formatPrice(res.total)} FCFA
                 </span>
                 {res.quote_pdf_url && (
                   <a

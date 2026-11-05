@@ -90,7 +90,7 @@ export default function ItemCard({ item }: { item: Item }) {
         <div className="text-sm text-slate-700">
           {mode === "rental" ? (
             <span>
-              {formatPrice(item.rental_price_per_day)} {t("perDay")}
+              {formatPrice(item.rental_price_per_day)} FCFA {t("perDay")}
             </span>
           ) : item.sale_price_on_request ? (
             <span className="text-brand-gold-dark">{t("priceOnRequest")}</span>

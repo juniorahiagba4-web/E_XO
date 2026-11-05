@@ -78,7 +78,7 @@ export default function AvailabilityAndQuote({
       {mode === "rental" ? (
         <>
           <p className="text-xl text-brand-gold-dark">
-            {formatPrice(item.rental_price_per_day)} {t("perDay")}
+            {formatPrice(item.rental_price_per_day)} FCFA {t("perDay")}
           </p>
           <p className={`mt-2 text-sm font-medium ${item.total_stock > 0 ? "text-emerald-600" : "text-red-500"}`}>
             {item.total_stock > 0

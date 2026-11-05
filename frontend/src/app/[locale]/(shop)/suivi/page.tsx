@@ -72,7 +72,7 @@ export default function TrackQuotePage() {
           </p>
           <p className="mt-2 font-medium text-brand-navy">Statut : {tStatus(reservation.status)}</p>
           <p className="mt-1 text-slate-600">
-            Total : {formatPrice(reservation.total)} {reservation.currency}
+            Total : {formatPrice(reservation.total)} FCFA
           </p>
           {reservation.items?.some((line) => line.price_on_request) && (
             <p className="mt-1 text-xs text-slate-500">

@@ -170,7 +170,7 @@ export default function DevisPage() {
                   const rowTotal = lineTotal(line);
 
                   return (
-                    <div key={line.item.id} className="flex items-center gap-3 p-3">
+                    <div key={line.item.id} className="flex gap-3 p-3">
                       <div className="h-16 w-16 shrink-0 overflow-hidden rounded-lg bg-slate-100">
                         {line.item.image_url ? (
                           // eslint-disable-next-line @next/next/no-img-element
@@ -181,39 +181,57 @@ export default function DevisPage() {
                           </div>
                         )}
                       </div>
-                      <div className="min-w-0 flex-1">
-                        <p className="truncate font-medium text-brand-navy">{line.item.name}</p>
-                        <p className="text-sm text-slate-500">
-                          {isPriceOnRequest(line)
-                            ? tProduct("priceOnRequest")
-                            : isPurchase
-                              ? `${formatPrice(unitPrice)} FCFA`
-                              : `${formatPrice(unitPrice)} FCFA x ${nights}j`}
-                        </p>
+                      {/* Two rows (details, then quantity and total) so nothing
+                          overlaps on a narrow phone screen. */}
+                      <div className="flex min-w-0 flex-1 flex-col gap-2">
+                        <div className="flex items-start justify-between gap-2">
+                          <div className="min-w-0">
+                            <p className="truncate font-medium text-brand-navy">{line.item.name}</p>
+                            <p className="text-sm text-slate-500">
+                              {isPriceOnRequest(line)
+                                ? tProduct("priceOnRequest")
+                                : isPurchase
+                                  ? `${formatPrice(unitPrice)} FCFA`
+                                  : nights > 0
+                                    ? `${formatPrice(unitPrice)} FCFA × ${t("days", { count: nights })}`
+                                    : `${formatPrice(unitPrice)} FCFA ${tProduct("perDay")}`}
+                            </p>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => cart.removeLine(line.item.id)}
+                            aria-label={t("removeLine")}
+                            className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-sm text-red-500 hover:bg-red-50"
+                          >
+                            ✕
+                          </button>
+                        </div>
+                        <div className="flex items-center justify-between gap-3">
+                          <QuantityStepper
+                            value={line.quantity}
+                            min={1}
+                            max={isPurchase ? line.item.purchasable_quantity : line.item.total_stock}
+                            onChange={(value) => cart.updateQuantity(line.item.id, value)}
+                          />
+                          <p className="whitespace-nowrap text-right font-semibold text-brand-navy">
+                            {isPriceOnRequest(line)
+                              ? tProduct("priceOnRequestShort")
+                              : !isPurchase && nights === 0
+                                ? "—"
+                                : `${formatPrice(rowTotal)} FCFA`}
+                          </p>
+                        </div>
                       </div>
-                      <QuantityStepper
-                        value={line.quantity}
-                        min={1}
-                        max={isPurchase ? line.item.purchasable_quantity : line.item.total_stock}
-                        onChange={(value) => cart.updateQuantity(line.item.id, value)}
-                      />
-                      <p className="w-24 shrink-0 text-right font-medium text-brand-navy">
-                        {isPriceOnRequest(line) ? tProduct("priceOnRequestShort") : `${formatPrice(rowTotal)} FCFA`}
-                      </p>
-                      <button
-                        type="button"
-                        onClick={() => cart.removeLine(line.item.id)}
-                        aria-label={t("removeLine")}
-                        className="shrink-0 text-sm text-red-500 hover:underline"
-                      >
-                        ✕
-                      </button>
                     </div>
                   );
                 })}
                 <div className="flex items-center justify-between p-4 text-lg font-semibold text-brand-navy">
-                  <span>{t("total")}</span>
-                  <span>{formatPrice(total)} FCFA</span>
+                  <span className="whitespace-nowrap">{t("total")}</span>
+                  {!isPurchase && nights === 0 ? (
+                    <span className="text-right text-sm font-normal text-slate-500">{t("pickDatesForTotal")}</span>
+                  ) : (
+                    <span className="whitespace-nowrap">{formatPrice(total)} FCFA</span>
+                  )}
                 </div>
               </div>
               {hasPriceOnRequestLine && (

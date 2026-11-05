@@ -133,6 +133,8 @@
     "titlePurchase": "Ma commande",
     "cartTitle": "Mon panier",
     "total": "Total estimé",
+    "days": "{count, plural, one {# jour} other {# jours}}",
+    "pickDatesForTotal": "Choisissez vos dates ci-dessous",
     "customerInfo": "Vos coordonnées",
     "firstName": "Prénom",
     "lastName": "Nom",

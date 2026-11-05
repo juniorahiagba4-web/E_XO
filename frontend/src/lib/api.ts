@@ -98,7 +98,13 @@ export function getCategories(locale: string) {
 }
 
 export function getSiteSettings(locale: string) {
-  return apiFetch<{ data: { homepage_hero_image_url: string | null } }>(
+  return apiFetch<{
+    data: {
+      homepage_hero_image_url: string | null;
+      homepage_hero_title: string | null;
+      homepage_hero_subtitle: string | null;
+    };
+  }>(
     "/site-settings",
     locale,
   ).then((r) => r.data);

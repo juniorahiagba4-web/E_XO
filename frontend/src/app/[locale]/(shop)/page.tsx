@@ -19,11 +19,19 @@ export default async function HomePage({
 }: PageProps<"/[locale]">) {
   const { locale } = await params;
   const { category, search, sort, min_price, max_price } = await searchParams;
-  const settings = await getSiteSettings(locale).catch(() => ({ homepage_hero_image_url: null }));
+  const settings = await getSiteSettings(locale).catch(() => ({
+    homepage_hero_image_url: null,
+    homepage_hero_title: null,
+    homepage_hero_subtitle: null,
+  }));
 
   return (
     <div>
-      <Hero backgroundImage={settings.homepage_hero_image_url} />
+      <Hero
+        backgroundImage={settings.homepage_hero_image_url}
+        title={settings.homepage_hero_title}
+        subtitle={settings.homepage_hero_subtitle}
+      />
 
       <WhyUs />
 
@@ -65,7 +73,7 @@ function WhyUs() {
   const items = t.raw("whyItems") as WhyItem[];
 
   return (
-    <section className="bg-brand-navy-dark text-white">
+    <section className="bg-brand-navy text-white">
       <div className="mx-auto max-w-6xl px-4 py-16 sm:py-20">
         <p className="text-sm font-medium uppercase tracking-widest text-brand-gold">
           {t("whyEyebrow")}
@@ -131,8 +139,20 @@ function RentalTerms() {
   );
 }
 
-function Hero({ backgroundImage }: { backgroundImage: string | null }) {
+// Title and subtitle are editable in the admin ("Page d'accueil"); the
+// translated defaults are used until the admin sets them.
+function Hero({
+  backgroundImage,
+  title,
+  subtitle,
+}: {
+  backgroundImage: string | null;
+  title: string | null;
+  subtitle: string | null;
+}) {
   const t = useTranslations("home");
+  const heroTitle = title ?? t("heroTitle");
+  const heroSubtitle = subtitle ?? t("heroSubtitle");
 
   if (backgroundImage) {
     return (
@@ -143,9 +163,9 @@ function Hero({ backgroundImage }: { backgroundImage: string | null }) {
         <div className="absolute inset-0 bg-gradient-to-r from-brand-navy/95 via-brand-navy/75 to-brand-navy/40" />
         <div className="relative mx-auto flex max-w-6xl flex-col items-start gap-6 px-4 py-24 sm:py-32">
           <h1 className="max-w-2xl text-4xl leading-[1.08] font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
-            {t("heroTitle")}
+            {heroTitle}
           </h1>
-          <p className="max-w-xl text-lg text-slate-100">{t("heroSubtitle")}</p>
+          <p className="max-w-xl text-lg text-slate-100">{heroSubtitle}</p>
           <div className="flex flex-wrap gap-3">
             <Link
               href="/catalogue"
@@ -171,9 +191,9 @@ function Hero({ backgroundImage }: { backgroundImage: string | null }) {
     <section className="bg-gradient-to-b from-brand-gold/10 to-white">
       <div className="mx-auto flex max-w-6xl flex-col items-start gap-6 px-4 py-16">
         <h1 className="max-w-2xl text-4xl leading-[1.08] font-bold tracking-tight text-brand-navy sm:text-5xl lg:text-6xl">
-          {t("heroTitle")}
+          {heroTitle}
         </h1>
-        <p className="max-w-xl text-lg text-slate-600">{t("heroSubtitle")}</p>
+        <p className="max-w-xl text-lg text-slate-600">{heroSubtitle}</p>
         <div className="flex flex-wrap gap-3">
           <Link
             href="/catalogue"

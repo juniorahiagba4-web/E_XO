@@ -16,10 +16,15 @@ class SiteSettingController extends Controller
     public function index(): JsonResponse
     {
         $heroImagePath = Setting::get('homepage_hero_image');
+        // Edited in the admin "Page d'accueil" page; null means "use the
+        // default text shipped with the site".
+        $locale = app()->getLocale() === 'en' ? 'en' : 'fr';
 
         return response()->json([
             'data' => [
                 'homepage_hero_image_url' => $heroImagePath ? Storage::disk('public')->url($heroImagePath) : null,
+                'homepage_hero_title' => Setting::get("homepage_hero_title_{$locale}") ?: null,
+                'homepage_hero_subtitle' => Setting::get("homepage_hero_subtitle_{$locale}") ?: null,
             ],
         ]);
     }
