@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\DeliverySlotTemplates\Tables;
 
+use App\Models\DeliverySlotTemplate;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -35,7 +36,9 @@ class DeliverySlotTemplatesTable
                     ->time('H:i')
                     ->sortable(),
                 TextColumn::make('type')
-                    ->badge(),
+                    ->label('Type')
+                    ->badge()
+                    ->formatStateUsing(fn (string $state) => DeliverySlotTemplate::TYPE_LABELS[$state] ?? $state),
                 TextColumn::make('capacity')
                     ->label('Capacité')
                     ->numeric()

@@ -99,6 +99,8 @@ export type CreateReservationPayload = {
   event_end_date?: string;
   delivery_method: "delivery" | "pickup";
   delivery_address?: string;
+  delivery_date?: string;
+  delivery_time?: string;
   delivery_slot_id?: number | null;
   return_slot_id?: number | null;
   notes?: string;

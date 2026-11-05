@@ -44,6 +44,9 @@
         @if($reservation->delivery_address)
             — {{ $reservation->delivery_address }}
         @endif
+        @if($reservation->deliveryWish())
+            <br><strong>Livraison souhaitée :</strong> {{ $reservation->deliveryWish() }}
+        @endif
     </p>
 
     <table>
@@ -67,14 +70,14 @@
                         @if($priceOnRequest)
                             Sur devis
                         @else
-                            {{ number_format((float) ($line->unit_sale_price ?? $line->unit_price_per_day), 0, ',', ' ') }} {{ $reservation->currency }}
+                            {{ number_format((float) ($line->unit_sale_price ?? $line->unit_price_per_day), 0, ',', ' ') }} FCFA
                         @endif
                     </td>
                     <td>
                         @if($priceOnRequest)
                             À confirmer
                         @else
-                            {{ number_format((float) $line->subtotal, 0, ',', ' ') }} {{ $reservation->currency }}
+                            {{ number_format((float) $line->subtotal, 0, ',', ' ') }} FCFA
                         @endif
                     </td>
                 </tr>
@@ -85,17 +88,17 @@
     <table class="totals">
         <tr>
             <td class="label">Sous-total</td>
-            <td>{{ number_format((float) $reservation->subtotal, 0, ',', ' ') }} {{ $reservation->currency }}</td>
+            <td>{{ number_format((float) $reservation->subtotal, 0, ',', ' ') }} FCFA</td>
         </tr>
         @if($reservation->discount > 0)
             <tr>
                 <td class="label">Remise</td>
-                <td>- {{ number_format((float) $reservation->discount, 0, ',', ' ') }} {{ $reservation->currency }}</td>
+                <td>- {{ number_format((float) $reservation->discount, 0, ',', ' ') }} FCFA</td>
             </tr>
         @endif
         <tr>
             <td class="label"><strong>Total</strong></td>
-            <td><strong>{{ number_format((float) $reservation->total, 0, ',', ' ') }} {{ $reservation->currency }}</strong></td>
+            <td><strong>{{ number_format((float) $reservation->total, 0, ',', ' ') }} FCFA</strong></td>
         </tr>
     </table>
 

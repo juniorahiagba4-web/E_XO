@@ -39,7 +39,7 @@ class ReservationStatsOverview extends StatsOverviewWidget
             ->count();
 
         return [
-            Stat::make('Chiffre d\'affaires (ce mois)', number_format((float) $revenueThisMonth, 0, ',', ' ').' XOF')
+            Stat::make('Chiffre d\'affaires (ce mois)', number_format((float) $revenueThisMonth, 0, ',', ' ').' FCFA')
                 ->description('Locations et achats confirmés')
                 ->icon(Heroicon::OutlinedBanknotes)
                 ->color('success'),

@@ -23,6 +23,10 @@ class ReservationResource extends Resource
 
     protected static string|\UnitEnum|null $navigationGroup = 'Réservations';
 
+    protected static ?string $modelLabel = 'réservation';
+
+    protected static ?string $pluralModelLabel = 'Réservations';
+
     public static function form(Schema $schema): Schema
     {
         return ReservationForm::configure($schema);

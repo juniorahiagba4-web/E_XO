@@ -17,8 +17,8 @@ class ItemReviewSeeder extends Seeder
                 ['author_name' => 'Sena A.', 'rating' => 5, 'comment' => "L'équipe a été très professionnelle, je recommande vivement."],
             ],
             'glaciere-100l' => [
-                ['author_name' => 'Yawa K.', 'rating' => 5, 'comment' => "Tenue au frais impeccable pendant toute la réception, très pratique."],
-                ['author_name' => 'Edem T.', 'rating' => 4.7, 'comment' => "Grande capacité, parfaite pour un événement de 150 personnes."],
+                ['author_name' => 'Yawa K.', 'rating' => 5, 'comment' => 'Tenue au frais impeccable pendant toute la réception, très pratique.'],
+                ['author_name' => 'Edem T.', 'rating' => 4.7, 'comment' => 'Grande capacité, parfaite pour un événement de 150 personnes.'],
             ],
         ];
 

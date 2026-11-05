@@ -14,9 +14,10 @@ class SettingForm
         return $schema
             ->components([
                 TextInput::make('key')
+                    ->label('Nom technique')
                     ->required()
                     ->unique(ignoreRecord: true)
-                    ->helperText("Clé connue du site : \"homepage_hero_image\" (image de fond de l'accueil)."),
+                    ->helperText("Réservé aux réglages techniques. Pour le texte et l'image de l'accueil, utilisez plutôt Paramètres → Page d'accueil."),
                 FileUpload::make('image_upload')
                     ->label('Image')
                     ->image()

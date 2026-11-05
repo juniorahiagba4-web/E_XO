@@ -35,10 +35,10 @@ class CustomerExporter extends Exporter
     public static function getCompletedNotificationBody(Export $export): string
     {
         $body = 'Votre export des clients est terminé : '
-            . $export->successful_rows . ' ' . Str::plural('ligne', $export->successful_rows) . ' exportée(s).';
+            .$export->successful_rows.' '.Str::plural('ligne', $export->successful_rows).' exportée(s).';
 
         if ($failedRowsCount = $export->getFailedRowsCount()) {
-            $body .= ' ' . $failedRowsCount . ' ' . Str::plural('ligne', $failedRowsCount) . ' en échec.';
+            $body .= ' '.$failedRowsCount.' '.Str::plural('ligne', $failedRowsCount).' en échec.';
         }
 
         return $body;

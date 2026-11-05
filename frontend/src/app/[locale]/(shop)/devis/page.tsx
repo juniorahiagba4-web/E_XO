@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { differenceInCalendarDays } from "date-fns";
+import { differenceInCalendarDays, format, parseISO } from "date-fns";
 import { useLocale, useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
 import { useCart } from "@/lib/cart-context";
@@ -25,6 +25,9 @@ export default function DevisPage() {
 
   const [deliveryMethod, setDeliveryMethod] = useState<"delivery" | "pickup">("pickup");
   const [address, setAddress] = useState("");
+  const [deliveryTime, setDeliveryTime] = useState("");
+  const [deliveryDate, setDeliveryDate] = useState("");
+  const today = format(new Date(), "yyyy-MM-dd");
   const [notes, setNotes] = useState("");
   const [guestFirstName, setGuestFirstName] = useState("");
   const [guestLastName, setGuestLastName] = useState("");
@@ -78,6 +81,9 @@ export default function DevisPage() {
           event_end_date: isPurchase ? undefined : cart.eventEndDate,
           delivery_method: deliveryMethod,
           delivery_address: deliveryMethod === "delivery" ? address : undefined,
+          delivery_time: deliveryMethod === "delivery" && deliveryTime ? deliveryTime : undefined,
+          delivery_date:
+            deliveryMethod === "delivery" && isPurchase && deliveryDate ? deliveryDate : undefined,
           notes,
           customer: user
             ? undefined
@@ -306,13 +312,49 @@ export default function DevisPage() {
                   </label>
                 </div>
                 {deliveryMethod === "delivery" && (
-                  <input
-                    required
-                    placeholder={t("address")}
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                    className="mt-3 w-full rounded-lg border border-slate-300 px-3 py-2 focus:border-brand-gold focus:outline-none"
-                  />
+                  <div className="mt-3 flex flex-col gap-3">
+                    <input
+                      required
+                      placeholder={t("address")}
+                      value={address}
+                      onChange={(e) => setAddress(e.target.value)}
+                      className="w-full rounded-lg border border-slate-300 px-3 py-2 focus:border-brand-gold focus:outline-none"
+                    />
+                    {/* A rental is delivered on its first day; a purchase has no
+                        dates yet, so the customer also picks the day. */}
+                    <div className="grid gap-3 sm:grid-cols-2">
+                      {isPurchase && (
+                        <label className="flex flex-col gap-1 text-sm text-slate-600">
+                          {t("deliveryDate")}
+                          <input
+                            required
+                            type="date"
+                            min={today}
+                            value={deliveryDate}
+                            onChange={(e) => setDeliveryDate(e.target.value)}
+                            className="rounded-lg border border-slate-300 px-3 py-2 text-base text-brand-navy focus:border-brand-gold focus:outline-none"
+                          />
+                        </label>
+                      )}
+                      <label className="flex flex-col gap-1 text-sm text-slate-600">
+                        {t("deliveryTime")}
+                        <input
+                          required
+                          type="time"
+                          step={900}
+                          value={deliveryTime}
+                          onChange={(e) => setDeliveryTime(e.target.value)}
+                          className="rounded-lg border border-slate-300 px-3 py-2 text-base text-brand-navy focus:border-brand-gold focus:outline-none"
+                        />
+                      </label>
+                    </div>
+                    <p className="text-xs text-slate-500">
+                      {!isPurchase && cart.eventStartDate
+                        ? `${t("deliveryOnStart", { date: format(parseISO(cart.eventStartDate), "dd/MM/yyyy") })} `
+                        : ""}
+                      {t("deliveryTimeHint")}
+                    </p>
+                  </div>
                 )}
               </fieldset>
 

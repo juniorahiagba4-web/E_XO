@@ -15,26 +15,35 @@ class CustomersTable
         return $table
             ->columns([
                 TextColumn::make('user.name')
+                    ->label('Compte sur le site')
+                    ->placeholder('—')
                     ->searchable(),
                 TextColumn::make('first_name')
+                    ->label('Prénom')
                     ->searchable(),
                 TextColumn::make('last_name')
+                    ->label('Nom')
                     ->searchable(),
                 TextColumn::make('email')
                     ->label('Adresse email')
                     ->searchable(),
                 TextColumn::make('phone')
+                    ->label('Téléphone')
                     ->searchable(),
                 TextColumn::make('company_name')
+                    ->label('Entreprise')
                     ->searchable(),
                 TextColumn::make('city')
+                    ->label('Ville')
                     ->searchable(),
                 TextColumn::make('created_at')
-                    ->dateTime()
+                    ->label('Client depuis')
+                    ->dateTime('d/m/Y H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->label('Modifié le')
+                    ->dateTime('d/m/Y H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

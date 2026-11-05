@@ -15,7 +15,7 @@ use Illuminate\Support\Str;
     'reference', 'customer_id', 'status', 'type',
     'event_start_date', 'event_end_date',
     'delivery_method', 'delivery_address',
-    'delivery_slot_template_id', 'delivery_date',
+    'delivery_slot_template_id', 'delivery_date', 'delivery_time',
     'return_slot_template_id', 'return_date',
     'notes', 'subtotal', 'deposit_required', 'discount', 'total', 'currency',
     'quote_pdf_path', 'quote_generated_at', 'hold_expires_at', 'confirmed_at', 'cancelled_at',
@@ -31,6 +31,27 @@ class Reservation extends Model
     public const BLOCKING_STATUSES = ['quote_sent', 'confirmed', 'deposit_paid', 'ongoing'];
 
     public const QUOTE_HOLD_HOURS = 48;
+
+    /** What the admin panel, exports and documents show for each stored code. */
+    public const STATUS_LABELS = [
+        'draft' => 'Brouillon',
+        'quote_sent' => 'Envoyé',
+        'confirmed' => 'Confirmé',
+        'deposit_paid' => 'Acompte payé',
+        'ongoing' => 'En cours',
+        'completed' => 'Terminé',
+        'cancelled' => 'Annulé',
+    ];
+
+    public const TYPE_LABELS = [
+        'rental' => 'Location',
+        'purchase' => 'Achat',
+    ];
+
+    public const DELIVERY_METHOD_LABELS = [
+        'delivery' => 'Livraison à domicile',
+        'pickup' => 'Retrait en boutique',
+    ];
 
     protected function casts(): array
     {
@@ -148,6 +169,24 @@ class Reservation extends Model
         });
     }
 
+    /**
+     * The delivery the customer asked for, e.g. "le 12/11/2026 à 14:30",
+     * or null when they pick the furniture up themselves.
+     */
+    public function deliveryWish(): ?string
+    {
+        if ($this->delivery_method !== 'delivery') {
+            return null;
+        }
+
+        $parts = array_filter([
+            $this->delivery_date ? 'le '.$this->delivery_date->format('d/m/Y') : null,
+            $this->delivery_time ? 'à '.str_replace(':', 'h', $this->delivery_time) : null,
+        ]);
+
+        return $parts ? implode(' ', $parts) : null;
+    }
+
     public function whatsappMessage(): string
     {
         $isRental = $this->type === 'rental';
@@ -162,7 +201,11 @@ class Reservation extends Model
             $lines[] = 'Période : '.$this->event_start_date->format('d/m/Y').' au '.$this->event_end_date->format('d/m/Y');
         }
 
-        $lines[] = 'Total estimé : '.number_format((float) $this->total, 0, ',', ' ')." {$this->currency}";
+        if ($wish = $this->deliveryWish()) {
+            $lines[] = "Livraison souhaitée : {$wish}";
+        }
+
+        $lines[] = 'Total estimé : '.number_format((float) $this->total, 0, ',', ' ').' FCFA';
 
         return implode("\n", $lines);
     }

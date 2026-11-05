@@ -18,9 +18,11 @@ class ReservationExporter extends Exporter
             ExportColumn::make('reference')
                 ->label('Référence'),
             ExportColumn::make('type')
-                ->label('Type'),
+                ->label('Type')
+                ->formatStateUsing(fn (?string $state) => Reservation::TYPE_LABELS[$state] ?? $state),
             ExportColumn::make('status')
-                ->label('Statut'),
+                ->label('Statut')
+                ->formatStateUsing(fn (?string $state) => Reservation::STATUS_LABELS[$state] ?? $state),
             ExportColumn::make('customer.full_name')
                 ->label('Client'),
             ExportColumn::make('customer.email')
@@ -32,7 +34,12 @@ class ReservationExporter extends Exporter
             ExportColumn::make('event_end_date')
                 ->label('Fin événement'),
             ExportColumn::make('delivery_method')
-                ->label('Livraison'),
+                ->label('Livraison')
+                ->formatStateUsing(fn (?string $state) => Reservation::DELIVERY_METHOD_LABELS[$state] ?? $state),
+            ExportColumn::make('delivery_date')
+                ->label('Date de livraison'),
+            ExportColumn::make('delivery_time')
+                ->label('Heure de livraison souhaitée'),
             ExportColumn::make('delivery_address')
                 ->label('Adresse de livraison'),
             ExportColumn::make('subtotal')
@@ -41,8 +48,6 @@ class ReservationExporter extends Exporter
                 ->label('Remise'),
             ExportColumn::make('total')
                 ->label('Total'),
-            ExportColumn::make('currency')
-                ->label('Devise'),
             ExportColumn::make('confirmed_at')
                 ->label('Confirmée le'),
             ExportColumn::make('cancelled_at')
@@ -55,10 +60,10 @@ class ReservationExporter extends Exporter
     public static function getCompletedNotificationBody(Export $export): string
     {
         $body = 'Votre export des réservations est terminé : '
-            . $export->successful_rows . ' ' . Str::plural('ligne', $export->successful_rows) . ' exportée(s).';
+            .$export->successful_rows.' '.Str::plural('ligne', $export->successful_rows).' exportée(s).';
 
         if ($failedRowsCount = $export->getFailedRowsCount()) {
-            $body .= ' ' . $failedRowsCount . ' ' . Str::plural('ligne', $failedRowsCount) . ' en échec.';
+            $body .= ' '.$failedRowsCount.' '.Str::plural('ligne', $failedRowsCount).' en échec.';
         }
 
         return $body;

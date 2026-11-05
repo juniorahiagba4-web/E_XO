@@ -18,7 +18,7 @@ class ItemReviewResource extends Resource
 
     protected static string|\UnitEnum|null $navigationGroup = 'Catalogue';
 
-    protected static ?string $modelLabel = 'Avis client';
+    protected static ?string $modelLabel = 'avis client';
 
     protected static ?string $pluralModelLabel = 'Avis clients';
 

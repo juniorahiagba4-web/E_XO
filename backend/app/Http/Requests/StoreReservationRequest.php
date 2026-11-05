@@ -30,6 +30,11 @@ class StoreReservationRequest extends FormRequest
 
             'delivery_method' => ['required', 'in:delivery,pickup'],
             'delivery_address' => ['required_if:delivery_method,delivery', 'nullable', 'string', 'max:255'],
+            // Optional server-side so a quote is never lost over it; the
+            // storefront asks for it whenever delivery is chosen. A purchase
+            // has no event dates, so it also carries the wished delivery day.
+            'delivery_time' => ['nullable', 'date_format:H:i'],
+            'delivery_date' => ['nullable', 'date', 'after_or_equal:'.now()->toDateString()],
             'delivery_slot_id' => ['nullable', 'integer', 'exists:delivery_slot_templates,id'],
             'return_slot_id' => ['nullable', 'integer', 'exists:delivery_slot_templates,id'],
 

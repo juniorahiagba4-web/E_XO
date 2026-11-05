@@ -21,7 +21,7 @@ class ContactMessageResource extends Resource
 
     protected static string|\UnitEnum|null $navigationGroup = 'Messages';
 
-    protected static ?string $modelLabel = 'Message de contact';
+    protected static ?string $modelLabel = 'message de contact';
 
     protected static ?string $pluralModelLabel = 'Messages de contact';
 

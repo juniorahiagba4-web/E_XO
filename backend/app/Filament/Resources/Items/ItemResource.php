@@ -23,6 +23,10 @@ class ItemResource extends Resource
 
     protected static string|\UnitEnum|null $navigationGroup = 'Catalogue';
 
+    protected static ?string $modelLabel = 'article';
+
+    protected static ?string $pluralModelLabel = 'Articles';
+
     public static function form(Schema $schema): Schema
     {
         return ItemForm::configure($schema);

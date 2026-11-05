@@ -26,7 +26,7 @@ class RevenueChart extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'label' => 'XOF',
+                    'label' => 'FCFA',
                     'data' => $totals->values()->all(),
                     'borderColor' => '#f0b429',
                     'backgroundColor' => 'rgba(240, 180, 41, 0.15)',

@@ -13,20 +13,27 @@ class CustomerForm
         return $schema
             ->components([
                 Select::make('user_id')
-                    ->relationship('user', 'name'),
+                    ->label('Compte sur le site')
+                    ->relationship('user', 'name')
+                    ->helperText('Vide si le client a demandé un devis sans créer de compte.'),
                 TextInput::make('first_name')
+                    ->label('Prénom')
                     ->required(),
                 TextInput::make('last_name')
+                    ->label('Nom')
                     ->required(),
                 TextInput::make('email')
                     ->label('Adresse email')
                     ->email()
                     ->required(),
                 TextInput::make('phone')
+                    ->label('Téléphone')
                     ->tel()
                     ->required(),
-                TextInput::make('company_name'),
-                TextInput::make('city'),
+                TextInput::make('company_name')
+                    ->label('Entreprise'),
+                TextInput::make('city')
+                    ->label('Ville'),
             ]);
     }
 }

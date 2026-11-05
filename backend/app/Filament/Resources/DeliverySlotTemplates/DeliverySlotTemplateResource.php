@@ -22,7 +22,9 @@ class DeliverySlotTemplateResource extends Resource
 
     protected static string|\UnitEnum|null $navigationGroup = 'Réservations';
 
-    protected static ?string $navigationLabel = 'Créneaux de livraison';
+    protected static ?string $modelLabel = 'créneau de livraison';
+
+    protected static ?string $pluralModelLabel = 'Créneaux de livraison';
 
     public static function form(Schema $schema): Schema
     {

@@ -35,9 +35,11 @@ class ItemsRelationManager extends RelationManager
                     ->numeric(),
                 TextColumn::make('unit_price_per_day')
                     ->label('Prix unitaire')
-                    ->formatStateUsing(fn ($state, $record) => $state ?? $record->unit_sale_price),
+                    ->getStateUsing(fn ($record) => $record->unit_price_per_day ?? $record->unit_sale_price)
+                    ->formatStateUsing(fn ($state) => $state === null ? 'Sur devis' : number_format((float) $state, 0, ',', ' ').' FCFA'),
                 TextColumn::make('subtotal')
-                    ->label('Sous-total'),
+                    ->label('Sous-total')
+                    ->formatStateUsing(fn ($state) => number_format((float) $state, 0, ',', ' ').' FCFA'),
             ])
             ->headerActions([])
             ->recordActions([])

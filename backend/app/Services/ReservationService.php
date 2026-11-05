@@ -8,6 +8,7 @@ use App\Models\Item;
 use App\Models\Promotion;
 use App\Models\Reservation;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;
 
@@ -96,6 +97,8 @@ class ReservationService
 
             $discount = $this->resolveDiscount($data['promo_code'] ?? null, $lines, $items);
 
+            $isDelivery = $data['delivery_method'] === 'delivery';
+
             $reservation = Reservation::query()->create([
                 'customer_id' => $customer->id,
                 'status' => 'quote_sent',
@@ -105,7 +108,8 @@ class ReservationService
                 'delivery_method' => $data['delivery_method'],
                 'delivery_address' => $data['delivery_address'] ?? null,
                 'delivery_slot_template_id' => $data['delivery_slot_id'] ?? null,
-                'delivery_date' => $start,
+                'delivery_date' => $isDelivery ? ($start ?? ($data['delivery_date'] ?? null)) : $start,
+                'delivery_time' => $isDelivery ? ($data['delivery_time'] ?? null) : null,
                 'return_slot_template_id' => $data['return_slot_id'] ?? null,
                 'return_date' => $end,
                 'notes' => $data['notes'] ?? null,
@@ -133,7 +137,7 @@ class ReservationService
      * may simply have expired between the client's preview and this request.
      *
      * @param  array<int, array{item_id: int, quantity: int, subtotal: float|int}>  $lines
-     * @param  \Illuminate\Support\Collection<int, Item>  $items
+     * @param  Collection<int, Item>  $items
      */
     private function resolveDiscount(?string $code, array $lines, $items): float
     {

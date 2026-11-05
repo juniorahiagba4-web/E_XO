@@ -11,6 +11,12 @@ class DeliverySlotTemplate extends Model
 {
     use HasFactory;
 
+    public const TYPE_LABELS = [
+        'delivery' => 'Livraison',
+        'pickup' => 'Retrait',
+        'both' => 'Livraison et retrait',
+    ];
+
     protected function casts(): array
     {
         return [

@@ -22,6 +22,10 @@ class SettingResource extends Resource
 
     protected static string|\UnitEnum|null $navigationGroup = 'Paramètres';
 
+    protected static ?string $modelLabel = 'paramètre avancé';
+
+    protected static ?string $pluralModelLabel = 'Paramètres avancés';
+
     public static function form(Schema $schema): Schema
     {
         return SettingForm::configure($schema);

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Reservations\Tables;
 
+use App\Models\Reservation;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -27,6 +28,7 @@ class ReservationsTable
                 TextColumn::make('status')
                     ->label('Statut')
                     ->badge()
+                    ->formatStateUsing(fn (string $state) => Reservation::STATUS_LABELS[$state] ?? $state)
                     ->color(fn (string $state) => match ($state) {
                         'draft' => 'gray',
                         'quote_sent' => 'warning',
@@ -39,7 +41,7 @@ class ReservationsTable
                 TextColumn::make('type')
                     ->label('Type')
                     ->badge()
-                    ->formatStateUsing(fn (string $state) => $state === 'purchase' ? 'Achat' : 'Location')
+                    ->formatStateUsing(fn (string $state) => Reservation::TYPE_LABELS[$state] ?? $state)
                     ->color(fn (string $state) => $state === 'purchase' ? 'success' : 'info'),
                 TextColumn::make('event_start_date')
                     ->label('Début')
@@ -49,15 +51,20 @@ class ReservationsTable
                     ->label('Fin')
                     ->date('d/m/Y')
                     ->sortable(),
+                // "Livraison" with the address and wished time underneath, so the
+                // team sees at a glance where and when to deliver.
                 TextColumn::make('delivery_method')
                     ->label('Livraison')
-                    ->formatStateUsing(fn (string $state) => $state === 'delivery' ? 'Livraison' : 'Retrait'),
+                    ->formatStateUsing(fn (string $state) => $state === 'delivery' ? 'À domicile' : 'Retrait en boutique')
+                    ->description(fn (Reservation $record) => $record->delivery_method === 'delivery'
+                        ? collect([$record->deliveryWish(), $record->delivery_address])->filter()->join(' — ')
+                        : null)
+                    ->wrap(),
                 TextColumn::make('total')
                     ->label('Total')
-                    ->numeric()
+                    ->numeric(decimalPlaces: 0, thousandsSeparator: ' ')
+                    ->suffix(' FCFA')
                     ->sortable(),
-                TextColumn::make('currency')
-                    ->label('Devise'),
                 TextColumn::make('created_at')
                     ->label('Créée le')
                     ->dateTime('d/m/Y H:i')
@@ -68,18 +75,13 @@ class ReservationsTable
             ->filters([
                 SelectFilter::make('status')
                     ->label('Statut')
-                    ->options([
-                        'draft' => 'Brouillon',
-                        'quote_sent' => 'Devis envoyé',
-                        'confirmed' => 'Confirmée',
-                        'deposit_paid' => 'Acompte payé',
-                        'ongoing' => 'En cours',
-                        'completed' => 'Terminée',
-                        'cancelled' => 'Annulée',
-                    ]),
+                    ->options(Reservation::STATUS_LABELS),
+                SelectFilter::make('delivery_method')
+                    ->label('Livraison')
+                    ->options(Reservation::DELIVERY_METHOD_LABELS),
                 SelectFilter::make('type')
                     ->label('Type')
-                    ->options(['rental' => 'Location', 'purchase' => 'Achat']),
+                    ->options(Reservation::TYPE_LABELS),
             ])
             ->recordActions([
                 Action::make('quote_pdf')

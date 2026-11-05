@@ -13,4 +13,10 @@ class ContactMessage extends Model
     public const STATUS_READ = 'read';
 
     public const STATUS_REPLIED = 'replied';
+
+    public const STATUS_LABELS = [
+        self::STATUS_NEW => 'Nouveau',
+        self::STATUS_READ => 'Lu',
+        self::STATUS_REPLIED => 'Répondu',
+    ];
 }

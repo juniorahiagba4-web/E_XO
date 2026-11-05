@@ -22,16 +22,21 @@ class CategoriesTable
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('slug')
+                    ->label('Adresse de la page')
                     ->searchable(),
                 TextColumn::make('parent.name_fr')
-                    ->label('Parent'),
+                    ->label('Catégorie parente')
+                    ->placeholder('—'),
                 TextColumn::make('sort_order')
+                    ->label('Ordre')
                     ->numeric()
                     ->sortable(),
                 IconColumn::make('is_active')
+                    ->label('Active')
                     ->boolean(),
                 TextColumn::make('created_at')
-                    ->dateTime()
+                    ->label('Créée le')
+                    ->dateTime('d/m/Y H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

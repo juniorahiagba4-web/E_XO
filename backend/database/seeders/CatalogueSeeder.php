@@ -17,7 +17,7 @@ class CatalogueSeeder extends Seeder
                 'items' => [
                     [
                         'fr' => 'Chaise Chiavari dorée', 'en' => 'Gold Chiavari chair', 'price' => 750, 'deposit' => 1500, 'sale' => 15000, 'stock' => 300, 'rating' => 4.8, 'rating_count' => 96,
-                        'description_fr' => "Chaise Chiavari élégante au cadre doré, idéale pour les mariages et réceptions haut de gamme. Empilable pour un stockage facile.",
+                        'description_fr' => 'Chaise Chiavari élégante au cadre doré, idéale pour les mariages et réceptions haut de gamme. Empilable pour un stockage facile.',
                         'description_en' => 'Elegant gold-framed Chiavari chair, ideal for weddings and upscale receptions. Stackable for easy storage.',
                         'specifications' => [
                             ['label' => 'Matériau', 'value' => 'Résine et métal doré'],
@@ -93,7 +93,7 @@ class CatalogueSeeder extends Seeder
                     [
                         'fr' => 'Glacière 100L', 'en' => '100L cooler', 'price' => 5000, 'deposit' => 10000, 'sale' => 85000, 'stock' => 15, 'rating' => 4.9, 'rating_count' => 22,
                         'description_fr' => "Grande glacière de 100 litres, parfaite pour garder boissons et rafraîchissements au frais toute la durée de l'événement.",
-                        'description_en' => "Large 100-liter cooler, perfect for keeping drinks and refreshments cold throughout the event.",
+                        'description_en' => 'Large 100-liter cooler, perfect for keeping drinks and refreshments cold throughout the event.',
                         'specifications' => [
                             ['label' => 'Capacité', 'value' => '100 L'],
                             ['label' => 'Dimensions', 'value' => '75 x 45 x 45 cm'],
@@ -102,7 +102,7 @@ class CatalogueSeeder extends Seeder
                     ],
                     [
                         'fr' => 'Glacière 50L', 'en' => '50L cooler', 'price' => 3000, 'deposit' => 6000, 'sale' => 55000, 'stock' => 20, 'rating' => 4.2, 'rating_count' => 11,
-                        'description_fr' => "Glacière compacte de 50 litres, facile à transporter pour les événements de taille moyenne.",
+                        'description_fr' => 'Glacière compacte de 50 litres, facile à transporter pour les événements de taille moyenne.',
                         'description_en' => 'Compact 50-liter cooler, easy to carry for medium-sized events.',
                         'specifications' => [
                             ['label' => 'Capacité', 'value' => '50 L'],

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\DeliverySlotTemplates\Schemas;
 
+use App\Models\DeliverySlotTemplate;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\TimePicker;
@@ -38,11 +39,7 @@ class DeliverySlotTemplateForm
                     ->seconds(false),
                 Select::make('type')
                     ->label('Type')
-                    ->options([
-                        'delivery' => 'Livraison',
-                        'pickup' => 'Retrait',
-                        'both' => 'Les deux',
-                    ])
+                    ->options(DeliverySlotTemplate::TYPE_LABELS)
                     ->required()
                     ->default('both')
                     ->native(false),

@@ -34,14 +34,16 @@ class ItemForm
                             ->afterStateUpdated(fn ($state, callable $set) => $set('slug', Str::slug($state))),
                         Textarea::make('description_fr')->label('Description (FR)'),
                     ]),
-                Section::make('English')
+                Section::make('Anglais')
                     ->columns(1)
                     ->schema([
-                        TextInput::make('name_en')->label('Name (EN)'),
+                        TextInput::make('name_en')->label('Nom (EN)'),
                         Textarea::make('description_en')->label('Description (EN)'),
                     ]),
 
                 TextInput::make('slug')
+                    ->label('Adresse de la page')
+                    ->helperText('Rempli automatiquement à partir du nom. Sert dans le lien de la fiche article.')
                     ->required()
                     ->unique(ignoreRecord: true),
                 FileUpload::make('image_path')
@@ -61,7 +63,7 @@ class ItemForm
                     ->helperText('Photos supplémentaires affichées comme miniatures sur la fiche article.'),
 
                 TextInput::make('sku')
-                    ->label('SKU')
+                    ->label('Référence interne')
                     ->required()
                     ->unique(ignoreRecord: true),
                 TextInput::make('unit_label')
@@ -70,16 +72,18 @@ class ItemForm
                     ->default('unité'),
 
                 TextInput::make('rental_price_per_day')
-                    ->label('Prix de location / jour (XOF)')
+                    ->label('Prix de location par jour')
                     ->required()
-                    ->numeric(),
+                    ->numeric()
+                    ->suffix('FCFA'),
                 Toggle::make('sale_price_on_request')
                     ->label('Prix de vente sur devis uniquement')
                     ->helperText('Active si cet article est à vendre mais sans prix fixe : le site affichera "Prix disponible sur devis" au lieu d\'un montant.')
                     ->live(),
                 TextInput::make('sale_price')
-                    ->label('Prix de vente (XOF)')
+                    ->label('Prix de vente')
                     ->numeric()
+                    ->suffix('FCFA')
                     ->hidden(fn ($get) => $get('sale_price_on_request'))
                     ->helperText('Laisser vide si cet article n\'est disponible qu\'à la location.'),
 

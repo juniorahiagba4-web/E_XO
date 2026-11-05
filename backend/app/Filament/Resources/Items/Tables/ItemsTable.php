@@ -27,17 +27,19 @@ class ItemsTable
                     ->label('Catégorie')
                     ->searchable(),
                 TextColumn::make('sku')
-                    ->label('SKU')
+                    ->label('Référence interne')
                     ->searchable(),
                 TextColumn::make('rental_price_per_day')
                     ->label('Prix / jour')
-                    ->numeric()
+                    ->numeric(decimalPlaces: 0, thousandsSeparator: ' ')
+                    ->suffix(' FCFA')
                     ->sortable(),
                 TextColumn::make('sale_price')
                     ->label('Prix de vente')
-                    ->numeric()
                     ->placeholder('—')
-                    ->formatStateUsing(fn ($state, $record) => $record->sale_price_on_request ? 'Sur devis' : $state)
+                    ->formatStateUsing(fn ($state, $record) => $record->sale_price_on_request
+                        ? 'Sur devis'
+                        : number_format((float) $state, 0, ',', ' ').' FCFA')
                     ->sortable(),
                 TextColumn::make('total_stock')
                     ->label('Stock')
@@ -51,7 +53,8 @@ class ItemsTable
                     ->label('Actif')
                     ->boolean(),
                 TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->label('Modifié le')
+                    ->dateTime('d/m/Y H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

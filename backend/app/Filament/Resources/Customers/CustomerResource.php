@@ -22,6 +22,10 @@ class CustomerResource extends Resource
 
     protected static string|\UnitEnum|null $navigationGroup = 'Réservations';
 
+    protected static ?string $modelLabel = 'client';
+
+    protected static ?string $pluralModelLabel = 'Clients';
+
     public static function form(Schema $schema): Schema
     {
         return CustomerForm::configure($schema);

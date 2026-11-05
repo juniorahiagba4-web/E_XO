@@ -28,16 +28,19 @@ class CategoryForm
                         Textarea::make('description_fr')
                             ->label('Description (FR)'),
                     ]),
-                Section::make('English')
+                Section::make('Anglais')
                     ->columns(1)
                     ->schema([
-                        TextInput::make('name_en')->label('Name (EN)'),
+                        TextInput::make('name_en')->label('Nom (EN)'),
                         Textarea::make('description_en')->label('Description (EN)'),
                     ]),
                 TextInput::make('slug')
+                    ->label('Adresse de la page')
+                    ->helperText('Rempli automatiquement à partir du nom.')
                     ->required()
                     ->unique(ignoreRecord: true),
                 FileUpload::make('image_path')
+                    ->label('Image')
                     ->image()
                     ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                     ->maxSize(5120)
@@ -47,6 +50,8 @@ class CategoryForm
                     ->relationship('parent', 'name_fr')
                     ->searchable(),
                 TextInput::make('sort_order')
+                    ->label('Ordre d\'affichage')
+                    ->helperText('Les plus petits nombres apparaissent en premier.')
                     ->numeric()
                     ->default(0),
                 Toggle::make('is_active')

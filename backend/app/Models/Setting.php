@@ -9,6 +9,15 @@ use Illuminate\Support\Facades\Cache;
 #[Fillable(['key', 'value'])]
 class Setting extends Model
 {
+    /** Readable names for the keys the site knows, shown in the admin list. */
+    public const LABELS = [
+        'homepage_hero_image' => 'Accueil — image de fond',
+        'homepage_hero_title_fr' => 'Accueil — titre (français)',
+        'homepage_hero_subtitle_fr' => "Accueil — texte d'accroche (français)",
+        'homepage_hero_title_en' => 'Accueil — titre (anglais)',
+        'homepage_hero_subtitle_en' => "Accueil — texte d'accroche (anglais)",
+    ];
+
     public static function get(string $key, mixed $default = null): mixed
     {
         return Cache::rememberForever("setting.{$key}", function () use ($key, $default) {

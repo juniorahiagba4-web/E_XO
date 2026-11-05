@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\ContactMessages\Schemas;
 
+use App\Models\ContactMessage;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -32,11 +33,7 @@ class ContactMessageForm
                     ->columnSpanFull(),
                 Select::make('status')
                     ->label('Statut')
-                    ->options([
-                        'new' => 'Nouveau',
-                        'read' => 'Lu',
-                        'replied' => 'Répondu',
-                    ])
+                    ->options(ContactMessage::STATUS_LABELS)
                     ->required(),
             ]);
     }

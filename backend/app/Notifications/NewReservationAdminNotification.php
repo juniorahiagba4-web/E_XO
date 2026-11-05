@@ -36,7 +36,10 @@ class NewReservationAdminNotification extends Notification implements ShouldQueu
             ->subject("Nouveau {$label} — {$this->reservation->reference}")
             ->line("Un nouveau {$label} vient d'être soumis par {$customerName}.")
             ->line("Référence : {$this->reservation->reference}")
-            ->line('Total estimé : '.number_format((float) $this->reservation->total, 0, ',', ' ')." {$this->reservation->currency}")
+            ->line('Livraison : '.($this->reservation->deliveryWish()
+                ? 'à domicile, '.$this->reservation->deliveryWish()
+                : Reservation::DELIVERY_METHOD_LABELS[$this->reservation->delivery_method] ?? '—'))
+            ->line('Total estimé : '.number_format((float) $this->reservation->total, 0, ',', ' ').' FCFA')
             ->action('Voir la réservation', url("/admin/reservations/{$this->reservation->id}/edit"));
     }
 
@@ -47,7 +50,9 @@ class NewReservationAdminNotification extends Notification implements ShouldQueu
 
         return FilamentNotification::make()
             ->title($label)
-            ->body("{$customerName} — {$this->reservation->reference}")
+            ->body("{$customerName} — {$this->reservation->reference}"
+                .($this->reservation->deliveryWish() ? "
+Livraison souhaitée {$this->reservation->deliveryWish()}" : ''))
             ->icon('heroicon-o-document-text')
             ->actions([
                 Action::make('view')

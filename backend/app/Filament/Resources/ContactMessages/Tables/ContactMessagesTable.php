@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\ContactMessages\Tables;
 
+use App\Models\ContactMessage;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -34,6 +35,7 @@ class ContactMessagesTable
                 TextColumn::make('status')
                     ->label('Statut')
                     ->badge()
+                    ->formatStateUsing(fn (string $state) => ContactMessage::STATUS_LABELS[$state] ?? $state)
                     ->color(fn (string $state) => match ($state) {
                         'new' => 'warning',
                         'read' => 'info',
@@ -49,11 +51,7 @@ class ContactMessagesTable
             ->filters([
                 SelectFilter::make('status')
                     ->label('Statut')
-                    ->options([
-                        'new' => 'Nouveau',
-                        'read' => 'Lu',
-                        'replied' => 'Répondu',
-                    ]),
+                    ->options(ContactMessage::STATUS_LABELS),
             ])
             ->recordActions([
                 EditAction::make(),
