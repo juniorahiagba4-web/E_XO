@@ -25,7 +25,7 @@ class CustomerForm
                 TextInput::make('email')
                     ->label('Adresse email')
                     ->email()
-                    ->required(),
+                    ->helperText('Facultatif pour une commande prise par téléphone.'),
                 TextInput::make('phone')
                     ->label('Téléphone')
                     ->tel()

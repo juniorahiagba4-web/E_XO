@@ -32,7 +32,9 @@
     <p>
         <strong>Client :</strong> {{ $reservation->customer->full_name }}<br>
         <strong>Téléphone :</strong> {{ $reservation->customer->phone }}<br>
-        <strong>Email :</strong> {{ $reservation->customer->email }}
+        @if($reservation->customer->email)
+            <strong>Email :</strong> {{ $reservation->customer->email }}
+        @endif
     </p>
 
     @php($isRental = $reservation->type === 'rental')

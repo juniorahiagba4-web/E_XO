@@ -54,8 +54,8 @@ class ReservationForm
                         Select::make('customer_id')
                             ->label('Client')
                             ->relationship('customer', 'email')
-                            ->getOptionLabelFromRecordUsing(fn ($record) => "{$record->full_name} ({$record->email})")
-                            ->searchable(['first_name', 'last_name', 'email'])
+                            ->getOptionLabelFromRecordUsing(fn ($record) => $record->full_name.' ('.($record->email ?: $record->phone).')')
+                            ->searchable(['first_name', 'last_name', 'email', 'phone'])
                             ->required(),
                         Textarea::make('notes')
                             ->label('Message du client')

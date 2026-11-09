@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Reservations;
 
+use App\Filament\Resources\Reservations\Pages\CreateReservation;
 use App\Filament\Resources\Reservations\Pages\EditReservation;
 use App\Filament\Resources\Reservations\Pages\ListReservations;
 use App\Filament\Resources\Reservations\RelationManagers\ItemsRelationManager;
@@ -29,11 +30,6 @@ class ReservationResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Réservations';
 
-    public static function canCreate(): bool
-    {
-        return false;
-    }
-
     public static function form(Schema $schema): Schema
     {
         return ReservationForm::configure($schema);
@@ -55,6 +51,7 @@ class ReservationResource extends Resource
     {
         return [
             'index' => ListReservations::route('/'),
+            'create' => CreateReservation::route('/create'),
             'edit' => EditReservation::route('/{record}/edit'),
         ];
     }
