@@ -75,6 +75,48 @@ redirects `laperledor-togo.com` and `www.laperledor-togo.com` to the Vercel
 deployment instead of returning a 404. It is never reached once the DNS is
 switched to Vercel.
 
+## Pre-production (staging)
+
+Every change goes to pre-production first, is checked there, and only then
+reaches production.
+
+| | Pre-production | Production |
+| --- | --- | --- |
+| Git branch | `staging` | `Wilfried` |
+| Website (Vercel) | `https://test.laperledor-togo.com` | `https://laperledor-togo.com` |
+| API + admin (VPS) | `https://api-test.laperledor-togo.com` | `https://api.laperledor-togo.com` |
+| Code on the VPS | `/var/www/laperledor-staging` | `/var/www/laperledor` |
+| MySQL database | `laperledor_staging` | `laperledor` |
+| Redis databases | 2 and 3 | 0 and 1 |
+| Queue worker | `laperledor-staging-horizon` | `laperledor-horizon` |
+
+The test copy has a red "PRÉ-PRODUCTION" banner on the website, a red
+"TEST" admin, sends no e-mail (`MAIL_MAILER=log`) and is not indexed by
+search engines. Its catalogue was copied from production once; it holds no
+real customer, order or quote PDF.
+
+Setup (once): add the DNS records in Hostinger, then
+
+```sh
+ssh laperledor@54.39.230.49 'bash -s' < deploy/05-staging-setup.sh
+```
+
+In Vercel, the `staging` branch has its own `NEXT_PUBLIC_API_URL`
+(`https://api-test.laperledor-togo.com/api/v1`) and
+`NEXT_PUBLIC_SITE_ENV=staging`, and the `test.laperledor-togo.com` domain is
+attached to that branch.
+
+Day to day:
+
+```sh
+git push origin staging                                                       # website: automatic
+ssh laperledor@54.39.230.49 'bash /var/www/laperledor-staging/deploy/deploy.sh staging'   # API + admin
+
+# once validated
+git checkout Wilfried && git merge --ff-only staging && git push origin Wilfried
+ssh laperledor@54.39.230.49 'bash /var/www/laperledor/deploy/deploy.sh'
+```
+
 ## Deploying a new version
 
 ```sh

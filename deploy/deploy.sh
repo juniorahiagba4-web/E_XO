@@ -1,14 +1,39 @@
 #!/usr/bin/env bash
-# Redeploy script — run this on the server after every `git push` to pick up
-# new backend code:
-#   ssh laperledor@<server-ip> 'bash /var/www/laperledor/deploy/deploy.sh'
+# Redeploy script — run this on the server after every `git push`:
+#
+#   ssh laperledor@<server-ip> 'bash /var/www/laperledor/deploy/deploy.sh'                  # production
+#   ssh laperledor@<server-ip> 'bash /var/www/laperledor-staging/deploy/deploy.sh staging'  # pre-production
+#
+# Production follows the "Wilfried" branch, pre-production the "staging" one.
 
 set -euo pipefail
 
-APP_DIR="/var/www/laperledor"
-BRANCH="Wilfried"
+TARGET="${1:-production}"
 
+case "$TARGET" in
+    production)
+        APP_DIR="/var/www/laperledor"
+        BRANCH="Wilfried"
+        HORIZON_SERVICE="laperledor-horizon"
+        ;;
+    staging)
+        APP_DIR="/var/www/laperledor-staging"
+        BRANCH="staging"
+        HORIZON_SERVICE="laperledor-staging-horizon"
+        ;;
+    *)
+        echo "Usage: deploy.sh [production|staging]" >&2
+        exit 1
+        ;;
+esac
+
+echo "==> Deploying $TARGET ($BRANCH) in $APP_DIR"
 cd "$APP_DIR"
+
+# A git command once run as root leaves root-owned files in .git, and the
+# next fetch then fails with "insufficient permission". Hand them back first.
+sudo chown -R "$USER:www-data" "$APP_DIR/.git"
+
 git fetch origin
 git checkout "$BRANCH"
 git reset --hard "origin/$BRANCH"
@@ -27,7 +52,7 @@ sudo chown -R "$USER:www-data" "$APP_DIR/backend/storage" "$APP_DIR/backend/boot
 
 php artisan up
 
-sudo systemctl restart laperledor-horizon
+sudo systemctl restart "$HORIZON_SERVICE"
 sudo systemctl reload php8.4-fpm
 
-echo "Deploy complete."
+echo "Deploy complete ($TARGET)."

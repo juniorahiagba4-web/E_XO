@@ -221,6 +221,13 @@ return [
             ],
         ],
 
+        // Pre-production (api-test): same queues, kept small next to production.
+        'staging' => [
+            'supervisor-1' => [
+                'maxProcesses' => 2,
+            ],
+        ],
+
         'local' => [
             'supervisor-1' => [
                 'maxProcesses' => 3,

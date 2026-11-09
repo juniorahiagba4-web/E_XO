@@ -40,6 +40,10 @@ export function proxy(request: NextRequest) {
     ].join("; ") + ";",
   );
 
+  if (process.env.NEXT_PUBLIC_SITE_ENV === "staging") {
+    response.headers.set("X-Robots-Tag", "noindex, nofollow");
+  }
+
   if (request.nextUrl.protocol === "https:") {
     response.headers.set("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
   }

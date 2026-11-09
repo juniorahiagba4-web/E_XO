@@ -1,5 +1,9 @@
 export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000/api/v1";
 
+// "staging" on the pre-production copy (test.laperledor-togo.com), set in
+// Vercel for the "staging" branch only.
+export const IS_STAGING = process.env.NEXT_PUBLIC_SITE_ENV === "staging";
+
 // Numéro de test (Wilson) le temps de valider le parcours en conditions
 // réelles — à remplacer par le numéro définitif de l'entreprise avant la mise en ligne.
 export const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "22893040103";

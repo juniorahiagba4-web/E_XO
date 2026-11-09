@@ -29,8 +29,11 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            // The pre-production copy is red and says so, so nobody mistakes
+            // it for the real admin.
+            ->brandName(app()->environment('staging') ? "La Perle d'Or · TEST" : "La Perle d'Or")
             ->colors([
-                'primary' => Color::hex('#f0b429'),
+                'primary' => app()->environment('staging') ? Color::Red : Color::hex('#f0b429'),
             ])
             // Every admin/manager account must set up an authenticator-app
             // second factor before it can use the panel (no email-based
