@@ -12,7 +12,7 @@ class RevenueChart extends ChartWidget
 
     protected ?string $heading = "Chiffre d'affaires — 14 derniers jours";
 
-    private const CONFIRMED_STATUSES = ['confirmed', 'deposit_paid', 'ongoing', 'completed'];
+    private const CONFIRMED_STATUSES = ['confirmed', 'completed'];
 
     protected function getData(): array
     {

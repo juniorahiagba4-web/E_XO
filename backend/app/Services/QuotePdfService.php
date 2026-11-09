@@ -20,4 +20,12 @@ class QuotePdfService
 
         return $path;
     }
+
+    /** Rebuilds the PDF after the order was changed in the admin. */
+    public function refresh(Reservation $reservation): void
+    {
+        $reservation->unsetRelation('items');
+        $path = $this->generate($reservation);
+        $reservation->forceFill(['quote_pdf_path' => $path, 'quote_generated_at' => now()])->saveQuietly();
+    }
 }

@@ -146,7 +146,7 @@
     "address": "Adresse de livraison",
     "deliveryTime": "Heure de livraison souhaitée",
     "deliveryDate": "Date de livraison souhaitée",
-    "deliveryOnStart": "Livraison prévue le {date}, premier jour de location.",
+    "deliveryOnStart": "Livraison le {start} et récupération du mobilier le {end}, à cette même heure.",
     "deliveryTimeHint": "Nous vous confirmerons l'heure par WhatsApp.",
     "notes": "Notes (optionnel)",
     "continue": "Continuer",
@@ -277,8 +277,6 @@
   "reservationStatus": {
     "quote_sent": "Envoyé",
     "confirmed": "Confirmée",
-    "deposit_paid": "Acompte payé",
-    "ongoing": "En cours",
     "completed": "Terminée",
     "cancelled": "Annulée"
   },

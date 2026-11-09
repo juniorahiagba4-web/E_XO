@@ -30,12 +30,6 @@ class CustomersTable
                 TextColumn::make('phone')
                     ->label('Téléphone')
                     ->searchable(),
-                TextColumn::make('company_name')
-                    ->label('Entreprise')
-                    ->searchable(),
-                TextColumn::make('city')
-                    ->label('Ville')
-                    ->searchable(),
                 TextColumn::make('created_at')
                     ->label('Client depuis')
                     ->dateTime('d/m/Y H:i')

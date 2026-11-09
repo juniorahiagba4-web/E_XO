@@ -112,6 +112,9 @@ class ReservationService
                 'delivery_time' => $isDelivery ? ($data['delivery_time'] ?? null) : null,
                 'return_slot_template_id' => $data['return_slot_id'] ?? null,
                 'return_date' => $end,
+                // The shop collects rented furniture back at the delivery time.
+                'return_time' => $isDelivery && $isRental ? ($data['delivery_time'] ?? null) : null,
+                'purchase_date' => $isRental ? null : now()->toDateString(),
                 'notes' => $data['notes'] ?? null,
                 'subtotal' => $subtotal,
                 'discount' => $discount,

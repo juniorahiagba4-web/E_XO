@@ -24,6 +24,9 @@ class SettingResource extends Resource
 
     protected static ?string $modelLabel = 'paramètre avancé';
 
+    // Set explicitly: Filament would capitalise every word of the plural label.
+    protected static ?string $navigationLabel = 'Paramètres avancés';
+
     protected static ?string $pluralModelLabel = 'Paramètres avancés';
 
     public static function form(Schema $schema): Schema

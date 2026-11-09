@@ -24,6 +24,9 @@ class CustomerResource extends Resource
 
     protected static ?string $modelLabel = 'client';
 
+    // Set explicitly: Filament would capitalise every word of the plural label.
+    protected static ?string $navigationLabel = 'Clients';
+
     protected static ?string $pluralModelLabel = 'Clients';
 
     public static function form(Schema $schema): Schema

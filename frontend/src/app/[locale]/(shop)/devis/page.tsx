@@ -349,8 +349,11 @@ export default function DevisPage() {
                       </label>
                     </div>
                     <p className="text-xs text-slate-500">
-                      {!isPurchase && cart.eventStartDate
-                        ? `${t("deliveryOnStart", { date: format(parseISO(cart.eventStartDate), "dd/MM/yyyy") })} `
+                      {!isPurchase && cart.eventStartDate && cart.eventEndDate
+                        ? `${t("deliveryOnStart", {
+                            start: format(parseISO(cart.eventStartDate), "dd/MM/yyyy"),
+                            end: format(parseISO(cart.eventEndDate), "dd/MM/yyyy"),
+                          })} `
                         : ""}
                       {t("deliveryTimeHint")}
                     </p>

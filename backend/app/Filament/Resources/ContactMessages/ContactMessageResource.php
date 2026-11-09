@@ -23,6 +23,9 @@ class ContactMessageResource extends Resource
 
     protected static ?string $modelLabel = 'message de contact';
 
+    // Set explicitly: Filament would capitalise every word of the plural label.
+    protected static ?string $navigationLabel = 'Messages de contact';
+
     protected static ?string $pluralModelLabel = 'Messages de contact';
 
     public static function form(Schema $schema): Schema

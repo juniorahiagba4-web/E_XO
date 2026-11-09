@@ -146,7 +146,7 @@
     "address": "Delivery address",
     "deliveryTime": "Preferred delivery time",
     "deliveryDate": "Preferred delivery date",
-    "deliveryOnStart": "Delivery on {date}, the first day of the rental.",
+    "deliveryOnStart": "Delivery on {start} and collection on {end}, at this same time.",
     "deliveryTimeHint": "We'll confirm the time on WhatsApp.",
     "notes": "Notes (optional)",
     "continue": "Continue",
@@ -277,8 +277,6 @@
   "reservationStatus": {
     "quote_sent": "Sent",
     "confirmed": "Confirmed",
-    "deposit_paid": "Deposit paid",
-    "ongoing": "Ongoing",
     "completed": "Completed",
     "cancelled": "Cancelled"
   },

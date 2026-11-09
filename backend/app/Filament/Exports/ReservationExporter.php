@@ -33,13 +33,19 @@ class ReservationExporter extends Exporter
                 ->label('Début événement'),
             ExportColumn::make('event_end_date')
                 ->label('Fin événement'),
+            ExportColumn::make('purchase_date')
+                ->label("Date d'achat"),
             ExportColumn::make('delivery_method')
                 ->label('Livraison')
                 ->formatStateUsing(fn (?string $state) => Reservation::DELIVERY_METHOD_LABELS[$state] ?? $state),
             ExportColumn::make('delivery_date')
                 ->label('Date de livraison'),
             ExportColumn::make('delivery_time')
-                ->label('Heure de livraison souhaitée'),
+                ->label('Heure de livraison'),
+            ExportColumn::make('return_date')
+                ->label('Date de retour'),
+            ExportColumn::make('return_time')
+                ->label('Heure de retour'),
             ExportColumn::make('delivery_address')
                 ->label('Adresse de livraison'),
             ExportColumn::make('subtotal')

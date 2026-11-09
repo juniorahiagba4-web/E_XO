@@ -13,10 +13,10 @@ use Illuminate\Support\Str;
 
 #[Fillable([
     'reference', 'customer_id', 'status', 'type',
-    'event_start_date', 'event_end_date',
+    'event_start_date', 'event_end_date', 'purchase_date',
     'delivery_method', 'delivery_address',
     'delivery_slot_template_id', 'delivery_date', 'delivery_time',
-    'return_slot_template_id', 'return_date',
+    'return_slot_template_id', 'return_date', 'return_time',
     'notes', 'subtotal', 'deposit_required', 'discount', 'total', 'currency',
     'quote_pdf_path', 'quote_generated_at', 'hold_expires_at', 'confirmed_at', 'cancelled_at',
 ])]
@@ -28,17 +28,18 @@ class Reservation extends Model
      * Statuses that keep stock blocked for the reservation's period.
      * "quote_sent" only blocks stock while its hold has not expired (see scopeBlockingStock).
      */
-    public const BLOCKING_STATUSES = ['quote_sent', 'confirmed', 'deposit_paid', 'ongoing'];
+    public const BLOCKING_STATUSES = ['quote_sent', 'confirmed'];
 
     public const QUOTE_HOLD_HOURS = 48;
 
     /** What the admin panel, exports and documents show for each stored code. */
+    /**
+     * Envoyé: the customer sent the request. Confirmé: paid in part or in
+     * full. Terminé: furniture delivered (and collected back for a rental).
+     */
     public const STATUS_LABELS = [
-        'draft' => 'Brouillon',
         'quote_sent' => 'Envoyé',
         'confirmed' => 'Confirmé',
-        'deposit_paid' => 'Acompte payé',
-        'ongoing' => 'En cours',
         'completed' => 'Terminé',
         'cancelled' => 'Annulé',
     ];
@@ -58,6 +59,7 @@ class Reservation extends Model
         return [
             'event_start_date' => 'date',
             'event_end_date' => 'date',
+            'purchase_date' => 'date',
             'delivery_date' => 'date',
             'return_date' => 'date',
             'subtotal' => 'decimal:2',
@@ -75,6 +77,20 @@ class Reservation extends Model
     {
         static::creating(function (Reservation $reservation) {
             $reservation->reference ??= static::generateReference();
+        });
+
+        // Keep track of when an order was confirmed or cancelled, whoever
+        // changed the status.
+        static::saving(function (Reservation $reservation) {
+            if (! $reservation->isDirty('status')) {
+                return;
+            }
+            if ($reservation->status === 'confirmed') {
+                $reservation->confirmed_at ??= now();
+            }
+            if ($reservation->status === 'cancelled') {
+                $reservation->cancelled_at ??= now();
+            }
         });
     }
 
@@ -158,7 +174,7 @@ class Reservation extends Model
     public function scopeBlockingStock(Builder $query): Builder
     {
         return $query->where(function (Builder $q) {
-            $q->whereIn('status', ['confirmed', 'deposit_paid', 'ongoing'])
+            $q->whereIn('status', ['confirmed'])
                 ->orWhere(function (Builder $q2) {
                     $q2->where('status', 'quote_sent')
                         ->where(function (Builder $q3) {
@@ -179,9 +195,61 @@ class Reservation extends Model
             return null;
         }
 
+        return static::describeMoment($this->delivery_date, $this->delivery_time);
+    }
+
+    /** Number of billed days of a rental (at least one), null for a purchase. */
+    public function rentalDays(): ?int
+    {
+        if ($this->type !== 'rental' || ! $this->event_start_date || ! $this->event_end_date) {
+            return null;
+        }
+
+        return max(1, (int) round($this->event_start_date->diffInDays($this->event_end_date)));
+    }
+
+    /**
+     * Recomputes every line and the totals from the stored unit prices, so a
+     * price typed in the admin (e.g. for a "sur devis" item) or new rental
+     * dates are reflected everywhere. The discount is kept as is.
+     */
+    public function recalculateTotals(): void
+    {
+        $days = $this->rentalDays();
+        $subtotal = 0.0;
+
+        foreach ($this->items()->get() as $line) {
+            $lineSubtotal = $this->type === 'rental'
+                ? (float) $line->unit_price_per_day * $line->quantity * ($days ?? 1)
+                : (float) ($line->unit_sale_price ?? 0) * $line->quantity;
+
+            if ((float) $line->subtotal !== $lineSubtotal) {
+                $line->update(['subtotal' => $lineSubtotal]);
+            }
+            $subtotal += $lineSubtotal;
+        }
+
+        $this->update([
+            'subtotal' => $subtotal,
+            'total' => max(0, $subtotal - (float) $this->discount),
+        ]);
+    }
+
+    /** When the furniture is collected back, e.g. "le 23/11/2026 à 14h30". */
+    public function returnWish(): ?string
+    {
+        if ($this->type !== 'rental' || $this->delivery_method !== 'delivery') {
+            return null;
+        }
+
+        return static::describeMoment($this->return_date ?? $this->event_end_date, $this->return_time);
+    }
+
+    public static function describeMoment(?Carbon $date, ?string $time): ?string
+    {
         $parts = array_filter([
-            $this->delivery_date ? 'le '.$this->delivery_date->format('d/m/Y') : null,
-            $this->delivery_time ? 'à '.str_replace(':', 'h', $this->delivery_time) : null,
+            $date ? 'le '.$date->format('d/m/Y') : null,
+            $time ? 'à '.str_replace(':', 'h', substr($time, 0, 5)) : null,
         ]);
 
         return $parts ? implode(' ', $parts) : null;
@@ -203,6 +271,10 @@ class Reservation extends Model
 
         if ($wish = $this->deliveryWish()) {
             $lines[] = "Livraison souhaitée : {$wish}";
+        }
+
+        if ($return = $this->returnWish()) {
+            $lines[] = "Retour du mobilier : {$return}";
         }
 
         $lines[] = 'Total estimé : '.number_format((float) $this->total, 0, ',', ' ').' FCFA';

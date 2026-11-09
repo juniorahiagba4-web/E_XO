@@ -35,17 +35,26 @@
         <strong>Email :</strong> {{ $reservation->customer->email }}
     </p>
 
+    @php($isRental = $reservation->type === 'rental')
+    @php($days = $reservation->rentalDays())
     <p>
-        @if($reservation->type === 'rental')
-            <strong>Période de l'événement :</strong>
-            {{ $reservation->event_start_date->format('d/m/Y') }} au {{ $reservation->event_end_date->format('d/m/Y') }}<br>
+        @if($isRental)
+            <strong>Période de location :</strong>
+            du {{ $reservation->event_start_date->format('d/m/Y') }} au {{ $reservation->event_end_date->format('d/m/Y') }}
+            ({{ $days }} {{ $days > 1 ? 'jours' : 'jour' }})<br>
+        @else
+            <strong>Date d'achat :</strong> {{ ($reservation->purchase_date ?? $reservation->created_at)->format('d/m/Y') }}<br>
         @endif
-        <strong>Mode :</strong> {{ $reservation->delivery_method === 'delivery' ? 'Livraison' : 'Retrait au dépôt' }}
-        @if($reservation->delivery_address)
-            — {{ $reservation->delivery_address }}
-        @endif
-        @if($reservation->deliveryWish())
-            <br><strong>Livraison souhaitée :</strong> {{ $reservation->deliveryWish() }}
+        @if($reservation->delivery_method === 'delivery')
+            <strong>Livraison à :</strong> {{ $reservation->delivery_address }}<br>
+            @if($reservation->deliveryWish())
+                <strong>{{ $isRental ? 'Livraison (aller)' : 'Livraison' }} :</strong> {{ $reservation->deliveryWish() }}<br>
+            @endif
+            @if($reservation->returnWish())
+                <strong>Retour du mobilier :</strong> {{ $reservation->returnWish() }}
+            @endif
+        @else
+            <strong>Retrait :</strong> en boutique
         @endif
     </p>
 
@@ -54,7 +63,10 @@
             <tr>
                 <th>Article</th>
                 <th>Quantité</th>
-                <th>{{ $reservation->type === 'purchase' ? 'Prix unitaire' : 'Prix / jour' }}</th>
+                <th>{{ $isRental ? 'Prix / jour' : 'Prix unitaire' }}</th>
+                @if($isRental)
+                    <th>Jours</th>
+                @endif
                 <th>Sous-total</th>
             </tr>
         </thead>
@@ -73,6 +85,9 @@
                             {{ number_format((float) ($line->unit_sale_price ?? $line->unit_price_per_day), 0, ',', ' ') }} FCFA
                         @endif
                     </td>
+                    @if($isRental)
+                        <td>{{ $days }}</td>
+                    @endif
                     <td>
                         @if($priceOnRequest)
                             À confirmer

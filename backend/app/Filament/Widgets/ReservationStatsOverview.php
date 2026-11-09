@@ -13,7 +13,7 @@ class ReservationStatsOverview extends StatsOverviewWidget
     protected static ?int $sort = 1;
 
     /** Statuses that represent money actually booked, not just quoted. */
-    private const CONFIRMED_STATUSES = ['confirmed', 'deposit_paid', 'ongoing', 'completed'];
+    private const CONFIRMED_STATUSES = ['confirmed', 'completed'];
 
     private const LOW_STOCK_THRESHOLD = 15;
 

@@ -20,6 +20,9 @@ class ItemReviewResource extends Resource
 
     protected static ?string $modelLabel = 'avis client';
 
+    // Set explicitly: Filament would capitalise every word of the plural label.
+    protected static ?string $navigationLabel = 'Avis clients';
+
     protected static ?string $pluralModelLabel = 'Avis clients';
 
     public static function table(Table $table): Table

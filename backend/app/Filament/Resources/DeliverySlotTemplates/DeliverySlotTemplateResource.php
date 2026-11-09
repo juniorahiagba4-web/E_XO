@@ -22,6 +22,10 @@ class DeliverySlotTemplateResource extends Resource
 
     protected static string|\UnitEnum|null $navigationGroup = 'Réservations';
 
+    // Replaced by the delivery time customers type on the site; kept in the
+    // database but no longer shown in the menu.
+    protected static bool $shouldRegisterNavigation = false;
+
     protected static ?string $modelLabel = 'créneau de livraison';
 
     protected static ?string $pluralModelLabel = 'Créneaux de livraison';

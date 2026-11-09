@@ -30,10 +30,6 @@ class CustomerForm
                     ->label('Téléphone')
                     ->tel()
                     ->required(),
-                TextInput::make('company_name')
-                    ->label('Entreprise'),
-                TextInput::make('city')
-                    ->label('Ville'),
             ]);
     }
 }

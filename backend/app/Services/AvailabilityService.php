@@ -28,7 +28,7 @@ class AvailabilityService
     /**
      * Purchases have no time window: once a unit is sold it never comes back,
      * so availability is simply the total minus everything already sold
-     * (any non-draft, non-cancelled purchase order).
+     * (any purchase order that was not cancelled).
      */
     public function purchasableQuantity(Item $item, ?int $excludeReservationId = null): int
     {
@@ -36,7 +36,7 @@ class AvailabilityService
             ->where('item_id', $item->id)
             ->whereHas('reservation', function ($query) use ($excludeReservationId) {
                 $query->where('type', 'purchase')
-                    ->whereNotIn('status', ['draft', 'cancelled'])
+                    ->where('status', '!=', 'cancelled')
                     ->when($excludeReservationId, fn ($q) => $q->whereKeyNot($excludeReservationId));
             })
             ->sum('quantity');

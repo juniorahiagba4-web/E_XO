@@ -23,10 +23,6 @@ class CustomerExporter extends Exporter
                 ->label('Email'),
             ExportColumn::make('phone')
                 ->label('Téléphone'),
-            ExportColumn::make('company_name')
-                ->label('Entreprise'),
-            ExportColumn::make('city')
-                ->label('Ville'),
             ExportColumn::make('created_at')
                 ->label('Client depuis'),
         ];
