@@ -46,7 +46,7 @@ export default function QuantityStepper({
     "flex h-7 w-7 shrink-0 items-center justify-center text-sm font-medium text-slate-600 transition hover:bg-brand-navy-light hover:text-white disabled:pointer-events-none disabled:opacity-30";
 
   return (
-    <div className="inline-flex items-center overflow-hidden rounded-full border border-slate-300">
+    <div className="inline-flex w-fit self-start items-center overflow-hidden rounded-full border border-slate-300">
       <button
         type="button"
         onClick={() => onChange(clamp(value - 1))}
