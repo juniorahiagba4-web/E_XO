@@ -51,7 +51,7 @@ export default function CatalogueFilters({ category }: { category?: string }) {
         <button
           type="submit"
           aria-label={t("searchButton")}
-          className="flex shrink-0 items-center justify-center rounded-lg bg-brand-navy px-4 py-2 text-sm font-medium text-white transition hover:bg-brand-navy-light"
+          className="flex shrink-0 items-center justify-center rounded-lg bg-brand-navy-light px-4 py-2 text-sm font-medium text-white transition hover:bg-brand-navy"
         >
           <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
             <circle cx="11" cy="11" r="7" />

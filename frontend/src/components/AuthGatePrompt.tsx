@@ -27,14 +27,14 @@ export default function AuthGatePrompt({
           <Link
             href={`/connexion?redirect=${redirect}`}
             onClick={onDismiss}
-            className="rounded-full bg-brand-navy px-6 py-3 text-center font-medium text-white transition hover:bg-brand-navy-light"
+            className="rounded-full bg-brand-navy-light px-6 py-3 text-center font-medium text-white transition hover:bg-brand-navy"
           >
             {t("login")}
           </Link>
           <Link
             href={`/inscription?redirect=${redirect}`}
             onClick={onDismiss}
-            className="rounded-full border border-brand-navy px-6 py-3 text-center font-medium text-brand-navy transition hover:bg-brand-navy hover:text-white"
+            className="rounded-full border border-brand-navy-light px-6 py-3 text-center font-medium text-brand-navy-light transition hover:bg-brand-navy-light hover:text-white"
           >
             {t("register")}
           </Link>

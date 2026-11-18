@@ -112,7 +112,7 @@ export default function RegisterPage() {
         <button
           type="submit"
           disabled={submitting}
-          className="rounded-full bg-brand-navy px-6 py-3 font-medium text-white transition hover:bg-brand-navy-light disabled:opacity-50"
+          className="rounded-full bg-brand-navy-light px-6 py-3 font-medium text-white transition hover:bg-brand-navy disabled:opacity-50"
         >
           {submitting ? t("submitting") : t("register")}
         </button>

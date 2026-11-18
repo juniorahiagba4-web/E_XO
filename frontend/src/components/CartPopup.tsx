@@ -33,7 +33,7 @@ export default function CartPopup() {
           <circle cx="17.5" cy="21" r="1.3" fill="currentColor" stroke="none" />
         </svg>
         {count > 0 && (
-          <span className="absolute -right-1.5 -top-1.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-brand-navy px-1 text-[11px] font-semibold text-white">
+          <span className="absolute -right-1.5 -top-1.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-brand-navy-light px-1 text-[11px] font-semibold text-white">
             {count}
           </span>
         )}
@@ -44,7 +44,7 @@ export default function CartPopup() {
           <h2 className="flex items-center gap-2 text-xl font-bold text-brand-navy">
             {tCart("cartTitle")}
             {count > 0 && (
-              <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-brand-navy px-1.5 text-xs font-semibold text-white">
+              <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-brand-navy-light px-1.5 text-xs font-semibold text-white">
                 {count}
               </span>
             )}
@@ -128,7 +128,7 @@ export default function CartPopup() {
             <Link
               href="/devis"
               onClick={() => cart.closeCart()}
-              className="flex items-center justify-center gap-2 rounded-full bg-brand-navy px-4 py-3.5 text-center text-sm font-semibold text-white transition hover:bg-brand-navy-light"
+              className="flex items-center justify-center gap-2 rounded-full bg-brand-navy-light px-4 py-3.5 text-center text-sm font-semibold text-white transition hover:bg-brand-navy"
             >
               {tCart("checkout")}
             </Link>

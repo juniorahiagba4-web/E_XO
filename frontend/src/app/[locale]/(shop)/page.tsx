@@ -197,7 +197,7 @@ function Hero({
         <div className="flex flex-wrap gap-3">
           <Link
             href="/catalogue"
-            className="rounded-full bg-brand-navy px-6 py-3 font-medium text-white transition hover:bg-brand-navy-light"
+            className="rounded-full bg-brand-navy-light px-6 py-3 font-medium text-white transition hover:bg-brand-navy"
           >
             {t("ctaCatalogue")}
           </Link>

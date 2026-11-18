@@ -141,8 +141,8 @@ export default function DateRangePicker({
               day: "w-9 h-9 text-center align-middle p-0 relative",
               day_button:
                 "h-9 w-9 rounded-full text-sm font-medium text-slate-700 transition hover:bg-brand-gold/20",
-              range_start: "[&>button]:bg-brand-navy [&>button]:text-white [&>button]:hover:bg-brand-navy rounded-l-full bg-brand-gold/15",
-              range_end: "[&>button]:bg-brand-navy [&>button]:text-white [&>button]:hover:bg-brand-navy rounded-r-full bg-brand-gold/15",
+              range_start: "[&>button]:bg-brand-navy-light [&>button]:text-white [&>button]:hover:bg-brand-navy-light rounded-l-full bg-brand-gold/15",
+              range_end: "[&>button]:bg-brand-navy-light [&>button]:text-white [&>button]:hover:bg-brand-navy-light rounded-r-full bg-brand-gold/15",
               range_middle: "bg-brand-gold/15 [&>button]:rounded-none [&>button]:bg-transparent [&>button]:hover:bg-transparent",
               selected: "",
               today: "font-bold",
@@ -167,7 +167,7 @@ export default function DateRangePicker({
                 type="button"
                 onClick={apply}
                 disabled={!draft?.from}
-                className="rounded-full bg-brand-navy px-3 py-1.5 text-xs font-medium text-white transition hover:bg-brand-navy-light disabled:opacity-40"
+                className="rounded-full bg-brand-navy-light px-3 py-1.5 text-xs font-medium text-white transition hover:bg-brand-navy disabled:opacity-40"
               >
                 {t("applyDates")}
               </button>

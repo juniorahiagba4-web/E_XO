@@ -43,7 +43,7 @@ export default function FaqPage() {
       <div className="mt-10 text-center">
         <Link
           href="/contact"
-          className="inline-block rounded-full border border-brand-navy px-6 py-3 font-medium text-brand-navy transition hover:bg-brand-navy hover:text-white"
+          className="inline-block rounded-full border border-brand-navy-light px-6 py-3 font-medium text-brand-navy-light transition hover:bg-brand-navy-light hover:text-white"
         >
           {t("contactCta")}
         </Link>

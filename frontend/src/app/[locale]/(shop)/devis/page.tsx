@@ -143,7 +143,7 @@ export default function DevisPage() {
                     href={reservation.quote_pdf_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full max-w-xs rounded-full bg-brand-navy px-6 py-3 text-center font-medium text-white hover:bg-brand-navy-light"
+                    className="w-full max-w-xs rounded-full bg-brand-navy-light px-6 py-3 text-center font-medium text-white hover:bg-brand-navy"
                   >
                     {tConfirm("downloadPdf")}
                   </a>
@@ -375,7 +375,7 @@ export default function DevisPage() {
               <button
                 type="submit"
                 disabled={submitting || datesMissing}
-                className="rounded-full bg-brand-navy px-6 py-3 font-medium text-white transition hover:bg-brand-navy-light disabled:opacity-50"
+                className="rounded-full bg-brand-navy-light px-6 py-3 font-medium text-white transition hover:bg-brand-navy disabled:opacity-50"
               >
                 {submitting ? t("submitting") : isPurchase ? t("submitPurchase") : t("submit")}
               </button>

@@ -32,7 +32,7 @@ export default function BackToTop() {
       type="button"
       onClick={scrollToTop}
       aria-label="Remonter en haut"
-      className="fixed bottom-20 right-4 z-50 flex h-11 w-11 items-center justify-center rounded-full bg-brand-navy text-white shadow-lg transition hover:bg-brand-gold hover:text-brand-navy md:bottom-6 md:right-6"
+      className="fixed bottom-20 right-4 z-50 flex h-11 w-11 items-center justify-center rounded-full bg-brand-navy-light text-white shadow-lg transition hover:bg-brand-gold hover:text-brand-navy md:bottom-6 md:right-6"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

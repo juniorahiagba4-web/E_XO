@@ -33,13 +33,13 @@ export default function Error({
               <button
                 type="button"
                 onClick={reset}
-                className="rounded-full bg-brand-navy px-6 py-3 font-medium text-white transition hover:bg-brand-navy-light"
+                className="rounded-full bg-brand-navy-light px-6 py-3 font-medium text-white transition hover:bg-brand-navy"
               >
                 {t("retry")}
               </button>
               <Link
                 href="/"
-                className="rounded-full border border-brand-navy px-6 py-3 font-medium text-brand-navy transition hover:bg-brand-navy hover:text-white"
+                className="rounded-full border border-brand-navy-light px-6 py-3 font-medium text-brand-navy-light transition hover:bg-brand-navy-light hover:text-white"
               >
                 {t("backHome")}
               </Link>

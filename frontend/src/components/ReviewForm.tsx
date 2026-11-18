@@ -97,7 +97,7 @@ export default function ReviewForm({ reference, reviewToken }: { reference: stri
       <div className="text-center">
         <h1 className="mb-3 text-2xl font-bold text-brand-navy">{t("invalidTitle")}</h1>
         <p className="mb-6 text-slate-500">{t("invalidText")}</p>
-        <Link href="/" className="rounded-full bg-brand-navy px-6 py-3 font-medium text-white">
+        <Link href="/" className="rounded-full bg-brand-navy-light px-6 py-3 font-medium text-white">
           {t("backHome")}
         </Link>
       </div>
@@ -116,7 +116,7 @@ export default function ReviewForm({ reference, reviewToken }: { reference: stri
         </p>
         <h1 className="mb-3 text-2xl font-bold text-brand-navy">{t("thanksTitle")}</h1>
         <p className="mb-6 text-slate-500">{done ? t("thanksText") : t("alreadyDone")}</p>
-        <Link href="/catalogue" className="rounded-full bg-brand-navy px-6 py-3 font-medium text-white">
+        <Link href="/catalogue" className="rounded-full bg-brand-navy-light px-6 py-3 font-medium text-white">
           {t("backCatalogue")}
         </Link>
       </div>
@@ -171,7 +171,7 @@ export default function ReviewForm({ reference, reviewToken }: { reference: stri
       <button
         type="submit"
         disabled={submitting || rated.length === 0}
-        className="mt-4 w-full rounded-full bg-brand-navy px-6 py-3 font-medium text-white transition hover:bg-brand-navy-light disabled:cursor-not-allowed disabled:opacity-50"
+        className="mt-4 w-full rounded-full bg-brand-navy-light px-6 py-3 font-medium text-white transition hover:bg-brand-navy disabled:cursor-not-allowed disabled:opacity-50"
       >
         {submitting ? t("submitting") : t("submit", { count: rated.length })}
       </button>

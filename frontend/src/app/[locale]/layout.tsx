@@ -7,6 +7,7 @@ import { AuthProvider } from "@/lib/auth-context";
 import { AuthGateProvider } from "@/lib/auth-gate-context";
 import { FavoritesProvider } from "@/lib/favorites-context";
 import { COMPANY_NAME, IS_STAGING } from "@/lib/config";
+import { Analytics } from "@vercel/analytics/next";
 import { heros } from "../fonts/heros";
 import "../globals.css";
 
@@ -57,6 +58,9 @@ export default async function LocaleLayout({
             </AuthGateProvider>
           </AuthProvider>
         </NextIntlClientProvider>
+        {/* Visitor statistics (Vercel Web Analytics: no cookie, no personal data).
+            The test copy is not counted. */}
+        {!IS_STAGING && <Analytics />}
       </body>
     </html>
   );

@@ -99,7 +99,7 @@ export default function AvailabilityAndQuote({
               type="button"
               onClick={() => setMode("rental")}
               className={`rounded-full px-4 py-1.5 font-medium transition ${
-                mode === "rental" ? "bg-brand-navy text-white" : "text-slate-600"
+                mode === "rental" ? "bg-brand-navy-light text-white" : "text-slate-600"
               }`}
             >
               {t("modeRental")}
@@ -108,7 +108,7 @@ export default function AvailabilityAndQuote({
               type="button"
               onClick={() => setMode("purchase")}
               className={`rounded-full px-4 py-1.5 font-medium transition ${
-                mode === "purchase" ? "bg-brand-navy text-white" : "text-slate-600"
+                mode === "purchase" ? "bg-brand-navy-light text-white" : "text-slate-600"
               }`}
             >
               {t("modePurchase")}
@@ -145,7 +145,7 @@ export default function AvailabilityAndQuote({
               type="button"
               disabled={!canCheck || status === "checking"}
               onClick={checkAvailability}
-              className="mt-4 w-full rounded-full bg-brand-navy px-4 py-2 font-medium text-white transition hover:bg-brand-navy-light disabled:cursor-not-allowed disabled:opacity-50"
+              className="mt-4 w-full rounded-full bg-brand-navy-light px-4 py-2 font-medium text-white transition hover:bg-brand-navy disabled:cursor-not-allowed disabled:opacity-50"
             >
               {status === "checking" ? t("checking") : t("checkAvailability")}
             </button>
@@ -194,7 +194,7 @@ export default function AvailabilityAndQuote({
             type="button"
             disabled={!canAdd}
             onClick={addToCart}
-            className="flex-1 rounded-full border border-brand-navy px-4 py-2 font-medium text-brand-navy transition hover:bg-brand-navy hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
+            className="flex-1 rounded-full border border-brand-navy-light px-4 py-2 font-medium text-brand-navy-light transition hover:bg-brand-navy-light hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
           >
             {justAdded ? t("added") : t("addToCart")}
           </button>

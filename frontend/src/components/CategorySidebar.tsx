@@ -23,7 +23,7 @@ export default async function CategorySidebar({
       <Link
         href={{ pathname: basePath, query: {} }}
         className={`shrink-0 rounded-lg px-3 py-2 text-sm font-medium transition ${
-          !activeCategory ? "bg-brand-navy text-white" : "text-slate-600 hover:bg-slate-100"
+          !activeCategory ? "bg-brand-navy-light text-white" : "text-slate-600 hover:bg-slate-100"
         }`}
       >
         {t("allCategories")}
@@ -33,7 +33,7 @@ export default async function CategorySidebar({
           key={cat.id}
           href={{ pathname: basePath, query: { category: cat.slug } }}
           className={`shrink-0 rounded-lg px-3 py-2 text-sm font-medium transition ${
-            activeCategory === cat.slug ? "bg-brand-navy text-white" : "text-slate-600 hover:bg-slate-100"
+            activeCategory === cat.slug ? "bg-brand-navy-light text-white" : "text-slate-600 hover:bg-slate-100"
           }`}
         >
           {cat.name}

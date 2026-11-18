@@ -109,7 +109,7 @@ export default function ContactPage() {
               </span>
             </div>
             <div className="flex items-start gap-4 p-4 transition group-hover:bg-brand-gold/5">
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-navy text-brand-gold transition group-hover:scale-110 group-hover:bg-brand-gold group-hover:text-brand-navy">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-navy-light text-brand-gold transition group-hover:scale-110 group-hover:bg-brand-gold group-hover:text-brand-navy">
                 <MapPinIcon />
               </span>
               <span>
@@ -130,7 +130,7 @@ export default function ContactPage() {
             href={`tel:${COMPANY_PHONE.replace(/\s+/g, "")}`}
             className="group flex items-start gap-4 rounded-xl border border-slate-200 p-4 transition hover:-translate-y-0.5 hover:border-brand-gold hover:bg-brand-gold/5 hover:shadow-md"
           >
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-navy text-brand-gold transition group-hover:scale-110 group-hover:bg-brand-gold group-hover:text-brand-navy">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-navy-light text-brand-gold transition group-hover:scale-110 group-hover:bg-brand-gold group-hover:text-brand-navy">
               <PhoneIcon />
             </span>
             <span>
@@ -143,7 +143,7 @@ export default function ContactPage() {
             href={`mailto:${COMPANY_EMAIL}`}
             className="group flex items-start gap-4 rounded-xl border border-slate-200 p-4 transition hover:-translate-y-0.5 hover:border-brand-gold hover:bg-brand-gold/5 hover:shadow-md"
           >
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-navy text-brand-gold transition group-hover:scale-110 group-hover:bg-brand-gold group-hover:text-brand-navy">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-navy-light text-brand-gold transition group-hover:scale-110 group-hover:bg-brand-gold group-hover:text-brand-navy">
               <MailIcon />
             </span>
             <span>
@@ -221,7 +221,7 @@ export default function ContactPage() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="rounded-full bg-brand-navy px-6 py-3 font-medium text-white transition hover:bg-brand-navy-light disabled:opacity-50"
+                className="rounded-full bg-brand-navy-light px-6 py-3 font-medium text-white transition hover:bg-brand-navy disabled:opacity-50"
               >
                 {submitting ? t("submitting") : t("submit")}
               </button>

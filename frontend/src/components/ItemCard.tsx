@@ -109,7 +109,7 @@ export default function ItemCard({ item }: { item: Item }) {
               type="button"
               onClick={() => setMode("rental")}
               className={`rounded-full px-2.5 py-1 font-medium transition ${
-                mode === "rental" ? "bg-brand-navy text-white" : "text-slate-500"
+                mode === "rental" ? "bg-brand-navy-light text-white" : "text-slate-500"
               }`}
             >
               {t("modeRental")}
@@ -118,7 +118,7 @@ export default function ItemCard({ item }: { item: Item }) {
               type="button"
               onClick={() => setMode("purchase")}
               className={`rounded-full px-2.5 py-1 font-medium transition ${
-                mode === "purchase" ? "bg-brand-navy text-white" : "text-slate-500"
+                mode === "purchase" ? "bg-brand-navy-light text-white" : "text-slate-500"
               }`}
             >
               {t("modePurchase")}
@@ -131,7 +131,7 @@ export default function ItemCard({ item }: { item: Item }) {
             type="button"
             onClick={handleAddToCart}
             disabled={mode === "rental" && outOfRentalStock}
-            className="flex-1 rounded-full border border-brand-navy px-3 py-1.5 text-xs font-medium text-brand-navy transition hover:bg-brand-navy hover:text-white disabled:pointer-events-none disabled:opacity-40"
+            className="flex-1 rounded-full border border-brand-navy-light px-3 py-1.5 text-xs font-medium text-brand-navy-light transition hover:bg-brand-navy-light hover:text-white disabled:pointer-events-none disabled:opacity-40"
           >
             {added ? t("added") : t("addToCart")}
           </button>
@@ -139,7 +139,7 @@ export default function ItemCard({ item }: { item: Item }) {
             type="button"
             onClick={handleCheckoutNow}
             disabled={mode === "rental" && outOfRentalStock}
-            className="flex-1 rounded-full bg-brand-navy px-3 py-1.5 text-xs font-medium text-white transition hover:bg-brand-navy-light disabled:pointer-events-none disabled:opacity-40"
+            className="flex-1 rounded-full bg-brand-navy-light px-3 py-1.5 text-xs font-medium text-white transition hover:bg-brand-navy disabled:pointer-events-none disabled:opacity-40"
           >
             {mode === "rental" ? t("rent") : t("quickBuy")}
           </button>

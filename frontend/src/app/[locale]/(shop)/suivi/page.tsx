@@ -57,7 +57,7 @@ export default function TrackQuotePage() {
         <button
           type="submit"
           disabled={loading}
-          className="rounded-full bg-brand-navy px-6 py-2 font-medium text-white hover:bg-brand-navy-light disabled:opacity-50"
+          className="rounded-full bg-brand-navy-light px-6 py-2 font-medium text-white hover:bg-brand-navy disabled:opacity-50"
         >
           Rechercher
         </button>
@@ -85,7 +85,7 @@ export default function TrackQuotePage() {
                 href={reservation.quote_pdf_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-full bg-brand-navy px-5 py-2 text-center text-sm font-medium text-white"
+                className="rounded-full bg-brand-navy-light px-5 py-2 text-center text-sm font-medium text-white"
               >
                 {t("downloadPdf")}
               </a>
