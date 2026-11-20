@@ -1,4 +1,7 @@
-import { buildWhatsappLink } from "@/lib/config";
+"use client";
+
+import { whatsappLink } from "@/lib/company";
+import { useCompany } from "@/lib/company-context";
 
 export default function WhatsappButton({
   message,
@@ -7,9 +10,11 @@ export default function WhatsappButton({
   message: string;
   label: string;
 }) {
+  const company = useCompany();
+
   return (
     <a
-      href={buildWhatsappLink(message)}
+      href={whatsappLink(company, message)}
       target="_blank"
       rel="noopener noreferrer"
       className="inline-flex items-center gap-2 rounded-full bg-[#25D366] px-5 py-3 font-medium text-white shadow-sm transition hover:brightness-95"

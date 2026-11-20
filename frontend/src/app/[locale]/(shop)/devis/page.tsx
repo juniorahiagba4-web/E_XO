@@ -7,13 +7,15 @@ import { Link, useRouter } from "@/i18n/navigation";
 import { useCart } from "@/lib/cart-context";
 import { useAuth } from "@/lib/auth-context";
 import { createReservation, ApiError } from "@/lib/api";
-import { buildWhatsappLink } from "@/lib/config";
+import { whatsappLink } from "@/lib/company";
+import { useCompany } from "@/lib/company-context";
 import { formatPrice } from "@/lib/format";
 import QuantityStepper from "@/components/QuantityStepper";
 import DateRangePicker from "@/components/DateRangePicker";
 import type { Reservation } from "@/lib/types";
 
 export default function DevisPage() {
+  const company = useCompany();
   const t = useTranslations("quoteForm");
   const tConfirm = useTranslations("quoteConfirmation");
   const tProduct = useTranslations("product");
@@ -149,7 +151,7 @@ export default function DevisPage() {
                   </a>
                 )}
                 <a
-                  href={buildWhatsappLink(reservation.whatsapp_message)}
+                  href={whatsappLink(company, reservation.whatsapp_message)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full max-w-xs rounded-full bg-[#25D366] px-6 py-3 text-center font-medium text-white hover:brightness-95"

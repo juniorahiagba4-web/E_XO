@@ -1,7 +1,7 @@
 import { useTranslations } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { buildWhatsappLink } from "@/lib/config";
+import { getCompany, whatsappLink } from "@/lib/company";
 import { getSiteSettings } from "@/lib/api";
 import CatalogueBrowser from "@/components/CatalogueBrowser";
 import { pageMetadata } from "@/lib/seo";
@@ -31,10 +31,12 @@ export default async function HomePage({
     homepage_hero_title: null,
     homepage_hero_subtitle: null,
   }));
+  const company = await getCompany();
 
   return (
     <div>
       <Hero
+        whatsappHref={whatsappLink(company, "Bonjour, je souhaite louer du mobilier pour un événement.")}
         backgroundImage={settings.homepage_hero_image_url}
         title={settings.homepage_hero_title}
         subtitle={settings.homepage_hero_subtitle}
@@ -152,7 +154,9 @@ function Hero({
   backgroundImage,
   title,
   subtitle,
+  whatsappHref,
 }: {
+  whatsappHref: string;
   backgroundImage: string | null;
   title: string | null;
   subtitle: string | null;
@@ -181,7 +185,7 @@ function Hero({
               {t("ctaCatalogue")}
             </Link>
             <a
-              href={buildWhatsappLink("Bonjour, je souhaite louer du mobilier pour un événement.")}
+              href={whatsappHref}
               target="_blank"
               rel="noopener noreferrer"
               className="rounded-full bg-brand-gold px-6 py-3 font-medium text-brand-navy transition hover:bg-brand-gold-dark"
@@ -209,7 +213,7 @@ function Hero({
             {t("ctaCatalogue")}
           </Link>
           <a
-            href={buildWhatsappLink("Bonjour, je souhaite louer du mobilier pour un événement.")}
+            href={whatsappHref}
             target="_blank"
             rel="noopener noreferrer"
             className="rounded-full bg-brand-gold px-6 py-3 font-medium text-brand-navy transition hover:bg-brand-gold-dark"

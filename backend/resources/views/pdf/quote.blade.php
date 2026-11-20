@@ -23,9 +23,20 @@
             <p class="muted">Émis le {{ $reservation->quote_generated_at?->format('d/m/Y') ?? now()->format('d/m/Y') }}</p>
         </div>
         <div class="brand">
+            @php($company = \App\Support\CompanyInfo::forWebsite())
             <strong>La Perle d'Or</strong><br>
             Location & vente de mobilier événementiel<br>
-            Lomé, Togo
+            {{ $company['address'] ?? 'Lomé, Togo' }}<br>
+            Tél. : {{ $company['phone'] }}
+            @if($company['whatsapp'] && $company['whatsapp'] !== $company['phone'])
+                · WhatsApp : {{ $company['whatsapp'] }}
+            @endif
+            @foreach($company['other_phones'] as $other)
+                <br>{{ $other['label'] !== '' ? $other['label'].' : ' : 'Tél. : ' }}{{ $other['number'] }}
+            @endforeach
+            @if($company['email'])
+                <br>{{ $company['email'] }}
+            @endif
         </div>
     </div>
 

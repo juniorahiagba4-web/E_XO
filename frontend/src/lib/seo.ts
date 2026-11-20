@@ -1,14 +1,7 @@
 import type { Metadata } from "next";
 import { routing } from "@/i18n/routing";
-import {
-  COMPANY_ADDRESS,
-  COMPANY_EMAIL,
-  COMPANY_MAPS_URL,
-  COMPANY_NAME,
-  COMPANY_PHONE,
-  IS_STAGING,
-  SOCIAL_LINKS,
-} from "./config";
+import { COMPANY_MAPS_URL, COMPANY_NAME, IS_STAGING } from "./config";
+import type { CompanyInfo } from "./company";
 import type { Item } from "./types";
 
 /** Public address of the site, used for canonical links, the sitemap and social previews. */
@@ -95,10 +88,13 @@ export function formatFcfa(value: string | number) {
 }
 
 /** Google's description of the business: name, address, phone, area served... */
-export function localBusinessJsonLd(locale: string, description: string) {
-  const sameAs = [SOCIAL_LINKS.tiktok, SOCIAL_LINKS.facebook, SOCIAL_LINKS.instagram, COMPANY_MAPS_URL].filter(
-    Boolean,
-  );
+export function localBusinessJsonLd(locale: string, description: string, company: CompanyInfo) {
+  const sameAs = [
+    company.social.tiktok,
+    company.social.facebook,
+    company.social.instagram,
+    COMPANY_MAPS_URL,
+  ].filter(Boolean);
   return {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
@@ -108,13 +104,13 @@ export function localBusinessJsonLd(locale: string, description: string) {
     url: absoluteUrl(locale),
     logo: `${SITE_URL}/brand/logo-lockup-dark.svg`,
     image: `${SITE_URL}/${locale}/og`,
-    telephone: COMPANY_PHONE.replace(/\s/g, ""),
-    email: COMPANY_EMAIL,
+    telephone: company.phone.replace(/[^\d+]/g, ""),
+    ...(company.email ? { email: company.email } : {}),
     priceRange: "700 – 150 000 FCFA",
     currenciesAccepted: "XOF",
     address: {
       "@type": "PostalAddress",
-      streetAddress: COMPANY_ADDRESS.split(", Lomé")[0],
+      streetAddress: company.address.split(", Lomé")[0],
       addressLocality: "Lomé",
       addressCountry: "TG",
     },

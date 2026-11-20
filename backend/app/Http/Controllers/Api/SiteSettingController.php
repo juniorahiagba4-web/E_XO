@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Setting;
+use App\Support\CompanyInfo;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Storage;
 
@@ -25,6 +26,8 @@ class SiteSettingController extends Controller
                 'homepage_hero_image_url' => $heroImagePath ? Storage::disk('public')->url($heroImagePath) : null,
                 'homepage_hero_title' => Setting::get("homepage_hero_title_{$locale}") ?: null,
                 'homepage_hero_subtitle' => Setting::get("homepage_hero_subtitle_{$locale}") ?: null,
+                // Phones, WhatsApp, e-mail, address, social pages (admin "Coordonnées de l'entreprise").
+                'company' => CompanyInfo::forWebsite(),
             ],
         ]);
     }

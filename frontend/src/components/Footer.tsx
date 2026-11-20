@@ -1,6 +1,10 @@
+"use client";
+
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { COMPANY_ADDRESS, COMPANY_NAME, COMPANY_PHONE, SOCIAL_LINKS } from "@/lib/config";
+import { COMPANY_NAME } from "@/lib/config";
+import { telHref, whatsappLink } from "@/lib/company";
+import { useCompany } from "@/lib/company-context";
 import { FacebookIcon, InstagramIcon, TiktokIcon, WhatsappIcon } from "@/components/icons/SocialIcons";
 import Logo from "./Logo";
 
@@ -8,12 +12,13 @@ export default function Footer() {
   const t = useTranslations("footer");
   const tNav = useTranslations("nav");
   const year = new Date().getFullYear();
+  const company = useCompany();
 
   const socials = [
-    { href: SOCIAL_LINKS.facebook, label: "Facebook", Icon: FacebookIcon },
-    { href: SOCIAL_LINKS.instagram, label: "Instagram", Icon: InstagramIcon },
-    { href: SOCIAL_LINKS.tiktok, label: "TikTok", Icon: TiktokIcon },
-    { href: SOCIAL_LINKS.whatsapp, label: "WhatsApp", Icon: WhatsappIcon },
+    { href: company.social.facebook, label: "Facebook", Icon: FacebookIcon },
+    { href: company.social.instagram, label: "Instagram", Icon: InstagramIcon },
+    { href: company.social.tiktok, label: "TikTok", Icon: TiktokIcon },
+    { href: whatsappLink(company), label: "WhatsApp", Icon: WhatsappIcon },
   ].filter((social): social is typeof social & { href: string } => Boolean(social.href));
 
   return (
@@ -24,8 +29,10 @@ export default function Footer() {
             <Logo variant="stacked" className="h-24" />
           </Link>
           <p className="text-sm text-slate-300">{t("slogan")}</p>
-          <p className="text-sm text-slate-300">{COMPANY_ADDRESS}</p>
-          <p className="text-sm text-slate-300">{COMPANY_PHONE}</p>
+          <p className="text-sm text-slate-300">{company.address}</p>
+          <a href={telHref(company.phone)} className="text-sm text-slate-300 hover:text-brand-gold">
+            {company.phone}
+          </a>
         </div>
 
         <div className="flex flex-col gap-2">

@@ -1,9 +1,14 @@
-import { buildWhatsappLink } from "@/lib/config";
+"use client";
+
+import { whatsappLink } from "@/lib/company";
+import { useCompany } from "@/lib/company-context";
 
 export default function FloatingWhatsapp({ message }: { message: string }) {
+  const company = useCompany();
+
   return (
     <a
-      href={buildWhatsappLink(message)}
+      href={whatsappLink(company, message)}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="WhatsApp"

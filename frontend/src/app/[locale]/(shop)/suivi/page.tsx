@@ -3,11 +3,13 @@
 import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { getReservation, ApiError } from "@/lib/api";
-import { buildWhatsappLink } from "@/lib/config";
+import { whatsappLink } from "@/lib/company";
+import { useCompany } from "@/lib/company-context";
 import { formatPrice } from "@/lib/format";
 import type { Reservation } from "@/lib/types";
 
 export default function TrackQuotePage() {
+  const company = useCompany();
   const t = useTranslations("quoteConfirmation");
   const tStatus = useTranslations("reservationStatus");
   const locale = useLocale();
@@ -91,7 +93,7 @@ export default function TrackQuotePage() {
               </a>
             )}
             <a
-              href={buildWhatsappLink(reservation.whatsapp_message)}
+              href={whatsappLink(company, reservation.whatsapp_message)}
               target="_blank"
               rel="noopener noreferrer"
               className="rounded-full bg-[#25D366] px-5 py-2 text-center text-sm font-medium text-white"

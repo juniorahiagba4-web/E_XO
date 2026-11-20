@@ -3,14 +3,9 @@
 import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { sendContactMessage, ApiError } from "@/lib/api";
-import {
-  COMPANY_ADDRESS,
-  COMPANY_EMAIL,
-  COMPANY_MAPS_QUERY,
-  COMPANY_MAPS_URL,
-  COMPANY_PHONE,
-  SOCIAL_LINKS,
-} from "@/lib/config";
+import { COMPANY_MAPS_QUERY, COMPANY_MAPS_URL } from "@/lib/config";
+import { telHref, whatsappLink } from "@/lib/company";
+import { useCompany } from "@/lib/company-context";
 import { FacebookIcon, InstagramIcon, TiktokIcon, WhatsappIcon } from "@/components/icons/SocialIcons";
 
 function MapPinIcon() {
@@ -52,11 +47,13 @@ export default function ContactPage() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
 
+  const company = useCompany();
+  const phones = [{ label: t("phoneLabel"), number: company.phone }, ...company.other_phones];
   const socials = [
-    { href: SOCIAL_LINKS.facebook, label: "Facebook", Icon: FacebookIcon },
-    { href: SOCIAL_LINKS.instagram, label: "Instagram", Icon: InstagramIcon },
-    { href: SOCIAL_LINKS.tiktok, label: "TikTok", Icon: TiktokIcon },
-    { href: SOCIAL_LINKS.whatsapp, label: "WhatsApp", Icon: WhatsappIcon },
+    { href: company.social.facebook, label: "Facebook", Icon: FacebookIcon },
+    { href: company.social.instagram, label: "Instagram", Icon: InstagramIcon },
+    { href: company.social.tiktok, label: "TikTok", Icon: TiktokIcon },
+    { href: whatsappLink(company), label: "WhatsApp", Icon: WhatsappIcon },
   ].filter((social): social is typeof social & { href: string } => Boolean(social.href));
 
   async function handleSubmit(e: React.FormEvent) {
@@ -114,33 +111,37 @@ export default function ContactPage() {
               </span>
               <span>
                 <span className="block text-sm font-medium text-brand-navy">{t("addressLabel")}</span>
-                <span className="block text-slate-500">{COMPANY_ADDRESS}</span>
+                <span className="block text-slate-500">{company.address}</span>
               </span>
             </div>
             <a
               href={COMPANY_MAPS_URL}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={`${t("openInMaps")} : ${COMPANY_ADDRESS}`}
+              aria-label={`${t("openInMaps")} : ${company.address}`}
               className="absolute inset-0"
             />
           </div>
 
-          <a
-            href={`tel:${COMPANY_PHONE.replace(/\s+/g, "")}`}
-            className="group flex items-start gap-4 rounded-xl border border-slate-200 p-4 transition hover:-translate-y-0.5 hover:border-brand-gold hover:bg-brand-gold/5 hover:shadow-md"
-          >
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-navy-light text-brand-gold transition group-hover:scale-110 group-hover:bg-brand-gold group-hover:text-brand-navy">
-              <PhoneIcon />
-            </span>
-            <span>
-              <span className="block text-sm font-medium text-brand-navy">{t("phoneLabel")}</span>
-              <span className="block text-slate-500">{COMPANY_PHONE}</span>
-            </span>
-          </a>
+          {phones.map((phone) => (
+            <a
+              key={phone.number}
+              href={telHref(phone.number)}
+              className="group flex items-start gap-4 rounded-xl border border-slate-200 p-4 transition hover:-translate-y-0.5 hover:border-brand-gold hover:bg-brand-gold/5 hover:shadow-md"
+            >
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-navy-light text-brand-gold transition group-hover:scale-110 group-hover:bg-brand-gold group-hover:text-brand-navy">
+                <PhoneIcon />
+              </span>
+              <span>
+                <span className="block text-sm font-medium text-brand-navy">{phone.label || t("phoneLabel")}</span>
+                <span className="block text-slate-500">{phone.number}</span>
+              </span>
+            </a>
+          ))}
 
+          {company.email && (
           <a
-            href={`mailto:${COMPANY_EMAIL}`}
+            href={`mailto:${company.email}`}
             className="group flex items-start gap-4 rounded-xl border border-slate-200 p-4 transition hover:-translate-y-0.5 hover:border-brand-gold hover:bg-brand-gold/5 hover:shadow-md"
           >
             <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-navy-light text-brand-gold transition group-hover:scale-110 group-hover:bg-brand-gold group-hover:text-brand-navy">
@@ -148,9 +149,10 @@ export default function ContactPage() {
             </span>
             <span>
               <span className="block text-sm font-medium text-brand-navy">{t("emailLabel")}</span>
-              <span className="block text-slate-500">{COMPANY_EMAIL}</span>
+              <span className="block text-slate-500">{company.email}</span>
             </span>
           </a>
+          )}
 
           <div className="rounded-xl border border-slate-200 p-4">
             <p className="mb-3 text-sm font-medium text-brand-navy">{t("socialLabel")}</p>

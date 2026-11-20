@@ -16,6 +16,14 @@ class Setting extends Model
         'homepage_hero_subtitle_fr' => "Accueil — texte d'accroche (français)",
         'homepage_hero_title_en' => 'Accueil — titre (anglais)',
         'homepage_hero_subtitle_en' => "Accueil — texte d'accroche (anglais)",
+        'company_phone' => 'Entreprise — téléphone principal',
+        'company_whatsapp' => 'Entreprise — numéro WhatsApp',
+        'company_other_phones' => 'Entreprise — autres numéros',
+        'company_email' => 'Entreprise — e-mail',
+        'company_address' => 'Entreprise — adresse',
+        'company_tiktok_url' => 'Entreprise — page TikTok',
+        'company_facebook_url' => 'Entreprise — page Facebook',
+        'company_instagram_url' => 'Entreprise — page Instagram',
     ];
 
     public static function get(string $key, mixed $default = null): mixed

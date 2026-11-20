@@ -11,6 +11,8 @@ import { Analytics } from "@vercel/analytics/next";
 import { getTranslations } from "next-intl/server";
 import JsonLd from "@/components/JsonLd";
 import { SITE_URL, localBusinessJsonLd } from "@/lib/seo";
+import { getCompany } from "@/lib/company";
+import { CompanyProvider } from "@/lib/company-context";
 import { heros } from "../fonts/heros";
 import "../globals.css";
 
@@ -59,6 +61,7 @@ export default async function LocaleLayout({
     notFound();
   }
   const tSeo = await getTranslations({ locale, namespace: "seo" });
+  const company = await getCompany();
 
   return (
     <html
@@ -73,6 +76,7 @@ export default async function LocaleLayout({
           </div>
         )}
         <NextIntlClientProvider>
+          <CompanyProvider company={company}>
           <AuthProvider>
             <AuthGateProvider>
               <FavoritesProvider>
@@ -80,11 +84,12 @@ export default async function LocaleLayout({
               </FavoritesProvider>
             </AuthGateProvider>
           </AuthProvider>
+          </CompanyProvider>
         </NextIntlClientProvider>
         {/* Visitor statistics (Vercel Web Analytics: no cookie, no personal data).
             The test copy is not counted. */}
         {!IS_STAGING && <Analytics />}
-        <JsonLd data={localBusinessJsonLd(locale, tSeo("siteDescription"))} />
+        <JsonLd data={localBusinessJsonLd(locale, tSeo("siteDescription"), company)} />
       </body>
     </html>
   );
