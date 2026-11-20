@@ -1,4 +1,27 @@
 {
+  "seo": {
+    "siteTitle": "Event chair and furniture rental in Lomé, Togo",
+    "siteDescription": "Rent or buy VIP and Napoleon chairs, tables, tablecloths and coolers for your weddings, receptions and events in Lomé, Togo and West Africa. Delivery and fast quotes.",
+    "homeTitle": "VIP & Napoleon chair and event furniture rental in Lomé | La Perle d'Or",
+    "homeDescription": "La Perle d'Or: rent or buy VIP and Napoleon chairs, tables, tablecloths and coolers in Lomé. Clean furniture, delivered and set up for your weddings, receptions and ceremonies in Togo and West Africa.",
+    "catalogueTitle": "Catalogue: chairs, tables, tablecloths and coolers for rent in Lomé",
+    "catalogueDescription": "All of La Perle d'Or's event furniture: VIP and Napoleon chairs, tables, tablecloths, decoration and coolers to rent or buy in Lomé. Daily prices, online availability and free quotes.",
+    "categoryTitle": "{category}: rental and sale in Lomé",
+    "categoryDescription": "{category} to rent or buy in Lomé for your weddings, receptions and events. Daily prices, online availability, delivery across Togo and free quotes from La Perle d'Or.",
+    "itemTitleRental": "{name}: rental in Lomé",
+    "itemTitleBoth": "{name}: rental and sale in Lomé",
+    "itemDescription": "Rent the {name} in Lomé from {price} per day for your weddings, receptions and events. Delivery across Togo and free quotes from La Perle d'Or.",
+    "itemDescriptionTail": "For rent in Lomé from {price} per day for weddings and receptions. Delivery across Togo and free quotes.",
+    "contactTitle": "Contact La Perle d'Or, event furniture rental in Lomé",
+    "contactDescription": "Reach La Perle d'Or in Lomé (Cité Millénium) by WhatsApp, phone or e-mail to rent or buy chairs, tables, tablecloths and coolers for your event.",
+    "faqTitle": "Frequently asked questions about furniture rental",
+    "faqDescription": "Booking, delivery, deposit, payment: every answer about renting chairs and event furniture with La Perle d'Or in Lomé.",
+    "termsTitle": "Terms of service",
+    "termsDescription": "Terms of use of the site and of event furniture rental with La Perle d'Or in Lomé.",
+    "privacyTitle": "Privacy policy",
+    "privacyDescription": "How La Perle d'Or protects and uses your personal data.",
+    "ogTagline": "VIP & Napoleon chair and event furniture rental in Lomé"
+  },
   "errors": {
     "notFoundTitle": "Page not found",
     "notFoundMessage": "The page you're looking for doesn't exist or has moved.",

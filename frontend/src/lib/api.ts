@@ -132,6 +132,32 @@ export function getItems(
   ).then((r) => r.data);
 }
 
+/**
+ * Every matching item, all pages included: the API sends them 24 at a time,
+ * and the catalogue and the sitemap must show the whole range.
+ */
+export async function getAllItems(
+  locale: string,
+  params: Parameters<typeof getItems>[1] = {},
+) {
+  const all: Item[] = [];
+  for (let page = 1; page <= 20; page++) {
+    const query = new URLSearchParams(
+      Object.entries({ ...params, page: String(page) }).filter(([, v]) => Boolean(v)) as [
+        string,
+        string,
+      ][],
+    ).toString();
+    const res = await apiFetch<{ data: Item[]; meta?: { last_page?: number } }>(
+      `/items?${query}`,
+      locale,
+    );
+    all.push(...res.data);
+    if (!res.meta?.last_page || page >= res.meta.last_page) break;
+  }
+  return all;
+}
+
 export function getItem(locale: string, slug: string) {
   return apiFetch<{ data: Item; related: Item[] }>(`/items/${slug}`, locale).then(
     (r) => ({ item: r.data, related: r.related }),

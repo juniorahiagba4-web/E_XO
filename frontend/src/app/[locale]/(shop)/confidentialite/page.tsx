@@ -1,4 +1,16 @@
 import { getTranslations } from "next-intl/server";
+import { pageMetadata } from "@/lib/seo";
+
+export async function generateMetadata({ params }: PageProps<"/[locale]/confidentialite">) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "seo" });
+  return pageMetadata({
+    locale,
+    path: "/confidentialite",
+    title: t("privacyTitle"),
+    description: t("privacyDescription"),
+  });
+}
 
 type LegalSection = { heading: string; body: string };
 

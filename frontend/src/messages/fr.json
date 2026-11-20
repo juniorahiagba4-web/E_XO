@@ -1,4 +1,27 @@
 {
+  "seo": {
+    "siteTitle": "Location de chaises et mobilier événementiel à Lomé",
+    "siteDescription": "Location et vente de chaises VIP et Napoléon, tables, nappes et glacières pour vos mariages, réceptions et événements à Lomé, au Togo et en Afrique de l'Ouest. Livraison et devis rapide.",
+    "homeTitle": "Location de chaises VIP, Napoléon et mobilier événementiel à Lomé | La Perle d'Or",
+    "homeDescription": "La Perle d'Or : location et vente de chaises VIP et Napoléon, tables, nappes et glacières à Lomé. Mobilier propre, livré et installé pour vos mariages, réceptions et cérémonies au Togo et dans la sous-région.",
+    "catalogueTitle": "Catalogue : chaises, tables, nappes et glacières à louer à Lomé",
+    "catalogueDescription": "Tout le mobilier événementiel de La Perle d'Or : chaises VIP et Napoléon, tables, nappes, décoration et glacières, à louer ou à acheter à Lomé. Prix par jour, disponibilité en ligne et devis gratuit.",
+    "categoryTitle": "{category} : location et vente à Lomé",
+    "categoryDescription": "{category} à louer ou à acheter à Lomé pour vos mariages, réceptions et événements. Prix par jour, disponibilité en ligne, livraison au Togo et devis gratuit chez La Perle d'Or.",
+    "itemTitleRental": "{name} : location à Lomé",
+    "itemTitleBoth": "{name} : location et vente à Lomé",
+    "itemDescription": "{name} à louer à Lomé dès {price} par jour pour vos mariages, réceptions et événements. Livraison au Togo et devis gratuit chez La Perle d'Or.",
+    "itemDescriptionTail": "À louer à Lomé dès {price} par jour pour vos mariages et réceptions. Livraison au Togo et devis gratuit.",
+    "contactTitle": "Contact : La Perle d'Or, location de mobilier à Lomé",
+    "contactDescription": "Contactez La Perle d'Or à Lomé (Cité Millénium) par WhatsApp, téléphone ou e-mail pour louer ou acheter chaises, tables, nappes et glacières pour votre événement.",
+    "faqTitle": "Questions fréquentes sur la location de mobilier",
+    "faqDescription": "Réservation, livraison, caution, paiement : toutes les réponses sur la location de chaises et de mobilier événementiel avec La Perle d'Or à Lomé.",
+    "termsTitle": "Conditions d'utilisation",
+    "termsDescription": "Conditions d'utilisation du site et de location de mobilier événementiel de La Perle d'Or à Lomé.",
+    "privacyTitle": "Politique de confidentialité",
+    "privacyDescription": "Comment La Perle d'Or protège et utilise vos données personnelles.",
+    "ogTagline": "Location de chaises VIP, Napoléon et mobilier événementiel à Lomé"
+  },
   "errors": {
     "notFoundTitle": "Page introuvable",
     "notFoundMessage": "La page que vous cherchez n'existe pas ou a été déplacée.",

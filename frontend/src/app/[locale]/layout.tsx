@@ -8,16 +8,38 @@ import { AuthGateProvider } from "@/lib/auth-gate-context";
 import { FavoritesProvider } from "@/lib/favorites-context";
 import { COMPANY_NAME, IS_STAGING } from "@/lib/config";
 import { Analytics } from "@vercel/analytics/next";
+import { getTranslations } from "next-intl/server";
+import JsonLd from "@/components/JsonLd";
+import { SITE_URL, localBusinessJsonLd } from "@/lib/seo";
 import { heros } from "../fonts/heros";
 import "../globals.css";
 
-export const metadata: Metadata = {
-  title: `${COMPANY_NAME} - Location de mobilier événementiel`,
-  description:
-    "Location et vente de chaises, tables, nappes, glacières pour vos événements au Togo et dans la sous-région.",
-  // The test copy must never show up in search results.
-  ...(IS_STAGING ? { robots: { index: false, follow: false } } : {}),
-};
+export async function generateMetadata({ params }: LayoutProps<"/[locale]">): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "seo" });
+
+  return {
+    metadataBase: new URL(SITE_URL),
+    // Each page gives its own title; "| La Perle d'Or" is added after it.
+    title: { default: `${t("siteTitle")} | ${COMPANY_NAME}`, template: `%s | ${COMPANY_NAME}` },
+    description: t("siteDescription"),
+    applicationName: COMPANY_NAME,
+    // No canonical link here: each public page sets its own (pageMetadata),
+    // otherwise every page would point Google back to the home page.
+    openGraph: {
+      type: "website",
+      siteName: COMPANY_NAME,
+      locale: locale === "fr" ? "fr_FR" : "en_US",
+    },
+    twitter: { card: "summary_large_image" },
+    // The test copy must never show up in search results.
+    ...(IS_STAGING ? { robots: { index: false, follow: false } } : {}),
+    // Proof of ownership for Google Search Console (value given by Google).
+    ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+      ? { verification: { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION } }
+      : {}),
+  };
+}
 
 export const viewport: Viewport = {
   themeColor: "#000046",
@@ -36,6 +58,7 @@ export default async function LocaleLayout({
   if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
+  const tSeo = await getTranslations({ locale, namespace: "seo" });
 
   return (
     <html
@@ -61,6 +84,7 @@ export default async function LocaleLayout({
         {/* Visitor statistics (Vercel Web Analytics: no cookie, no personal data).
             The test copy is not counted. */}
         {!IS_STAGING && <Analytics />}
+        <JsonLd data={localBusinessJsonLd(locale, tSeo("siteDescription"))} />
       </body>
     </html>
   );

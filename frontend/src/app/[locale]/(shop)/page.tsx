@@ -4,13 +4,20 @@ import { Link } from "@/i18n/navigation";
 import { buildWhatsappLink } from "@/lib/config";
 import { getSiteSettings } from "@/lib/api";
 import CatalogueBrowser from "@/components/CatalogueBrowser";
+import { pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata({
   params,
 }: PageProps<"/[locale]">) {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "home" });
-  return { title: t("heroTitle") };
+  const t = await getTranslations({ locale, namespace: "seo" });
+  return pageMetadata({
+    locale,
+    path: "/",
+    title: t("homeTitle"),
+    description: t("homeDescription"),
+    absoluteTitle: true,
+  });
 }
 
 export default async function HomePage({

@@ -1,5 +1,5 @@
 import { getTranslations } from "next-intl/server";
-import { getCategories, getItems } from "@/lib/api";
+import { getAllItems, getCategories } from "@/lib/api";
 import CategorySidebar from "./CategorySidebar";
 import CategoryHeroBanner from "./CategoryHeroBanner";
 import CatalogueFilters from "./CatalogueFilters";
@@ -26,10 +26,10 @@ export default async function CatalogueBrowser({
   const categories = await getCategories(locale).catch(() => []);
   const activeCategory = category ? categories.find((c) => c.slug === category) : undefined;
 
-  let items: Awaited<ReturnType<typeof getItems>> = [];
+  let items: Awaited<ReturnType<typeof getAllItems>> = [];
   let loadError = false;
   try {
-    items = await getItems(locale, {
+    items = await getAllItems(locale, {
       category,
       search,
       sort: sort as never,
