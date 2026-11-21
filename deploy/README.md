@@ -75,6 +75,19 @@ redirects `laperledor-togo.com` and `www.laperledor-togo.com` to the Vercel
 deployment instead of returning a 404. It is never reached once the DNS is
 switched to Vercel.
 
+### 6. `06-configure-mail.sh` — sending e-mails (once)
+
+```sh
+ssh -t laperledor@54.39.230.49 'bash /var/www/laperledor/deploy/06-configure-mail.sh'
+```
+
+Connects production to the Hostinger mailbox `contact@laperledor-togo.com`
+(SMTP `smtp.hostinger.com:465`). The password is typed in the terminal and
+only written to the server's `.env` (a dated backup of the previous `.env` is
+kept). It then sends a test e-mail. The admin and manager accounts receive an
+e-mail for every new quote request and contact message, at the address of
+their account (Utilisateurs page). Pre-production keeps `MAIL_MAILER=log`.
+
 ## Pre-production (staging)
 
 Every change goes to pre-production first, is checked there, and only then
