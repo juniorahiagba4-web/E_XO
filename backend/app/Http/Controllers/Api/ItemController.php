@@ -36,7 +36,8 @@ class ItemController extends Controller
             'price_desc' => $items->orderByDesc('rental_price_per_day'),
             'popular' => $items->orderByDesc('popularity'),
             'newest' => $items->orderByDesc('created_at'),
-            default => $items->orderBy('name_fr'),
+            // Order chosen in the admin (drag and drop in the Articles list).
+            default => $items->orderBy('sort_order')->orderBy('name_fr'),
         };
 
         $items = $items->paginate(24);

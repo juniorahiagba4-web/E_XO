@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
     'image_path', 'gallery', 'specifications', 'sku', 'unit_label',
     'rental_price_per_day', 'deposit_amount', 'sale_price', 'sale_price_on_request',
     'rating', 'rating_count',
-    'total_stock', 'min_rental_quantity', 'is_active',
+    'total_stock', 'min_rental_quantity', 'is_active', 'sort_order',
 ])]
 class Item extends Model
 {
@@ -33,9 +33,20 @@ class Item extends Model
             'total_stock' => 'integer',
             'min_rental_quantity' => 'integer',
             'is_active' => 'boolean',
+            'sort_order' => 'integer',
             'gallery' => 'array',
             'specifications' => 'array',
         ];
+    }
+
+    protected static function booted(): void
+    {
+        // A new item goes to the end of the catalogue; the admin can move it.
+        static::creating(function (Item $item) {
+            if (! $item->sort_order) {
+                $item->sort_order = (int) static::query()->max('sort_order') + 1;
+            }
+        });
     }
 
     public function getImageUrlAttribute(): ?string

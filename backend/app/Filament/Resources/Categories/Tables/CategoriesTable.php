@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Categories\Tables;
 
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -40,7 +41,13 @@ class CategoriesTable
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            // Same order as in the website menu; drag and drop to change it.
             ->defaultSort('sort_order')
+            ->reorderable('sort_order')
+            ->reorderRecordsTriggerAction(fn (Action $action, bool $isReordering) => $action
+                ->button()
+                ->label($isReordering ? 'Terminer' : "Modifier l'ordre d'affichage")
+                ->icon($isReordering ? 'heroicon-o-check' : 'heroicon-o-arrows-up-down'))
             ->filters([])
             ->recordActions([
                 EditAction::make(),

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Items\Tables;
 
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -18,6 +19,10 @@ class ItemsTable
     {
         return $table
             ->columns([
+                TextColumn::make('sort_order')
+                    ->label('Position')
+                    ->tooltip("Ordre d'affichage sur le site. Bouton « Modifier l'ordre d'affichage » pour le changer.")
+                    ->sortable(),
                 ImageColumn::make('image_path')->label(''),
                 TextColumn::make('name_fr')
                     ->label('Nom')
@@ -58,6 +63,13 @@ class ItemsTable
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            // Same order as on the website; drag and drop to change it.
+            ->defaultSort('sort_order')
+            ->reorderable('sort_order')
+            ->reorderRecordsTriggerAction(fn (Action $action, bool $isReordering) => $action
+                ->button()
+                ->label($isReordering ? 'Terminer' : "Modifier l'ordre d'affichage")
+                ->icon($isReordering ? 'heroicon-o-check' : 'heroicon-o-arrows-up-down'))
             ->filters([])
             ->recordActions([
                 EditAction::make(),
